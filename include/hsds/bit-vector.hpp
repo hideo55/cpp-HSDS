@@ -4,13 +4,15 @@
 #include <stdint.h>
 #include <vector>
 #include <iostream>
-#include "rank-index.hpp"
+#include "hsds/popcount.hpp"
+#include "hsds/rank-index.hpp"
+
 
 namespace hsds {
 
-const int S_BLOCK_SIZE = 64;
-const int L_BLOCK_SIZE = 512;
-const int BLOCK_RATE = 8;
+const uint32_t S_BLOCK_SIZE = 64;
+const uint32_t L_BLOCK_SIZE = 512;
+const uint32_t BLOCK_RATE = 8;
 
 class BitVector {
 public:
@@ -42,11 +44,12 @@ private:
     typedef uint64_t block_type;
     typedef std::vector<block_type> blocks_type;
     typedef std::vector<RankIndex> ranktable_type;
-    typedef std::vector<uint32_t> select_0s_;
-    typedef std::vector<uint32_t> select_1s_;
+    typedef std::vector<uint32_t> select_dict_type;
 
     blocks_type blocks_;
     ranktable_type rank_tables_;
+    select_dict_type select_0s_;
+    select_dict_type select_1s_;
     uint64_t size_;
     uint64_t num_of_1s_;
 };

@@ -7,7 +7,7 @@
 #include <vector>
 
 #include <ux/ux.hpp>
-#include "bit-vector.hpp"
+#include "hsds/bit-vector.hpp"
 #include "marisa/grimoire/vector/bit-vector.h"
 
 namespace {
@@ -65,7 +65,7 @@ void generate_data(size_t size, double ones_ratio, std::vector<bool> *bits, std:
     point_queries->resize(NUM_QUERIES);
     rank_queries->resize(NUM_QUERIES);
     select_queries->resize(NUM_QUERIES);
-    const uint64_t threshold = (1ULL << 32) * ones_ratio;
+    const uint64_t threshold = (uint64_t)((1ULL << 32) * ones_ratio);
     size_t num_ones = 0;
     for (size_t i = 0; i < bits->size(); ++i) {
         const bool bit = xor128() < threshold;
