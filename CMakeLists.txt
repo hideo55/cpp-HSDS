@@ -13,15 +13,22 @@ SET(serial "1.0.0")
 
 SET(soserial "1")
 
+
 INCLUDE(FindSSE)
 FindSSE ()
 IF(SSE3_FOUND)
     IF(SSSE3_FOUND)
-        ADD_DEFINITIONS(-DHSDS_USE_SSE3 -mssse3)
+        SET(CXX_DFLAGS -DHSDS_USE_SSE3 -mssse3)
+        #ADD_DEFINITIONS(-DHSDS_USE_SSE3 -mssse3)
     ENDIF(SSSE3_FOUND)
 ENDIF(SSE3_FOUND)
 
-#ADD_DEFINITIONS(-DHSDS_USE_POPCNT -mpopcnt)
+IF(SSE4_1_FOUND)
+    SET(CXX_DFLAGS ${CXX_DFLAGS} -DHSDS_USE_POPCNT -msse4.1 -mpopcnt)
+    #ADD_DEFINITIONS(-DHSDS_USE_POPCNT -msse4.1 -mpopcnt)
+ENDIF(SSE4_1_FOUND)
+ADD_DEFINITIONS(${CXX_DFLAGS})
+
 
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/include")
 
@@ -42,7 +49,12 @@ TARGET_LINK_LIBRARIES(test_bit-vector hsds-bitvector)
 ADD_TEST(NAME test_bitvector COMMAND ./test_bit-vector)
 
 # Benchmark
-ADD_EXECUTABLE(benchmark_bit-vector benchmark/benchmark.cpp)
-SET_TARGET_PROPERTIES(benchmark_bit-vector PROPERTIES INCLUDE_DIRECTORIES "/home/h-ohno/dl/marisa-0.2.4/lib;${PROJECT_SOURCE_DIR}/include")
-TARGET_LINK_LIBRARIES(benchmark_bit-vector hsds-bitvector ux marisa)
+OPTION(WITH_BENCHMARK "Build benchmark program" OFF)
+IF(WITH_BENCHMARK)
+    ADD_EXECUTABLE(benchmark_bit-vector benchmark/benchmark.cpp)
+    OPTION(MARISA_INCLUDE_PATH "marisa-trie" ./)
+    SET_TARGET_PROPERTIES(benchmark_bit-vector PROPERTIES INCLUDE_DIRECTORIES "/home/h-ohno/dl/marisa-0.2.4/lib;${PROJECT_SOURCE_DIR}/include")
+    TARGET_LINK_LIBRARIES(benchmark_bit-vector hsds-bitvector ux marisa)
+ENDIF(WITH_BENCHMARK)
+
 
