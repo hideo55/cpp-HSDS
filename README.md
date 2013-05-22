@@ -11,7 +11,17 @@ using namespace hsds;
 
 void main(){
     BitVector bv;
-    bv.set();
+    bv.set(0, true);
+    bv.set(100, true);
+    
+    ...
+    
+    bv.build();
+    
+    uint64_t pos = bv.select1(0)// 0;
+    pos = bv.select1(0)// 100;
+    pos = bv.select0(0)// 1;
+    
 }
 
 ```

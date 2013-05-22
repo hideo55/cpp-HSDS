@@ -134,34 +134,47 @@ FORCE_INLINE uint64_t rank64(uint64_t x, uint64_t i, bool b) {
 }
 
 FORCE_INLINE uint64_t select64(uint64_t x, uint64_t i, bool b) {
-    if (!b) { 
-        x = ~x; 
+    if (!b) {
+        x = ~x;
     }
-    uint64_t x1 = ((x  & 0xaaaaaaaaaaaaaaaaULL) >>  1)
-                +  (x  & 0x5555555555555555ULL);
-    uint64_t x2 = ((x1 & 0xccccccccccccccccULL) >>  2)
-                +  (x1 & 0x3333333333333333ULL);
-    uint64_t x3 = ((x2 & 0xf0f0f0f0f0f0f0f0ULL) >>  4)
-                +  (x2 & 0x0f0f0f0f0f0f0f0fULL);
-    uint64_t x4 = ((x3 & 0xff00ff00ff00ff00ULL) >>  8)
-                +  (x3 & 0x00ff00ff00ff00ffULL);
-    uint64_t x5 = ((x4 & 0xffff0000ffff0000ULL) >> 16)
-                +  (x4 & 0x0000ffff0000ffffULL);
+    uint64_t x1 = ((x & 0xaaaaaaaaaaaaaaaaULL) >> 1) + (x & 0x5555555555555555ULL);
+    uint64_t x2 = ((x1 & 0xccccccccccccccccULL) >> 2) + (x1 & 0x3333333333333333ULL);
+    uint64_t x3 = ((x2 & 0xf0f0f0f0f0f0f0f0ULL) >> 4) + (x2 & 0x0f0f0f0f0f0f0f0fULL);
+    uint64_t x4 = ((x3 & 0xff00ff00ff00ff00ULL) >> 8) + (x3 & 0x00ff00ff00ff00ffULL);
+    uint64_t x5 = ((x4 & 0xffff0000ffff0000ULL) >> 16) + (x4 & 0x0000ffff0000ffffULL);
 
     i++;
     uint64_t pos = 0;
     uint64_t v5 = x5 & 0xffffffffULL;
-    if (i > v5) { i -= v5; pos += 32; }
+    if (i > v5) {
+        i -= v5;
+        pos += 32;
+    }
     uint64_t v4 = (x4 >> pos) & 0x0000ffffULL;
-    if (i > v4) { i -= v4; pos += 16; }
+    if (i > v4) {
+        i -= v4;
+        pos += 16;
+    }
     uint64_t v3 = (x3 >> pos) & 0x000000ffULL;
-    if (i > v3) { i -= v3; pos +=  8; }
+    if (i > v3) {
+        i -= v3;
+        pos += 8;
+    }
     uint64_t v2 = (x2 >> pos) & 0x0000000fULL;
-    if (i > v2) { i -= v2; pos +=  4; }
+    if (i > v2) {
+        i -= v2;
+        pos += 4;
+    }
     uint64_t v1 = (x1 >> pos) & 0x00000003ULL;
-    if (i > v1) { i -= v1; pos +=  2; }
-    uint64_t v0 = (x  >> pos) & 0x00000001ULL;
-    if (i > v0) { i -= v0; pos +=  1; }
+    if (i > v1) {
+        i -= v1;
+        pos += 2;
+    }
+    uint64_t v0 = (x >> pos) & 0x00000001ULL;
+    if (i > v0) {
+        i -= v0;
+        pos += 1;
+    }
     return pos;
 }
 
@@ -218,11 +231,12 @@ void BitVector::build() {
     uint64_t block_num = blocks_.size();
     uint64_t num_0s_in_lblock = 0, num_1s_in_lblock = 0;
     num_of_1s_ = 0;
-    
+
     rank_tables_.clear();
     ranktable_type().swap(rank_tables_);
     rank_tables_.resize(
-            ((block_num * S_BLOCK_SIZE) / L_BLOCK_SIZE) + (((block_num * S_BLOCK_SIZE) % L_BLOCK_SIZE) != 0 ? 1 : 0) + 1);
+            ((block_num * S_BLOCK_SIZE) / L_BLOCK_SIZE) + (((block_num * S_BLOCK_SIZE) % L_BLOCK_SIZE) != 0 ? 1 : 0)
+                    + 1);
     select_0s_.clear();
     select_dict_type().swap(select_0s_);
     select_0s_.push_back(0);
@@ -235,52 +249,52 @@ void BitVector::build() {
         uint64_t rank_id = i / BLOCK_RATE;
         RankIndex &rank = rank_tables_[rank_id];
         switch (i % 8) {
-            case 0: {
-                rank.set_abs(num_of_1s_);
-                break;
-            }
-            case 1: {
-                rank.set_rel1(num_of_1s_ - rank.abs());
-                break;
-            }
-            case 2: {
-                rank.set_rel2(num_of_1s_ - rank.abs());
-                break;
-            }
-            case 3: {
-                rank.set_rel3(num_of_1s_ - rank.abs());
-                break;
-            }
-            case 4: {
-                rank.set_rel4(num_of_1s_ - rank.abs());
-                break;
-            }
-            case 5: {
-                rank.set_rel5(num_of_1s_ - rank.abs());
-                break;
-            }
-            case 6: {
-                rank.set_rel6(num_of_1s_ - rank.abs());
-                break;
-            }
-            case 7: {
-                rank.set_rel7(num_of_1s_ - rank.abs());
-                break;
-            }
+        case 0: {
+            rank.set_abs(num_of_1s_);
+            break;
+        }
+        case 1: {
+            rank.set_rel1(num_of_1s_ - rank.abs());
+            break;
+        }
+        case 2: {
+            rank.set_rel2(num_of_1s_ - rank.abs());
+            break;
+        }
+        case 3: {
+            rank.set_rel3(num_of_1s_ - rank.abs());
+            break;
+        }
+        case 4: {
+            rank.set_rel4(num_of_1s_ - rank.abs());
+            break;
+        }
+        case 5: {
+            rank.set_rel5(num_of_1s_ - rank.abs());
+            break;
+        }
+        case 6: {
+            rank.set_rel6(num_of_1s_ - rank.abs());
+            break;
+        }
+        case 7: {
+            rank.set_rel7(num_of_1s_ - rank.abs());
+            break;
+        }
         }
         uint64_t count1s = PopCount::count(blocks_[i]);
-        
-        if( num_1s_in_lblock + count1s > L_BLOCK_SIZE ){
+
+        if (num_1s_in_lblock + count1s > L_BLOCK_SIZE) {
             uint32_t diff = L_BLOCK_SIZE - num_1s_in_lblock;
             uint32_t pos = select64(blocks_[i], count1s - diff, true);
-            select_1s_.push_back((i-1)*S_BLOCK_SIZE + pos);
+            select_1s_.push_back((i - 1) * S_BLOCK_SIZE + pos);
             num_1s_in_lblock -= L_BLOCK_SIZE;
         }
         uint64_t count0s = S_BLOCK_SIZE - count1s;
-        if( num_0s_in_lblock + count0s > L_BLOCK_SIZE ){
+        if (num_0s_in_lblock + count0s > L_BLOCK_SIZE) {
             uint32_t diff = L_BLOCK_SIZE - num_0s_in_lblock;
             uint32_t pos = select64(blocks_[i], count0s - diff, false);
-            select_0s_.push_back((i-1)*S_BLOCK_SIZE + pos);
+            select_0s_.push_back((i - 1) * S_BLOCK_SIZE + pos);
             num_0s_in_lblock -= L_BLOCK_SIZE;
         }
         num_1s_in_lblock += count1s;
@@ -288,10 +302,10 @@ void BitVector::build() {
         num_of_1s_ += count1s;
     }
 
-    if (( block_num % BLOCK_RATE) != 0) {
-        uint64_t rank_id = (block_num -1 ) / BLOCK_RATE;
+    if ((block_num % BLOCK_RATE) != 0) {
+        uint64_t rank_id = (block_num - 1) / BLOCK_RATE;
         RankIndex &rank = rank_tables_[rank_id];
-        switch ((block_num -1) % BLOCK_RATE) {
+        switch ((block_num - 1) % BLOCK_RATE) {
         case 0: {
             rank.set_rel1(num_of_1s_ - rank.abs());
         }
@@ -362,20 +376,28 @@ uint64_t BitVector::select0(uint64_t i) const {
         throw "Out of range access in hsds::BitVector::select()";
     }
 
-    // Binary search in rank table
-    uint64_t left = 0;
-    uint64_t right = rank_tables_.size();
-    while (left < right) {
-        uint64_t pivot = (left + right) / 2;
-        if (i < (pivot * L_BLOCK_SIZE) - rank_tables_[pivot].abs()) {
-            right = pivot;
-        } else {
-            left = pivot + 1;
+    const uint64_t select_id = i / L_BLOCK_SIZE;
+    if ((i % L_BLOCK_SIZE) == 0) {
+        return select_0s_[select_id];
+    }
+    uint64_t begin = select_0s_[select_id] / L_BLOCK_SIZE;
+    uint64_t end = (select_0s_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
+    if (begin + 10 >= end) {
+        while (i >= ((begin + 1) * L_BLOCK_SIZE) - rank_tables_[begin + 1].abs()) {
+            ++begin;
+        }
+    } else {
+        while (begin + 1 < end) {
+            const uint64_t pivot = (begin + end) / 2;
+            if (i < (pivot * 512) - rank_tables_[pivot].abs()) {
+                end = pivot;
+            } else {
+                begin = pivot;
+            }
         }
     }
-    --right;
 
-    uint64_t rank_id = right;
+    uint64_t rank_id = begin;
     i -= (rank_id * L_BLOCK_SIZE) - rank_tables_[rank_id].abs();
 
     const RankIndex &rank = rank_tables_[rank_id];
@@ -417,20 +439,20 @@ uint64_t BitVector::select1(uint64_t i) const {
     }
 
     const uint64_t select_id = i / L_BLOCK_SIZE;
-    if( (i % L_BLOCK_SIZE) == 0 ){
+    if ((i % L_BLOCK_SIZE) == 0) {
         return select_1s_[select_id];
     }
     uint64_t begin = select_1s_[select_id] / L_BLOCK_SIZE;
-    uint64_t end = (select_1s_[select_id+1] + L_BLOCK_SIZE - 1)/ L_BLOCK_SIZE;
+    uint64_t end = (select_1s_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
 
-    if( begin + 10 >= end ){
+    if (begin + 10 >= end) {
         // Linear search in rank table
-        while(i >= rank_tables_[begin + 1].abs()){
+        while (i >= rank_tables_[begin + 1].abs()) {
             ++begin;
         }
-    }else{
+    } else {
         // Binary search in rank table
-        while(begin + 1 < end){
+        while (begin + 1 < end) {
             uint64_t pivot = (begin + end) / 2;
             if (i < rank_tables_[pivot].abs()) {
                 end = pivot;
@@ -439,7 +461,6 @@ uint64_t BitVector::select1(uint64_t i) const {
             }
         }
     }
-
 
     uint64_t rank_id = begin;
 
