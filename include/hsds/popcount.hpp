@@ -12,8 +12,7 @@
  #ifdef _MSC_VER
   #include <intrin.h>
  #else  // _MSC_VERa
-  #include <smmintrin.h>
-  //#include <popcntintrin.h>
+  #include <popcntintrin.h>
  #endif  // _MSC_VER
 #endif
 
