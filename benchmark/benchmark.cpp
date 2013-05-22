@@ -15,7 +15,7 @@ namespace {
 const size_t MIN_NUM_BITS = 1U << 10;
 const size_t MAX_NUM_BITS = 1U << 30;
 const size_t NUM_TRIALS = 11;
-const size_t NUM_QUERIES = 1 << 22;
+const size_t NUM_QUERIES = 1 << 11;
 
 class Timer {
 public:
@@ -181,6 +181,7 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
         for (size_t i = 0; i < NUM_TRIALS; ++i) {
             Timer timer;
             uint64_t total = 0;
+
             for (size_t j = 0; j < select_queries.size(); ++j) {
                 total += dic.select1(select_queries[j]);
             }
@@ -189,8 +190,6 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
         }
         std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
-
-    //dic.clear();
 }
 
 void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,

@@ -31,5 +31,13 @@ int main(){
     cout << bv.select1(2) << endl;
     cout << bv.select1(3) << endl;
     cout << bv.select0(0) << std::endl;
+
+    bv.clear();
+    for(size_t i = 0; i < 1024; ++i){
+        bv.set(i,true);
+    }
+    bv.build();
+    cout <<  bv.select1(1023) << endl;
+
     return 0;
 }

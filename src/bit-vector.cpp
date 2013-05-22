@@ -272,26 +272,26 @@ void BitVector::build() {
         
         if( num_1s_in_lblock + count1s > L_BLOCK_SIZE ){
             uint32_t diff = L_BLOCK_SIZE - num_1s_in_lblock;
-            uint32_t pos = select64(blocks_[i], diff, true);
+            uint32_t pos = select64(blocks_[i], count1s - diff, true);
             select_1s_.push_back((i-1)*S_BLOCK_SIZE + pos);
-            num_1s_in_lblock -= diff;
+            num_1s_in_lblock -= L_BLOCK_SIZE;
         }
         uint64_t count0s = S_BLOCK_SIZE - count1s;
         if( num_0s_in_lblock + count0s > L_BLOCK_SIZE ){
             uint32_t diff = L_BLOCK_SIZE - num_0s_in_lblock;
-            uint32_t pos = select64(blocks_[i], diff, false);
+            uint32_t pos = select64(blocks_[i], count0s - diff, false);
             select_0s_.push_back((i-1)*S_BLOCK_SIZE + pos);
-            num_0s_in_lblock -= diff;
+            num_0s_in_lblock -= L_BLOCK_SIZE;
         }
         num_1s_in_lblock += count1s;
         num_0s_in_lblock += count0s;
         num_of_1s_ += count1s;
     }
 
-    if ((block_num % BLOCK_RATE) != 0) {
-        uint64_t rank_id = block_num / BLOCK_RATE;
+    if (( block_num % BLOCK_RATE) != 0) {
+        uint64_t rank_id = (block_num -1 ) / BLOCK_RATE;
         RankIndex &rank = rank_tables_[rank_id];
-        switch ((block_num - 1) % BLOCK_RATE) {
+        switch ((block_num -1) % BLOCK_RATE) {
         case 0: {
             rank.set_rel1(num_of_1s_ - rank.abs());
         }
@@ -317,10 +317,8 @@ void BitVector::build() {
 
     }
     rank_tables_.back().set_abs(num_of_1s_);
-
     select_0s_.push_back(size_);
     select_1s_.push_back(size_);
-    
 }
 
 uint64_t BitVector::rank(uint64_t i) const {
@@ -417,28 +415,14 @@ uint64_t BitVector::select1(uint64_t i) const {
     if (i >= this->size(true)) {
         throw "Out of range access in hsds::BitVector::select()";
     }
-/*
-    // Binary search in rank table
-    uint64_t left = 0;
-    uint64_t right = rank_tables_.size();
-    while (left < right) {
-        uint64_t pivot = (left + right) / 2;
-        if (i < rank_tables_[pivot].abs()) {
-            right = pivot;
-        } else {
-            left = pivot + 1;
-        }
-    }
-    --right;
 
-    uint64_t rank_id = right;
-*/
     const uint64_t select_id = i / L_BLOCK_SIZE;
     if( (i % L_BLOCK_SIZE) == 0 ){
         return select_1s_[select_id];
     }
     uint64_t begin = select_1s_[select_id] / L_BLOCK_SIZE;
     uint64_t end = (select_1s_[select_id+1] + L_BLOCK_SIZE - 1)/ L_BLOCK_SIZE;
+
     if( begin + 10 >= end ){
         // Linear search in rank table
         while(i >= rank_tables_[begin + 1].abs()){
@@ -455,10 +439,13 @@ uint64_t BitVector::select1(uint64_t i) const {
             }
         }
     }
+
+
     uint64_t rank_id = begin;
 
-    i -= rank_tables_[rank_id].abs();
     const RankIndex &rank = rank_tables_[rank_id];
+
+    i -= rank.abs();
     uint64_t block_id = rank_id * BLOCK_RATE;
 
     if (i < rank.rel4()) {
