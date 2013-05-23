@@ -6,16 +6,20 @@
 #include <sstream>
 #include <vector>
 
-#include <ux/ux.hpp>
 #include "hsds/bit-vector.hpp"
+#ifdef USE_UX
+#include <ux/ux.hpp>
+#endif
+#ifdef USE_MARISA
 #include "marisa/grimoire/vector/bit-vector.h"
+#endif
 
 namespace {
 
 const size_t MIN_NUM_BITS = 1U << 10;
 const size_t MAX_NUM_BITS = 1U << 30;
 const size_t NUM_TRIALS = 11;
-const size_t NUM_QUERIES = 1 << 11;
+const size_t NUM_QUERIES = 1 << 22;
 
 class Timer {
 public:
@@ -85,6 +89,7 @@ void generate_data(size_t size, double ones_ratio, std::vector<bool> *bits, std:
     }
 }
 
+#ifdef USE_UX
 void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
         const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
     ux::BitVec bv;
@@ -137,6 +142,7 @@ void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &po
         std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
 }
+#endif
 
 void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
         const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
@@ -154,7 +160,7 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
             Timer timer;
             uint64_t total = 0;
             for (size_t j = 0; j < point_queries.size(); ++j) {
-                total += dic.get(point_queries[j]);
+                total += dic[point_queries[j]];
             }
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
@@ -192,6 +198,7 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
     }
 }
 
+#ifdef USE_MARISA
 void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
         const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
     marisa::grimoire::vector::BitVector dic;
@@ -242,6 +249,7 @@ void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t>
         std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
 }
+#endif
 
 }  // namespace
 
@@ -264,9 +272,14 @@ int main(int argc, char *argv[]) {
     std::cerr << "ONES_RATIO: " << ONES_RATIO << std::endl;
 
     std::cout << "#bits"
-            "\tux(get)\tux(rank)\tux(select)"
             "\thsds(get)\thsds(rank)\thsds(select)"
-            "\tmarisa(get)\tmarisa(rank)\tmarisa(select)" << std::endl;
+#ifdef USE_UX
+            "\tux(get)\tux(rank)\tux(select)"
+#endif
+#ifdef USE_MARISA
+            "\tmarisa(get)\tmarisa(rank)\tmarisa(select)" 
+#endif
+             << std::endl;
     for (size_t num_bits = MIN_NUM_BITS; num_bits <= MAX_NUM_BITS; num_bits <<= 1) {
         std::vector<bool> bits;
         std::vector<uint32_t> point_queries;
@@ -275,9 +288,13 @@ int main(int argc, char *argv[]) {
         generate_data(num_bits, ONES_RATIO, &bits, &point_queries, &rank_queries, &select_queries);
 
         std::cout << num_bits;
-        benchmark_ux(bits, point_queries, rank_queries, select_queries);
         benchmark_hsds(bits, point_queries, rank_queries, select_queries);
+#ifdef USE_UX
+        benchmark_ux(bits, point_queries, rank_queries, select_queries);
+#endif
+#ifdef USE_MARISA
         benchmark_marisa(bits, point_queries, rank_queries, select_queries);
+#endif
         std::cout << std::endl;
     }
 
