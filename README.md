@@ -2,7 +2,7 @@
 
 ## Libraries
 
-### Succinct bit vector
+### BitVector - Succinct bit vector
 
 ```c++
 #include "bit-vector.hpp"
@@ -26,11 +26,21 @@ void main(){
 
 ```
 
-# Author
+## Install
+
+```
+$ cmake .
+$ git clone git://github.com/hideo55/cpp-HSDS.git
+$ cd cpp-HSDS
+$ cmake .
+$ make && make install
+```
+
+## Author
 
 Hideaki Ohno
 
-# License
+## License
 
 (The MIT License)
 
