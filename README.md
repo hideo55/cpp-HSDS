@@ -19,7 +19,7 @@ void main(){
     bv.build();
     
     uint64_t pos = bv.select1(0)// 0;
-    pos = bv.select1(0)// 100;
+    pos = bv.select1(1)// 100;
     pos = bv.select0(0)// 1;
     
 }
