@@ -23,9 +23,9 @@ IF(SSE3_FOUND)
 ENDIF(SSE3_FOUND)
 
 IF(SSE4_1_FOUND)
-    SET(CXX_DFLAGS ${CXX_DFLAGS} -DHSDS_USE_POPCNT -msse4.1 -mpopcnt)
+#    SET(CXX_DFLAGS ${CXX_DFLAGS} -DHSDS_USE_POPCNT -msse4.1 -mpopcnt)
 ENDIF(SSE4_1_FOUND)
-#ADD_DEFINITIONS(${CXX_DFLAGS})
+ADD_DEFINITIONS(${CXX_DFLAGS})
 
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/include")
 
@@ -37,21 +37,41 @@ INSTALL(TARGETS hsds-bitvector LIBRARY DESTINATION lib)
 
 INSTALL(FILES include/hsds/bit-vector.hpp include/hsds/popcount.hpp include/hsds/rank-index.hpp DESTINATION include/hsds)
 
+
 # Testing
 ENABLE_TESTING()
 
 ADD_EXECUTABLE(test_bit-vector t/test_bit-vector.cpp)
+
 TARGET_LINK_LIBRARIES(test_bit-vector hsds-bitvector)
 
 ADD_TEST(NAME test_bitvector COMMAND ./test_bit-vector)
 
 # Benchmark
 OPTION(WITH_BENCHMARK "Build benchmark program" OFF)
+
 IF(WITH_BENCHMARK)
+    
+    OPTION(USE_UX OFF)
+
+    OPTION(USE_MARISA OFF)
+
+    IF(USE_UX)
+        SET(BM_DEFINITIONS -DUSE_UX)
+    ENDIF(USE_UX)
+
+    IF(USE_MARISA)
+        SET(BM_DEFINITIONS ${BM_DEFINITIONS} -DUSE_MARISA)
+    ENDIF(USE_MARISA)
+
     OPTION(MARISA_INCLUDE_PATH "marisa-trie include path" ./)
+
     ADD_EXECUTABLE(benchmark_bit-vector benchmark/benchmark.cpp)
+    ADD_DEFINITIONS(${BM_DEFINITIONS})
     INCLUDE_DIRECTORIES(${MARISA_INCLUDE_PATH} "${PROJECT_SOURCE_DIR}/include")
+
     TARGET_LINK_LIBRARIES(benchmark_bit-vector hsds-bitvector ux marisa)
+
 ENDIF(WITH_BENCHMARK)
 
 
