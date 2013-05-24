@@ -179,7 +179,8 @@ void BitVector::set(uint64_t i, bool b) {
 void BitVector::build() {
     rank_table_.clear();
     uint64_t block_num = blocks_.size();
-    uint64_t num_0s_in_lblock = L_BLOCK_SIZE, num_1s_in_lblock = L_BLOCK_SIZE;
+    uint64_t num_0s_in_lblock = L_BLOCK_SIZE;
+    uint64_t num_1s_in_lblock = L_BLOCK_SIZE;
     num_of_1s_ = 0;
 
     ranktable_type().swap(rank_table_);
