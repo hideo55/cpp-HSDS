@@ -1,9 +1,9 @@
-#ifndef HSDS_POPCOUNT_H_
+#if !defined(HSDS_POPCOUNT_H_)
 #define HSDS_POPCOUNT_H_
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER)
  #include <stdint.h>
-#endif // _MSC_VER
+#endif // !defined(_MSC_VER)
 #include "hsds/intrin.h"
 
 namespace hsds {
@@ -53,14 +53,14 @@ public:
 
     static uint64_t count(uint64_t x) {
 #if defined(HSDS_USE_POPCNT)
-#ifdef _MSC_VER
+ #if defined(_MSC_VER)
         return __popcnt64(x);
-#else
+ #else // defined(_MSC_VER)
         return _mm_popcnt_u64(x);
-#endif
-#else
+ #endif // defined(_MSC_VER)
+#else // defined(HSDS_USE_POPCNT)
         return PopCount(x).lo64();
-#endif
+#endif // defined(HSDS_USE_POPCNT)
     }
 
 private:
@@ -68,4 +68,4 @@ private:
 };
 }
 
-#endif /* HSDS_POPCOUNT_H_ */
+#endif /* !defined(HSDS_POPCOUNT_H_) */
