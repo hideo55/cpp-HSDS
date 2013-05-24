@@ -1,20 +1,10 @@
 #ifndef HSDS_POPCOUNT_H_
 #define HSDS_POPCOUNT_H_
 
-#include <stdint.h>
-
-#ifdef HSDS_USE_SSE3
-#include <xmmintrin.h>
-#include <tmmintrin.h>
-#endif
-
-#ifdef HSDS_USE_POPCNT
- #ifdef _MSC_VER
-  #include <intrin.h>
- #else  // _MSC_VERa
-  #include <popcntintrin.h>
- #endif  // _MSC_VER
-#endif
+#ifndef _MSC_VER
+ #include <stdint.h>
+#endif // _MSC_VER
+#include "hsds/intrin.h"
 
 namespace hsds {
 class PopCount {
