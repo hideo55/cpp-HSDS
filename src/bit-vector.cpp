@@ -151,9 +151,9 @@ BitVector::BitVector(uint64_t size) :
 
 void BitVector::clear() {
     blocks_type().swap(blocks_);
-    ranktable_type().swap(rank_tables_);
-    select_dict_type().swap(select_0s_);
-    select_dict_type().swap(select_1s_);
+    ranktable_type().swap(rank_table_);
+    select_dict_type().swap(select0_table_);
+    select_dict_type().swap(select1_table_);
     size_ = 0;
     num_of_1s_ = 0;
 }
@@ -177,21 +177,21 @@ void BitVector::set(uint64_t i, bool b) {
 }
 
 void BitVector::build() {
-    rank_tables_.clear();
+    rank_table_.clear();
     uint64_t block_num = blocks_.size();
     uint64_t num_0s_in_lblock = L_BLOCK_SIZE, num_1s_in_lblock = L_BLOCK_SIZE;
     num_of_1s_ = 0;
 
-    ranktable_type().swap(rank_tables_);
-    rank_tables_.resize(
+    ranktable_type().swap(rank_table_);
+    rank_table_.resize(
             ((block_num * S_BLOCK_SIZE) / L_BLOCK_SIZE) + (((block_num * S_BLOCK_SIZE) % L_BLOCK_SIZE) != 0 ? 1 : 0)
                     + 1);
-    select_dict_type().swap(select_0s_);
-    select_dict_type().swap(select_1s_);
+    select_dict_type().swap(select0_table_);
+    select_dict_type().swap(select1_table_);
 
     for (uint64_t i = 0; i < block_num; ++i) {
         uint64_t rank_id = i / BLOCK_RATE;
-        RankIndex &rank = rank_tables_[rank_id];
+        RankIndex &rank = rank_table_[rank_id];
         switch (i % 8) {
             case 0: {
                 rank.set_abs(num_of_1s_);
@@ -226,21 +226,23 @@ void BitVector::build() {
                 break;
             }
         }
+
         uint64_t count1s = PopCount::count(blocks_[i]);
 
         if (num_1s_in_lblock + count1s > L_BLOCK_SIZE) {
             uint32_t diff = L_BLOCK_SIZE - num_1s_in_lblock;
-            uint32_t pos = select64(blocks_[i], count1s - diff - 1, 0);
-            select_1s_.push_back(i * S_BLOCK_SIZE + pos);
+            uint32_t pos = select64(blocks_[i], diff, 0);
+            select1_table_.push_back(i * S_BLOCK_SIZE + pos);
             num_1s_in_lblock -= L_BLOCK_SIZE;
         }
         uint64_t count0s = S_BLOCK_SIZE - count1s;
         if (num_0s_in_lblock + count0s > L_BLOCK_SIZE) {
             uint32_t diff = L_BLOCK_SIZE - num_0s_in_lblock;
-            uint32_t pos = select64(~blocks_[i], S_BLOCK_SIZE - count0s - diff - 1, 0);
-            select_0s_.push_back(i * S_BLOCK_SIZE + pos);
+            uint32_t pos = select64(~blocks_[i], diff, 0);
+            select0_table_.push_back(i * S_BLOCK_SIZE + pos);
             num_0s_in_lblock -= L_BLOCK_SIZE;
         }
+
         num_1s_in_lblock += count1s;
         num_0s_in_lblock += count0s;
         num_of_1s_ += count1s;
@@ -248,7 +250,7 @@ void BitVector::build() {
 
     if ((block_num % BLOCK_RATE) != 0) {
         uint64_t rank_id = (block_num - 1) / BLOCK_RATE;
-        RankIndex &rank = rank_tables_[rank_id];
+        RankIndex &rank = rank_table_[rank_id];
         switch ((block_num - 1) % BLOCK_RATE) {
             case 0: {
                 rank.set_rel1(num_of_1s_ - rank.abs());
@@ -274,9 +276,9 @@ void BitVector::build() {
         }
 
     }
-    rank_tables_.back().set_abs(num_of_1s_);
-    select_0s_.push_back(size_);
-    select_1s_.push_back(size_);
+    rank_table_.back().set_abs(num_of_1s_);
+    select0_table_.push_back(size_);
+    select1_table_.push_back(size_);
 }
 
 uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
@@ -285,7 +287,7 @@ uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
     uint64_t q_small = i / S_BLOCK_SIZE;
     uint64_t r = i % S_BLOCK_SIZE;
 
-    const RankIndex &rank = rank_tables_[q_large];
+    const RankIndex &rank = rank_table_[q_large];
     uint64_t offset = rank.abs();
     switch (q_small % BLOCK_RATE) {
         case 1:
@@ -319,18 +321,18 @@ uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
 
     const uint64_t select_id = x / L_BLOCK_SIZE;
     if ((x % L_BLOCK_SIZE) == 0) {
-        return select_0s_[select_id];
+        return select0_table_[select_id];
     }
-    uint64_t begin = select_0s_[select_id] / L_BLOCK_SIZE;
-    uint64_t end = (select_0s_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
+    uint64_t begin = select0_table_[select_id] / L_BLOCK_SIZE;
+    uint64_t end = (select0_table_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
     if (begin + 10 >= end) {
-        while (x >= ((begin + 1) * L_BLOCK_SIZE) - rank_tables_[begin + 1].abs()) {
+        while (x >= ((begin + 1) * L_BLOCK_SIZE) - rank_table_[begin + 1].abs()) {
             ++begin;
         }
     } else {
         while (begin + 1 < end) {
             const uint64_t pivot = (begin + end) / 2;
-            if (x < (pivot * L_BLOCK_SIZE) - rank_tables_[pivot].abs()) {
+            if (x < (pivot * L_BLOCK_SIZE) - rank_table_[pivot].abs()) {
                 end = pivot;
             } else {
                 begin = pivot;
@@ -339,9 +341,8 @@ uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
     }
 
     uint64_t rank_id = begin;
-    x -= (rank_id * L_BLOCK_SIZE) - rank_tables_[rank_id].abs();
-
-    const RankIndex &rank = rank_tables_[rank_id];
+    const RankIndex &rank = rank_table_[rank_id];
+    x -= (rank_id * L_BLOCK_SIZE) - rank.abs();
     uint64_t block_id = rank_id * BLOCK_RATE;
     if (x < (256U - rank.rel4())) {
         if (x < (128U - rank.rel2())) {
@@ -379,21 +380,21 @@ uint64_t BitVector::select1(uint64_t x) const throw (hsds::Exception) {
 
     const uint64_t select_id = x / L_BLOCK_SIZE;
     if ((x % L_BLOCK_SIZE) == 0) {
-        return select_1s_[select_id];
+        return select1_table_[select_id];
     }
-    uint64_t begin = select_1s_[select_id] / L_BLOCK_SIZE;
-    uint64_t end = (select_1s_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
+    uint64_t begin = select1_table_[select_id] / L_BLOCK_SIZE;
+    uint64_t end = (select1_table_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
 
     if (begin + 10 >= end) {
         // Linear search in rank table
-        while (x >= rank_tables_[begin + 1].abs()) {
+        while (x >= rank_table_[begin + 1].abs()) {
             ++begin;
         }
     } else {
         // Binary search in rank table
         while (begin + 1 < end) {
             uint64_t pivot = (begin + end) / 2;
-            if (x < rank_tables_[pivot].abs()) {
+            if (x < rank_table_[pivot].abs()) {
                 end = pivot;
             } else {
                 begin = pivot;
@@ -403,8 +404,7 @@ uint64_t BitVector::select1(uint64_t x) const throw (hsds::Exception) {
 
     uint64_t rank_id = begin;
 
-    const RankIndex &rank = rank_tables_[rank_id];
-
+    const RankIndex &rank = rank_table_[rank_id];
     x -= rank.abs();
     uint64_t block_id = rank_id * BLOCK_RATE;
 
@@ -448,17 +448,17 @@ void BitVector::save(std::ostream &os) const {
     os.write((char*) &size, sizeof(size));
     os.write((char*) &blocks_[0], sizeof(blocks_[0]) * size);
 
-    size = rank_tables_.size();
+    size = rank_table_.size();
     os.write((char*) &size, sizeof(size));
-    os.write((char*) &rank_tables_[0], sizeof(rank_tables_[0]) * size);
+    os.write((char*) &rank_table_[0], sizeof(rank_table_[0]) * size);
 
-    size = select_0s_.size();
+    size = select0_table_.size();
     os.write((char*) &size, sizeof(size));
-    os.write((char*) &select_0s_[0], sizeof(select_0s_[0]) * size);
+    os.write((char*) &select0_table_[0], sizeof(select0_table_[0]) * size);
 
-    size = select_1s_.size();
+    size = select1_table_.size();
     os.write((char*) &size, sizeof(size));
-    os.write((char*) &select_1s_[0], sizeof(select_1s_[0]) * size);
+    os.write((char*) &select1_table_[0], sizeof(select1_table_[0]) * size);
 
     HSDS_EXCEPTION_IF(os.fail(), "Failed to save the bit vector.");
 }
@@ -482,25 +482,25 @@ void BitVector::load(std::istream &is) {
     is.read((char*) &size, sizeof(size));
     HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
 
-    ranktable_type().swap(rank_tables_);
-    rank_tables_.resize(size);
-    is.read((char*) &rank_tables_[0], sizeof(rank_tables_[0]) * size);
+    ranktable_type().swap(rank_table_);
+    rank_table_.resize(size);
+    is.read((char*) &rank_table_[0], sizeof(rank_table_[0]) * size);
     HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
 
     is.read((char*) &size, sizeof(size));
     HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
 
-    select_dict_type().swap(select_0s_);
-    select_0s_.resize(size);
-    is.read((char*) &select_0s_[0], sizeof(select_0s_[0]) * size);
+    select_dict_type().swap(select0_table_);
+    select0_table_.resize(size);
+    is.read((char*) &select0_table_[0], sizeof(select0_table_[0]) * size);
     HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
 
     is.read((char*) &size, sizeof(size));
     HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
 
-    select_dict_type().swap(select_1s_);
-    select_1s_.resize(size);
-    is.read((char*) &select_1s_[0], sizeof(select_1s_[0]) * size);
+    select_dict_type().swap(select1_table_);
+    select1_table_.resize(size);
+    is.read((char*) &select1_table_[0], sizeof(select1_table_[0]) * size);
     HSDS_EXCEPTION_IF( is.fail(), "Failed to read file. File format is invalid.");
 }
 
