@@ -1,7 +1,9 @@
 #ifndef HSDS_RANK_INDEX_H_
 #define HSDS_RANK_INDEX_H_
 
-#include <stdint.h>
+#ifndef _MSC_VER
+ #include <stdint.h>
+#endif // _MSC_VER
 
 namespace hsds {
 
