@@ -4,7 +4,9 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
-#include <stdint.h>
+#ifndef _MSC_VER
+ #include <stdint.h>
+#endif // _MSC_VER
 
 #ifndef HSDS_EXCEPTION_IF
 #define HSDS_EXCEPTION_IF(cond__, message__) if(cond__){ \
