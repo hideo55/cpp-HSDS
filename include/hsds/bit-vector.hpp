@@ -1,9 +1,9 @@
-#ifndef HSDS_BIT_VECTOR_H_
+#if !defined(HSDS_BIT_VECTOR_H_)
 #define HSDS_BIT_VECTOR_H_
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER)
  #include <stdint.h>
-#endif // _MSC_VER
+#endif // !defined(_MSC_VER)
 #include <vector>
 #include <iostream>
 #include <algorithm>
