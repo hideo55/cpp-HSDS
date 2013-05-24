@@ -121,13 +121,13 @@ FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base_id) {
     }
 #else // defined(HSDS_USE_POPCNT)
     const uint64_t x = (counts | MASK_80) - ((i + 1) * MASK_01);
-#ifdef _MSC_VER
+#if defined(_MSC_VER)
     unsigned long skip;
     ::_BitScanForward64(&skip, (x & MASK_80) >> 7);
     --skip;
-#else // _MSC_VER
+#else // defined(_MSC_VER)
     const int skip = ::__builtin_ctzll((x & MASK_80) >> 7);
-#endif // _MSC_VER
+#endif // defined(_MSC_VER)
 #endif // defined(HSDS_USE_POPCNT)
     base_id += skip;
     block >>= skip;
