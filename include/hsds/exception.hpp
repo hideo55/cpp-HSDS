@@ -1,10 +1,12 @@
-#ifndef HSDS_EXCEPTION_H_
+#if !defined(HSDS_EXCEPTION_H_)
 #define HSDS_EXCEPTION_H_
 
 #include <exception>
 #include <stdexcept>
 #include <string>
-#include <stdint.h>
+#if !defined(_MSC_VER)
+ #include <stdint.h>
+#endif // !defined(_MSC_VER)
 
 #ifndef HSDS_EXCEPTION_IF
 #define HSDS_EXCEPTION_IF(cond__, message__) if(cond__){ \

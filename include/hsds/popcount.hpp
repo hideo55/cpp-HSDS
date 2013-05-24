@@ -1,20 +1,10 @@
-#ifndef HSDS_POPCOUNT_H_
+#if !defined(HSDS_POPCOUNT_H_)
 #define HSDS_POPCOUNT_H_
 
-#include <stdint.h>
-
-#ifdef HSDS_USE_SSE3
-#include <xmmintrin.h>
-#include <tmmintrin.h>
-#endif
-
-#ifdef HSDS_USE_POPCNT
- #ifdef _MSC_VER
-  #include <intrin.h>
- #else  // _MSC_VERa
-  #include <popcntintrin.h>
- #endif  // _MSC_VER
-#endif
+#if !defined(_MSC_VER)
+ #include <stdint.h>
+#endif // !defined(_MSC_VER)
+#include "hsds/intrin.h"
 
 namespace hsds {
 class PopCount {
@@ -63,14 +53,14 @@ public:
 
     static uint64_t count(uint64_t x) {
 #if defined(HSDS_USE_POPCNT)
-#ifdef _MSC_VER
+ #if defined(_MSC_VER)
         return __popcnt64(x);
-#else
+ #else // defined(_MSC_VER)
         return _mm_popcnt_u64(x);
-#endif
-#else
+ #endif // defined(_MSC_VER)
+#else // defined(HSDS_USE_POPCNT)
         return PopCount(x).lo64();
-#endif
+#endif // defined(HSDS_USE_POPCNT)
     }
 
 private:
@@ -78,4 +68,4 @@ private:
 };
 }
 
-#endif /* HSDS_POPCOUNT_H_ */
+#endif /* !defined(HSDS_POPCOUNT_H_) */

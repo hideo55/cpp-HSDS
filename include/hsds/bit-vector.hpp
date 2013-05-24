@@ -1,7 +1,9 @@
-#ifndef HSDS_BIT_VECTOR_H_
+#if !defined(HSDS_BIT_VECTOR_H_)
 #define HSDS_BIT_VECTOR_H_
 
-#include <stdint.h>
+#if !defined(_MSC_VER)
+ #include <stdint.h>
+#endif // !defined(_MSC_VER)
 #include <vector>
 #include <iostream>
 #include <algorithm>
@@ -133,9 +135,9 @@ public:
         blocks_.swap(x.blocks_);
         std::swap(size_, x.size_);
         std::swap(num_of_1s_, x.num_of_1s_);
-        rank_tables_.swap(x.rank_tables_);
-        select_0s_.swap(x.select_0s_);
-        select_1s_.swap(x.select_1s_);
+        rank_table_.swap(x.rank_table_);
+        select0_table_.swap(x.select0_table_);
+        select1_table_.swap(x.select1_table_);
     }
 private:
     typedef uint64_t block_type;
@@ -143,12 +145,12 @@ private:
     typedef std::vector<RankIndex> ranktable_type;
     typedef std::vector<uint32_t> select_dict_type;
 
-    blocks_type blocks_;            ///< Bit vector
-    ranktable_type rank_tables_;    ///< Rank dictionary
-    select_dict_type select_0s_;    ///< Select dictionary for 0-bits
-    select_dict_type select_1s_;    ///< Select dictionary for 1-bits
-    uint64_t size_;                 ///< Size of bit vector
-    uint64_t num_of_1s_;            ///< Nuber of the 1-bits
+    blocks_type blocks_;                ///< Bit vector
+    ranktable_type rank_table_;         ///< Rank dictionary
+    select_dict_type select0_table_;    ///< Select dictionary for 0-bits
+    select_dict_type select1_table_;    ///< Select dictionary for 1-bits
+    uint64_t size_;                     ///< Size of bit vector
+    uint64_t num_of_1s_;                ///< Nuber of the 1-bits
 
     // Disable copy constructor
     BitVector(const BitVector &);
@@ -158,4 +160,4 @@ private:
 
 }
 
-#endif /* HSDS_BIT_VECTOR_H_ */
+#endif /* !defined(HSDS_BIT_VECTOR_H_) */
