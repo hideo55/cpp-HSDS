@@ -1,21 +1,21 @@
-#ifndef HSDS_INTERIN_H_
+#if !defined(HSDS_INTERIN_H_)
 #define HSDS_INTERIN_H_
 
-#ifdef HSDS_USE_SSE3
+#if defined(HSDS_USE_SSE3)
  #include <tmmintrin.h>
-#endif
+#endif // defined(HSDS_USE_SSE3)
 
-#ifdef HSDS_USE_POPCNT
- #ifdef _MSC_VER
+#if defined(HSDS_USE_POPCNT)
+ #if defined(_MSC_VER)
   #include <intrin.h>
- #else  // _MSC_VERa
+ #else  // defined(_MSC_VER)
   #include <popcntintrin.h>
- #endif  // _MSC_VER
-#endif // HSDS_USE_POPCNT
+ #endif  // defined(_MSC_VER)
+#endif // defined(HSDS_USE_POPCNT)
 
-#ifdef _MSC_VER
+#ifdef defined(_MSC_VER)
  #include <intrin.h>
  #pragma intrinsic(_BitScanForward64)
-#endif // _MSC_VER
+#endif // defined(_MSC_VER)
 
-#endif // HSDS_INTERIN_H_
+#endif // !defined(HSDS_INTERIN_H_)
