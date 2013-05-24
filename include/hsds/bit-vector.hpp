@@ -160,4 +160,4 @@ private:
 
 }
 
-#endif /* HSDS_BIT_VECTOR_H_ */
+#endif /* !defined(HSDS_BIT_VECTOR_H_) */
