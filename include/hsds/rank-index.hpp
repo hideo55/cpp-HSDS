@@ -1,9 +1,9 @@
-#ifndef HSDS_RANK_INDEX_H_
+#if !defined(HSDS_RANK_INDEX_H_)
 #define HSDS_RANK_INDEX_H_
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER)
  #include <stdint.h>
-#endif // _MSC_VER
+#endif // !defined(_MSC_VER)
 
 namespace hsds {
 
@@ -84,4 +84,4 @@ private:
 
 }
 
-#endif /* HSDS_RANK_INDEX_H_ */
+#endif /* !defined(HSDS_RANK_INDEX_H_) */
