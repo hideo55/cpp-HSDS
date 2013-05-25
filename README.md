@@ -36,6 +36,10 @@ $ cmake .
 $ make && make install
 ```
 
+## Document
+
+[API Documentation](http://hideo55.github.io/cpp-HSDS/)
+
 ## Author
 
 Hideaki Ohno
