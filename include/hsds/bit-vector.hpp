@@ -2,7 +2,7 @@
 #define HSDS_BIT_VECTOR_H_
 
 #if !defined(_MSC_VER)
- #include <stdint.h>
+#include <stdint.h>
 #endif // !defined(_MSC_VER)
 #include <vector>
 #include <iostream>
@@ -18,6 +18,11 @@ const uint32_t S_BLOCK_SIZE = 64;
 const uint32_t L_BLOCK_SIZE = 512;
 const uint32_t BLOCK_RATE = 8;
 
+// Error messages
+const char* E_OUT_OF_RANGE = "Out of range access";
+const char* E_SAVE_FILE = "Failed to save the bit vector.";
+const char* E_LOAD_FILE = "Failed to read file. File format is invalid.";
+
 /**
  * @class BitVector
  * @brief Succinct bit vector class
@@ -27,23 +32,32 @@ public:
     /**
      * @brief Constructor
      */
-    BitVector();
+    BitVector() :
+            size_(0), num_of_1s_(0) {
+    }
 
     /**
      * @brief Constructor
      * @param Size[in] size of bit vector
      */
-    BitVector(uint64_t size);
+    BitVector(uint64_t size) :
+            size_(size), num_of_1s_(0) {
+        uint64_t block_num = (size + S_BLOCK_SIZE - 1) / S_BLOCK_SIZE;
+        blocks_.resize(block_num);
+    }
 
     /**
      * @brief Destructor
      */
-    ~BitVector();
+    ~BitVector() {
+    }
 
     /**
      * @brief Clear bit vector
      */
-    void clear();
+    void clear() {
+        BitVector().swap(*this);
+    }
 
     /**
      * @brief Get value from bit vector by index
@@ -52,7 +66,7 @@ public:
      * @exception hsds::Exception Out of range access
      */
     bool operator[](uint64_t i) const throw (hsds::Exception) {
-        HSDS_EXCEPTION_IF(i >= size_, "Out of range access");
+        HSDS_EXCEPTION_IF(i >= size_, E_OUT_OF_RANGE);
         return (blocks_[i / S_BLOCK_SIZE] & (1ULL << (i % S_BLOCK_SIZE))) != 0;
     }
 
@@ -152,11 +166,12 @@ private:
     uint64_t size_;                     ///< Size of bit vector
     uint64_t num_of_1s_;                ///< Nuber of the 1-bits
 
-    // Disable copy constructor
+// Disable copy constructor
     BitVector(const BitVector &);
-    // Disable assingment operator
+// Disable assingment operator
     BitVector &operator=(const BitVector &);
-};
+}
+;
 
 }
 

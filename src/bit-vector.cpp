@@ -138,29 +138,6 @@ FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base) {
     return base + SELECT_TABLE[i][block & 0xFF];
 }
 
-BitVector::BitVector() :
-        size_(0), num_of_1s_(0) {
-}
-
-BitVector::~BitVector() {
-}
-
-BitVector::BitVector(uint64_t size) :
-        num_of_1s_(0) {
-    size_ = size;
-    uint64_t block_num = (size + S_BLOCK_SIZE - 1) / S_BLOCK_SIZE;
-    blocks_.resize(block_num);
-}
-
-void BitVector::clear() {
-    blocks_type().swap(blocks_);
-    ranktable_type().swap(rank_table_);
-    select_dict_type().swap(select0_table_);
-    select_dict_type().swap(select1_table_);
-    size_ = 0;
-    num_of_1s_ = 0;
-}
-
 void BitVector::set(uint64_t i, bool b) {
     if (i >= size_) {
         size_ = i + 1;
@@ -286,7 +263,7 @@ void BitVector::build() {
 }
 
 uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
-    HSDS_EXCEPTION_IF(i > this->size(), "Out of range access");
+    HSDS_EXCEPTION_IF(i > this->size(), E_OUT_OF_RANGE);
     uint64_t q_large = i / L_BLOCK_SIZE;
     uint64_t q_small = i / S_BLOCK_SIZE;
     uint64_t r = i % S_BLOCK_SIZE;
@@ -321,7 +298,7 @@ uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
 }
 
 uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
-    HSDS_EXCEPTION_IF(x >= this->size(false), "Out of range access");
+    HSDS_EXCEPTION_IF(x >= this->size(false), E_OUT_OF_RANGE);
 
     const uint64_t select_id = x / L_BLOCK_SIZE;
     if ((x % L_BLOCK_SIZE) == 0) {
@@ -380,7 +357,7 @@ uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
 }
 
 uint64_t BitVector::select1(uint64_t x) const throw (hsds::Exception) {
-    HSDS_EXCEPTION_IF(x >= this->size(true), "Out of range access");
+    HSDS_EXCEPTION_IF(x >= this->size(true), E_OUT_OF_RANGE);
 
     const uint64_t select_id = x / L_BLOCK_SIZE;
     if ((x % L_BLOCK_SIZE) == 0) {
@@ -464,48 +441,48 @@ void BitVector::save(std::ostream &os) const {
     os.write((char*) &size, sizeof(size));
     os.write((char*) &select1_table_[0], sizeof(select1_table_[0]) * size);
 
-    HSDS_EXCEPTION_IF(os.fail(), "Failed to save the bit vector.");
+    HSDS_EXCEPTION_IF(os.fail(), E_SAVE_FILE);
 }
 
 void BitVector::load(std::istream &is) {
     is.read((char*) &size_, sizeof(size_));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     is.read((char*) &num_of_1s_, sizeof(num_of_1s_));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     uint64_t size = 0;
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     blocks_type().swap(blocks_);
     blocks_.resize(size);
     is.read((char*) &blocks_[0], sizeof(blocks_[0]) * size);
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     ranktable_type().swap(rank_table_);
     rank_table_.resize(size);
     is.read((char*) &rank_table_[0], sizeof(rank_table_[0]) * size);
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     select_dict_type().swap(select0_table_);
     select0_table_.resize(size);
     is.read((char*) &select0_table_[0], sizeof(select0_table_[0]) * size);
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
     select_dict_type().swap(select1_table_);
     select1_table_.resize(size);
     is.read((char*) &select1_table_[0], sizeof(select1_table_[0]) * size);
-    HSDS_EXCEPTION_IF( is.fail(), "Failed to read file. File format is invalid.");
+    HSDS_EXCEPTION_IF( is.fail(), E_LOAD_FILE);
 }
 
 }
