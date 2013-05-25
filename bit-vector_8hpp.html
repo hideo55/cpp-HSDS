@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>HSDS: Main Page</title>
+<title>HSDS: include/hsds/bit-vector.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -36,10 +36,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -58,7 +58,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -73,11 +78,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_4fb8f7004df05c3df5f70ce4bc2e4881.html">hsds</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">HSDS Documentation</div>  </div>
+<div class="title">bit-vector.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br/>
+<code>#include &lt;vector&gt;</code><br/>
+<code>#include &lt;iostream&gt;</code><br/>
+<code>#include &lt;algorithm&gt;</code><br/>
+<code>#include &quot;<a class="el" href="exception_8hpp_source.html">hsds/exception.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="popcount_8hpp_source.html">hsds/popcount.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="rank-index_8hpp_source.html">hsds/rank-index.hpp</a>&quot;</code><br/>
+</div>
+<p><a href="bit-vector_8hpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html">hsds::BitVector</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Succinct bit vector class.  <a href="classhsds_1_1_bit_vector.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacehsds"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html">hsds</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aecc65d7cf5e2b531ba0460bbcbbbd813"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#aecc65d7cf5e2b531ba0460bbcbbbd813">hsds::S_BLOCK_SIZE</a> = 64</td></tr>
+<tr class="separator:aecc65d7cf5e2b531ba0460bbcbbbd813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff974546f6f24280f20c970503eef50a"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#aff974546f6f24280f20c970503eef50a">hsds::L_BLOCK_SIZE</a> = 512</td></tr>
+<tr class="separator:aff974546f6f24280f20c970503eef50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fbdb97fb7f9e02b4ba7deeaca45045b"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#a7fbdb97fb7f9e02b4ba7deeaca45045b">hsds::BLOCK_RATE</a> = 8</td></tr>
+<tr class="separator:a7fbdb97fb7f9e02b4ba7deeaca45045b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
