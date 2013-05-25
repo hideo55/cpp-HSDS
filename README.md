@@ -29,7 +29,6 @@ void main(){
 ## Install
 
 ```
-$ cmake .
 $ git clone git://github.com/hideo55/cpp-HSDS.git
 $ cd cpp-HSDS
 $ cmake .
