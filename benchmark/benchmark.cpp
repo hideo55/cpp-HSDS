@@ -14,12 +14,10 @@
 #include "marisa/grimoire/vector/bit-vector.h"
 #endif
 
-namespace {
-
 const size_t MIN_NUM_BITS = 1U << 10;
 const size_t MAX_NUM_BITS = 1U << 30;
 const size_t NUM_TRIALS = 11;
-const size_t NUM_QUERIES = 1 << 22;
+const size_t NUM_QUERIES = 1 << 20;
 
 class Timer {
 public:
@@ -69,7 +67,7 @@ void generate_data(size_t size, double ones_ratio, std::vector<bool> *bits, std:
     point_queries->resize(NUM_QUERIES);
     rank_queries->resize(NUM_QUERIES);
     select_queries->resize(NUM_QUERIES);
-    const uint64_t threshold = (uint64_t)((1ULL << 32) * ones_ratio);
+    const uint64_t threshold = (uint64_t) ((1ULL << 32) * ones_ratio);
     size_t num_ones = 0;
     for (size_t i = 0; i < bits->size(); ++i) {
         const bool bit = xor128() < threshold;
@@ -97,7 +95,6 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
         dic.set(i, bits[i]);
     }
     dic.build();
-
 
     {
         std::vector<double> times;
@@ -196,9 +193,10 @@ void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &po
         std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
 }
-#endif
+#endif /* defined(USE_UX) */
 
 #if defined(USE_MARISA)
+
 void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
         const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
     marisa::grimoire::vector::BitVector dic;
@@ -249,9 +247,8 @@ void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t>
         std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
 }
-#endif
 
-}  // namespace
+#endif /* defined(USE_MARISA) */
 
 int main(int argc, char *argv[]) {
     double ONES_RATIO = 0.5;
@@ -277,9 +274,9 @@ int main(int argc, char *argv[]) {
             "\tux(get)\tux(rank)\tux(select)"
 #endif
 #if defined(USE_MARISA)
-            "\tmarisa(get)\tmarisa(rank)\tmarisa(select)" 
+            "\tmarisa(get)\tmarisa(rank)\tmarisa(select)"
 #endif
-             << std::endl;
+<<    std::endl;
     for (size_t num_bits = MIN_NUM_BITS; num_bits <= MAX_NUM_BITS; num_bits <<= 1) {
         std::vector<bool> bits;
         std::vector<uint32_t> point_queries;

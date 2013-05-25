@@ -162,7 +162,6 @@ void BitVector::build() {
     uint64_t num_0s_in_lblock = L_BLOCK_SIZE;
     uint64_t num_1s_in_lblock = L_BLOCK_SIZE;
     num_of_1s_ = 0;
-
     ranktable_type().swap(rank_table_);
     rank_table_.resize(
             ((block_num * S_BLOCK_SIZE) / L_BLOCK_SIZE) + (((block_num * S_BLOCK_SIZE) % L_BLOCK_SIZE) != 0 ? 1 : 0)
