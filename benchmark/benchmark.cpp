@@ -7,10 +7,10 @@
 #include <vector>
 
 #include "hsds/bit-vector.hpp"
-#ifdef USE_UX
+#if defined(USE_UX)
 #include <ux/ux.hpp>
 #endif
-#ifdef USE_MARISA
+#if defined(USE_MARISA)
 #include "marisa/grimoire/vector/bit-vector.h"
 #endif
 
@@ -89,61 +89,6 @@ void generate_data(size_t size, double ones_ratio, std::vector<bool> *bits, std:
     }
 }
 
-#ifdef USE_UX
-void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
-        const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
-    ux::BitVec bv;
-    for (size_t i = 0; i < bits.size(); ++i) {
-        bv.push_back(bits[i]);
-    }
-
-    ux::RSDic dic;
-    dic.build(bv);
-
-    {
-        std::vector<double> times;
-        for (size_t i = 0; i < NUM_TRIALS; ++i) {
-            Timer timer;
-            uint64_t total = 0;
-            for (size_t j = 0; j < point_queries.size(); ++j) {
-                total += dic.getBit(point_queries[j]);
-            }
-            times.push_back(timer.elapsed());
-            assert(total != uint64_t(-1));
-        }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
-    }
-
-    {
-        std::vector<double> times;
-        for (size_t i = 0; i < NUM_TRIALS; ++i) {
-            Timer timer;
-            uint64_t total = 0;
-            for (size_t j = 0; j < rank_queries.size(); ++j) {
-                total += dic.rank(rank_queries[j], 1);
-            }
-            times.push_back(timer.elapsed());
-            assert(total != uint64_t(-1));
-        }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
-    }
-
-    {
-        std::vector<double> times;
-        for (size_t i = 0; i < NUM_TRIALS; ++i) {
-            Timer timer;
-            uint64_t total = 0;
-            for (size_t j = 0; j < select_queries.size(); ++j) {
-                total += dic.select(select_queries[j] + 1, 1);
-            }
-            times.push_back(timer.elapsed());
-            assert(total != uint64_t(-1));
-        }
-        std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
-    }
-}
-#endif
-
 void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
         const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
 
@@ -198,7 +143,62 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
     }
 }
 
-#ifdef USE_MARISA
+#if defined(USE_UX)
+void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
+        const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
+    ux::BitVec bv;
+    for (size_t i = 0; i < bits.size(); ++i) {
+        bv.push_back(bits[i]);
+    }
+
+    ux::RSDic dic;
+    dic.build(bv);
+
+    {
+        std::vector<double> times;
+        for (size_t i = 0; i < NUM_TRIALS; ++i) {
+            Timer timer;
+            uint64_t total = 0;
+            for (size_t j = 0; j < point_queries.size(); ++j) {
+                total += dic.getBit(point_queries[j]);
+            }
+            times.push_back(timer.elapsed());
+            assert(total != uint64_t(-1));
+        }
+        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+    }
+
+    {
+        std::vector<double> times;
+        for (size_t i = 0; i < NUM_TRIALS; ++i) {
+            Timer timer;
+            uint64_t total = 0;
+            for (size_t j = 0; j < rank_queries.size(); ++j) {
+                total += dic.rank(rank_queries[j], 1);
+            }
+            times.push_back(timer.elapsed());
+            assert(total != uint64_t(-1));
+        }
+        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+    }
+
+    {
+        std::vector<double> times;
+        for (size_t i = 0; i < NUM_TRIALS; ++i) {
+            Timer timer;
+            uint64_t total = 0;
+            for (size_t j = 0; j < select_queries.size(); ++j) {
+                total += dic.select(select_queries[j] + 1, 1);
+            }
+            times.push_back(timer.elapsed());
+            assert(total != uint64_t(-1));
+        }
+        std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
+    }
+}
+#endif
+
+#if defined(USE_MARISA)
 void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
         const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
     marisa::grimoire::vector::BitVector dic;
@@ -273,10 +273,10 @@ int main(int argc, char *argv[]) {
 
     std::cout << "#bits"
             "\thsds(get)\thsds(rank)\thsds(select)"
-#ifdef USE_UX
+#if defined(USE_UX)
             "\tux(get)\tux(rank)\tux(select)"
 #endif
-#ifdef USE_MARISA
+#if defined(USE_MARISA)
             "\tmarisa(get)\tmarisa(rank)\tmarisa(select)" 
 #endif
              << std::endl;
@@ -289,10 +289,10 @@ int main(int argc, char *argv[]) {
 
         std::cout << num_bits;
         benchmark_hsds(bits, point_queries, rank_queries, select_queries);
-#ifdef USE_UX
+#if defined(USE_UX)
         benchmark_ux(bits, point_queries, rank_queries, select_queries);
 #endif
-#ifdef USE_MARISA
+#if defined(USE_MARISA)
         benchmark_marisa(bits, point_queries, rank_queries, select_queries);
 #endif
         std::cout << std::endl;

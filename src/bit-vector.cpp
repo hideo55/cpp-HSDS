@@ -88,7 +88,8 @@ const uint64_t MASK_0F = 0x0F0F0F0F0F0F0F0FULL;
 const uint64_t MASK_01 = 0x0101010101010101ULL;
 const uint64_t MASK_80 = 0x8080808080808080ULL;
 
-FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base_id) {
+FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base) {
+    // Calculate hamming weight
     uint64_t counts;
     {
 #if defined(HSDS_USE_SSE3)
@@ -111,28 +112,30 @@ FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base_id) {
 #endif // defined(HSDS_USE_SSE3)
         counts *= MASK_01;
     }
-#if defined(HSDS_USE_POPCNT)
-    uint8_t skip;
+
+    // Get leading zero length
+#if defined(HSDS_USE_POPCNT) && defined(HSDS_USE_SSE3)
+    uint8_t leading_zero_len;
     {
         __m128i x = _mm_cvtsi64_si128((i + 1) * MASK_01);
         __m128i y = _mm_cvtsi64_si128(counts);
         x = _mm_cmpgt_epi8(x, y);
-        skip = (uint8_t)PopCount::count(_mm_cvtsi128_si64(x));
+        leading_zero_len = (uint8_t)PopCount::count(_mm_cvtsi128_si64(x));
     }
 #else // defined(HSDS_USE_POPCNT)
     const uint64_t x = (counts | MASK_80) - ((i + 1) * MASK_01);
 #if defined(_MSC_VER)
-    unsigned long skip;
-    ::_BitScanForward64(&skip, (x & MASK_80) >> 7);
-    --skip;
+    unsigned long leading_zero_len;
+    ::_BitScanForward64(&leading_zero_len, (x & MASK_80) >> 7);
+    --leading_zero_len;
 #else // defined(_MSC_VER)
-    const int skip = ::__builtin_ctzll((x & MASK_80) >> 7);
+    const int leading_zero_len = ::__builtin_ctzll((x & MASK_80) >> 7);
 #endif // defined(_MSC_VER)
 #endif // defined(HSDS_USE_POPCNT)
-    base_id += skip;
-    block >>= skip;
-    i -= ((counts << 8) >> skip) & 0xFF;
-    return base_id + SELECT_TABLE[i][block & 0xFF];
+    base += leading_zero_len;
+    block >>= leading_zero_len;
+    i -= ((counts << 8) >> leading_zero_len) & 0xFF;
+    return base + SELECT_TABLE[i][block & 0xFF];
 }
 
 BitVector::BitVector() :
