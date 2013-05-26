@@ -156,22 +156,21 @@ public:
 private:
     typedef uint64_t block_type;
     typedef std::vector<block_type> blocks_type;
-    typedef std::vector<RankIndex> ranktable_type;
+    typedef std::vector<RankIndex> rank_dict_type;
     typedef std::vector<uint32_t> select_dict_type;
 
     blocks_type blocks_;                ///< Bit vector
-    ranktable_type rank_table_;         ///< Rank dictionary
+    rank_dict_type rank_table_;         ///< Rank dictionary
     select_dict_type select0_table_;    ///< Select dictionary for 0-bits
     select_dict_type select1_table_;    ///< Select dictionary for 1-bits
     uint64_t size_;                     ///< Size of bit vector
     uint64_t num_of_1s_;                ///< Nuber of the 1-bits
 
-// Disable copy constructor
+    // Disable copy constructor
     BitVector(const BitVector &);
-// Disable assingment operator
+    // Disable assingment operator
     BitVector &operator=(const BitVector &);
-}
-;
+};
 
 }
 

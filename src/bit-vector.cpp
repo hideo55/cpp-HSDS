@@ -21,7 +21,6 @@ FORCE_INLINE uint64_t rank64(uint64_t x, uint64_t i, bool b) {
     return PopCount::count(x);
 }
 
-
 // Pre-calculated select value table.
 const uint8_t SELECT_TABLE[8][256] =
 {
@@ -162,7 +161,7 @@ void BitVector::build() {
     uint64_t num_0s_in_lblock = L_BLOCK_SIZE;
     uint64_t num_1s_in_lblock = L_BLOCK_SIZE;
     num_of_1s_ = 0;
-    ranktable_type().swap(rank_table_);
+    rank_dict_type().swap(rank_table_);
     rank_table_.resize(
             ((block_num * S_BLOCK_SIZE) / L_BLOCK_SIZE) + (((block_num * S_BLOCK_SIZE) % L_BLOCK_SIZE) != 0 ? 1 : 0)
                     + 1);
@@ -462,7 +461,7 @@ void BitVector::load(std::istream &is) {
     is.read((char*) &size, sizeof(size));
     HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
 
-    ranktable_type().swap(rank_table_);
+    rank_dict_type().swap(rank_table_);
     rank_table_.resize(size);
     is.read((char*) &rank_table_[0], sizeof(rank_table_[0]) * size);
     HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
