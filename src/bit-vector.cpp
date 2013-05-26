@@ -13,14 +13,6 @@
 namespace hsds {
 using namespace std;
 
-FORCE_INLINE uint64_t rank64(uint64_t x, uint64_t i, bool b) {
-    if (!b) {
-        x = ~x;
-    }
-    x <<= (S_BLOCK_SIZE - i);
-    return PopCount::count(x);
-}
-
 // Pre-calculated select value table.
 const uint8_t SELECT_TABLE[8][256] =
 {
@@ -141,17 +133,17 @@ void BitVector::set(uint64_t i, bool b) {
     if (i >= size_) {
         size_ = i + 1;
     }
-    uint64_t q = i / S_BLOCK_SIZE;
+    uint64_t block_id = i / S_BLOCK_SIZE;
     uint64_t r = i % S_BLOCK_SIZE;
 
-    while (q >= blocks_.size()) {
+    while (block_id >= blocks_.size()) {
         blocks_.push_back(0);
     }
     uint64_t m = 0x1ULL << r;
     if (b) {
-        blocks_[q] |= m;
+        blocks_[block_id] |= m;
     } else {
-        blocks_[q] &= ~m;
+        blocks_[block_id] &= ~m;
     }
 }
 
@@ -262,13 +254,13 @@ void BitVector::build() {
 
 uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
     HSDS_EXCEPTION_IF(i > this->size(), E_OUT_OF_RANGE);
-    uint64_t q_large = i / L_BLOCK_SIZE;
-    uint64_t q_small = i / S_BLOCK_SIZE;
+    uint64_t rank_id = i / L_BLOCK_SIZE;
+    uint64_t block_id = i / S_BLOCK_SIZE;
     uint64_t r = i % S_BLOCK_SIZE;
 
-    const RankIndex &rank = rank_table_[q_large];
+    const RankIndex &rank = rank_table_[rank_id];
     uint64_t offset = rank.abs();
-    switch (q_small % BLOCK_RATE) {
+    switch (block_id % BLOCK_RATE) {
         case 1:
             offset += rank.rel1();
             break;
@@ -291,7 +283,7 @@ uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
             offset += rank.rel7();
             break;
     }
-    offset += PopCount::count(blocks_[q_small] & ((1ULL << r) - 1));
+    offset += PopCount::count(blocks_[block_id] & ((1ULL << r) - 1));
     return offset;
 }
 
