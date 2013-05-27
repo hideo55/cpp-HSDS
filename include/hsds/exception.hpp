@@ -8,11 +8,17 @@
  #include <stdint.h>
 #endif // !defined(_MSC_VER)
 
-#ifndef HSDS_EXCEPTION_IF
+#if !defined(HSDS_EXCEPTION_IF)
+ #if defined(_MSC_VER)
 #define HSDS_EXCEPTION_IF(cond__, message__) if(cond__){ \
-    throw hsds::Exception(message__, __FILE__, __func__, __LINE__); \
+    throw hsds::Exception(message__, __FILE__, __FUNCTION__, __LINE__); \
 }
-#endif
+ #else // defined(_MSC_VER)
+#define HSDS_EXCEPTION_IF(cond__, message__) if(cond__){ \
+    throw hsds::Exception(message__, __FILE__, __FUNC__, __LINE__); \
+}
+ #endif //defined(_MSC_VER)
+#endif //!defined(HSDS_EXCEPTION_IF)
 
 namespace hsds {
 /**
