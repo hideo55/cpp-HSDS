@@ -33,7 +33,7 @@ ADD_LIBRARY(hsds-bitvector SHARED src/bit-vector.cpp)
 
 SET_TARGET_PROPERTIES(hsds-bitvector PROPERTIES VERSION ${serial} SOVERSION ${soserial})
 
-INSTALL(TARGETS hsds-bitvector LIBRARY DESTINATION lib)
+INSTALL(TARGETS hsds-bitvector DESTINATION lib)
 
 INSTALL(FILES include/hsds/bit-vector.hpp include/hsds/popcount.hpp include/hsds/rank-index.hpp DESTINATION include/hsds)
 
