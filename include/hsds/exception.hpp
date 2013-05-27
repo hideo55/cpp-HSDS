@@ -15,7 +15,7 @@
 }
  #else // defined(_MSC_VER)
 #define HSDS_EXCEPTION_IF(cond__, message__) if(cond__){ \
-    throw hsds::Exception(message__, __FILE__, __FUNC__, __LINE__); \
+    throw hsds::Exception(message__, __FILE__, __func__, __LINE__); \
 }
  #endif //defined(_MSC_VER)
 #endif //!defined(HSDS_EXCEPTION_IF)
