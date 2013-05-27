@@ -1,11 +1,21 @@
 # HSDS - Hide's Succinct Data Structure library collection
 
+## Install
+
+```
+$ git clone git://github.com/hideo55/cpp-HSDS.git
+$ cd cpp-HSDS
+$ cmake .
+$ make && make install
+```
+
 ## Libraries
 
 ### BitVector - Succinct bit vector
 
+#### Sample
 ```c++
-#include "bit-vector.hpp"
+#include "hsds/bit-vector.hpp"
 
 using namespace hsds;
 
@@ -26,13 +36,9 @@ void main(){
 
 ```
 
-## Install
-
-```
-$ git clone git://github.com/hideo55/cpp-HSDS.git
-$ cd cpp-HSDS
-$ cmake .
-$ make && make install
+#### Build
+```sh
+$ g++ sample.cpp -o sample -lhsds-bitvector
 ```
 
 ## Document
