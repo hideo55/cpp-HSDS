@@ -147,7 +147,7 @@ void BitVector::set(uint64_t i, bool b) {
     }
 }
 
-void BitVector::build() {
+void BitVector::build(bool enable_faster_select1, bool enable_faster_select0) {
     rank_table_.clear();
     uint64_t block_num = blocks_.size();
     uint64_t num_0s_in_lblock = L_BLOCK_SIZE;
@@ -200,14 +200,14 @@ void BitVector::build() {
 
         uint64_t count1s = PopCount::count(blocks_[i]);
 
-        if (num_1s_in_lblock + count1s > L_BLOCK_SIZE) {
+        if (enable_faster_select1 && (num_1s_in_lblock + count1s > L_BLOCK_SIZE)) {
             uint32_t diff = L_BLOCK_SIZE - num_1s_in_lblock;
             uint32_t pos = select64(blocks_[i], diff, 0);
             select1_table_.push_back(i * S_BLOCK_SIZE + pos);
             num_1s_in_lblock -= L_BLOCK_SIZE;
         }
         uint64_t count0s = S_BLOCK_SIZE - count1s;
-        if (num_0s_in_lblock + count0s > L_BLOCK_SIZE) {
+        if (enable_faster_select0 && (num_0s_in_lblock + count0s > L_BLOCK_SIZE)) {
             uint32_t diff = L_BLOCK_SIZE - num_0s_in_lblock;
             uint32_t pos = select64(~blocks_[i], diff, 0);
             select0_table_.push_back(i * S_BLOCK_SIZE + pos);
@@ -248,8 +248,14 @@ void BitVector::build() {
 
     }
     rank_table_.back().set_abs(num_of_1s_);
-    select0_table_.push_back(size_);
-    select1_table_.push_back(size_);
+
+    if (enable_faster_select1) {
+        select1_table_.push_back(size_);
+    }
+
+    if (enable_faster_select0) {
+        select0_table_.push_back(size_);
+    }
 }
 
 uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
@@ -290,12 +296,21 @@ uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
 uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
     HSDS_EXCEPTION_IF(x >= this->size(false), E_OUT_OF_RANGE);
 
-    const uint64_t select_id = x / L_BLOCK_SIZE;
-    if ((x % L_BLOCK_SIZE) == 0) {
-        return select0_table_[select_id];
+    uint64_t begin;
+    uint64_t end;
+
+    if (select1_table_.empty()) {
+        begin = 0;
+        end = rank_table_.size();
+    } else {
+        const uint64_t select_id = x / L_BLOCK_SIZE;
+        if ((x % L_BLOCK_SIZE) == 0) {
+            return select0_table_[select_id];
+        }
+        begin = select0_table_[select_id] / L_BLOCK_SIZE;
+        end = (select0_table_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
     }
-    uint64_t begin = select0_table_[select_id] / L_BLOCK_SIZE;
-    uint64_t end = (select0_table_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
+
     if (begin + 10 >= end) {
         while (x >= ((begin + 1) * L_BLOCK_SIZE) - rank_table_[begin + 1].abs()) {
             ++begin;
@@ -349,12 +364,20 @@ uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
 uint64_t BitVector::select1(uint64_t x) const throw (hsds::Exception) {
     HSDS_EXCEPTION_IF(x >= this->size(true), E_OUT_OF_RANGE);
 
-    const uint64_t select_id = x / L_BLOCK_SIZE;
-    if ((x % L_BLOCK_SIZE) == 0) {
-        return select1_table_[select_id];
+    uint64_t begin;
+    uint64_t end;
+
+    if (select1_table_.empty()) {
+        begin = 0;
+        end = rank_table_.size();
+    } else {
+        const uint64_t select_id = x / L_BLOCK_SIZE;
+        if ((x % L_BLOCK_SIZE) == 0) {
+            return select1_table_[select_id];
+        }
+        begin = select1_table_[select_id] / L_BLOCK_SIZE;
+        end = (select1_table_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
     }
-    uint64_t begin = select1_table_[select_id] / L_BLOCK_SIZE;
-    uint64_t end = (select1_table_[select_id + 1] + L_BLOCK_SIZE - 1) / L_BLOCK_SIZE;
 
     if (begin + 10 >= end) {
         // Linear search in rank table
@@ -436,43 +459,43 @@ void BitVector::save(std::ostream &os) const {
 
 void BitVector::load(std::istream &is) {
     is.read((char*) &size_, sizeof(size_));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     is.read((char*) &num_of_1s_, sizeof(num_of_1s_));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     uint64_t size = 0;
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     blocks_type().swap(blocks_);
     blocks_.resize(size);
     is.read((char*) &blocks_[0], sizeof(blocks_[0]) * size);
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     rank_dict_type().swap(rank_table_);
     rank_table_.resize(size);
     is.read((char*) &rank_table_[0], sizeof(rank_table_[0]) * size);
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     select_dict_type().swap(select0_table_);
     select0_table_.resize(size);
     is.read((char*) &select0_table_[0], sizeof(select0_table_[0]) * size);
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     is.read((char*) &size, sizeof(size));
-    HSDS_EXCEPTION_IF( (is.eof() || is.fail() ), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     select_dict_type().swap(select1_table_);
     select1_table_.resize(size);
     is.read((char*) &select1_table_[0], sizeof(select1_table_[0]) * size);
-    HSDS_EXCEPTION_IF( is.fail(), E_LOAD_FILE);
+    HSDS_EXCEPTION_IF(is.fail(), E_LOAD_FILE);
 }
 
 }

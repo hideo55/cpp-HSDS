@@ -79,7 +79,7 @@ public:
     /**
      * @brief Build succinct bit vector
      */
-    void build();
+    void build(bool enable_faster_select1 = false, bool enable_faster_select0 = false);
 
     /**
      * @brief Returns number of the element in bit vector

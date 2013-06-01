@@ -3,6 +3,7 @@
 #include <cassert>
 #include <stdint.h>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <vector>
 
@@ -107,7 +108,7 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
     }
 
     {
@@ -121,7 +122,7 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
     }
 
     {
@@ -136,7 +137,60 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / select_queries.size() * 1000000.0);
+    }
+}
+
+void benchmark_hsds_fast(const std::vector<bool> &bits, const std::vector<uint32_t> &point_queries,
+        const std::vector<uint32_t> &rank_queries, const std::vector<uint32_t> &select_queries) {
+
+    hsds::BitVector dic;
+    for (size_t i = 0; i < bits.size(); ++i) {
+        dic.set(i, bits[i]);
+    }
+    dic.build(true); // use faster select1
+
+    {
+        std::vector<double> times;
+        for (size_t i = 0; i < NUM_TRIALS; ++i) {
+            Timer timer;
+            uint64_t total = 0;
+            for (size_t j = 0; j < point_queries.size(); ++j) {
+                total += dic[point_queries[j]];
+            }
+            times.push_back(timer.elapsed());
+            assert(total != uint64_t(-1));
+        }
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+    }
+
+    {
+        std::vector<double> times;
+        for (size_t i = 0; i < NUM_TRIALS; ++i) {
+            Timer timer;
+            uint64_t total = 0;
+            for (size_t j = 0; j < rank_queries.size(); ++j) {
+                total += dic.rank(rank_queries[j]);
+            }
+            times.push_back(timer.elapsed());
+            assert(total != uint64_t(-1));
+        }
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+    }
+
+    {
+        std::vector<double> times;
+        for (size_t i = 0; i < NUM_TRIALS; ++i) {
+            Timer timer;
+            uint64_t total = 0;
+
+            for (size_t j = 0; j < select_queries.size(); ++j) {
+                total += dic.select1(select_queries[j]);
+            }
+            times.push_back(timer.elapsed());
+            assert(total != uint64_t(-1));
+        }
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
 }
 
@@ -162,7 +216,7 @@ void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &po
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
     }
 
     {
@@ -176,7 +230,7 @@ void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &po
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
     }
 
     {
@@ -190,7 +244,7 @@ void benchmark_ux(const std::vector<bool> &bits, const std::vector<uint32_t> &po
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
 }
 #endif /* defined(USE_UX) */
@@ -216,7 +270,7 @@ void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t>
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
     }
 
     {
@@ -230,7 +284,7 @@ void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t>
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / rank_queries.size() * 1000000.0);
     }
 
     {
@@ -244,7 +298,7 @@ void benchmark_marisa(const std::vector<bool> &bits, const std::vector<uint32_t>
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
         }
-        std::cout << '\t' << (times[times.size() / 2] / select_queries.size() * 1000000.0);
+        std::cout << '\t' << std::setw(8) << (times[times.size() / 2] / select_queries.size() * 1000000.0);
     }
 }
 
@@ -270,6 +324,7 @@ int main(int argc, char *argv[]) {
 
     std::cout << "#bits"
             "\thsds(get)\thsds(rank)\thsds(select)"
+            "\thsds_f(get)\thsds_f(rank)\thsds_f(select)"
 #if defined(USE_UX)
             "\tux(get)\tux(rank)\tux(select)"
 #endif
@@ -286,6 +341,7 @@ int main(int argc, char *argv[]) {
 
         std::cout << num_bits;
         benchmark_hsds(bits, point_queries, rank_queries, select_queries);
+        benchmark_hsds_fast(bits, point_queries, rank_queries, select_queries);
 #if defined(USE_UX)
         benchmark_ux(bits, point_queries, rank_queries, select_queries);
 #endif
