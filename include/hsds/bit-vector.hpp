@@ -38,6 +38,7 @@ public:
 
     /**
      * @brief Constructor
+     *
      * @param Size[in] size of bit vector
      */
     BitVector(uint64_t size) :
@@ -61,8 +62,11 @@ public:
 
     /**
      * @brief Get value from bit vector by index
+     *
      * @param i[in] Index of bit vector
+     *
      * @return The value of the specified index
+     *
      * @exception hsds::Exception Out of range access
      */
     bool operator[](uint64_t i) const throw (hsds::Exception) {
@@ -72,33 +76,43 @@ public:
 
     /**
      * @brief Set value to bit vector by index
+     *
      * @param i[in] Index of bit vector
      */
     void set(uint64_t i, bool b = true);
 
     /**
      * @brief Build succinct bit vector
+     *
+     * @param[in] enable_faster_select1 Enable faster select1().
+     * @param[in] enable_faster_select0 Enable faster select0().
+     *
      */
     void build(bool enable_faster_select1 = false, bool enable_faster_select0 = false);
 
     /**
      * @brief Returns number of the element in bit vector
+     *
      * @return Size of the bit vector
      */
     uint64_t size() const {
         return size_;
     }
+
     /**
-     * @brief Returns the number of bits that matches with argument in the bit vector.
+     * @brief Returns the number of bits that matches with argument in the bit vector
+     *
      * @param b[in] Boolean
-     * @return Number of bits that matches with argument in the bit vector.
+     *
+     * @return Number of bits that matches with argument in the bit vector
      */
     uint64_t size(bool b) const {
         return b ? (num_of_1s_) : (size_ - num_of_1s_);
     }
 
     /**
-     * @brief Returns whether the vector is empty (i.e. whether its size is 0).
+     * @brief Returns whether the vector is empty (i.e. whether its size is 0)
+     *
      * @return true if the container size is 0, false otherwise.
      */
     bool empty() const {
@@ -106,43 +120,55 @@ public:
     }
 
     /**
-     * @brief Returns Number of the bits equal to 1 up to position `i`.
+     * @brief Returns Number of the bits equal to 1 up to position `i`
+     *
      * @param i[in] Index of the bit vector
+     *
      * @return Number of the bits equal to 1
+     *
      * @exception hsds::Exception Out of range access
      */
     uint64_t rank(uint64_t i) const throw (hsds::Exception);
 
     /**
-     * @brief Returns the position of the x-th occurrence of 0.
+     * @brief Returns the position of the x-th occurrence of 0
+     *
      * @param x[in] Rank number of 0-bits
-     * @return Index of x-th 0.
+     *
+     * @return Index of x-th 0
+     *
      * @exception hsds::Exception Out of range access
      */
     uint64_t select0(uint64_t x) const throw (hsds::Exception);
 
     /**
-     * @brief Returns the position of the x-th occurrence of 1.
+     * @brief Returns the position of the x-th occurrence of 1
+     *
      * @param x[in] Rank number of 1-bits
-     * @return Index of x-th 1.
+     *
+     * @return Index of x-th 1
+     *
      * @exception hsds::Exception Out of range access
      */
     uint64_t select1(uint64_t x) const throw (hsds::Exception);
 
     /**
      * @brief Save bit vector to the ostream
+     *
      * @param os[out] The instance of std::ostream
      */
     void save(std::ostream &os) const;
 
     /**
-     * @brief Load bit vector from istream.
+     * @brief Load bit vector from istream
+     *
      * @param is[in] The instance of std::istream
      */
     void load(std::istream &is);
 
     /**
-     * @brief Exchanges the content of the instance.
+     * @brief Exchanges the content of the instance
+     *
      * @param x[in,out] Another BitVector instnace
      */
     void swap(BitVector &x) {
