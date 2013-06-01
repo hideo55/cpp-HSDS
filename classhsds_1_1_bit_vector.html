@@ -118,9 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a41426138566c030a1d88cfb17812c392"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a41426138566c030a1d88cfb17812c392">set</a> (uint64_t i, bool b=true)</td></tr>
 <tr class="memdesc:a41426138566c030a1d88cfb17812c392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value to bit vector by index.  <a href="#a41426138566c030a1d88cfb17812c392">More...</a><br/></td></tr>
 <tr class="separator:a41426138566c030a1d88cfb17812c392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fc969a0781bbbfb842ad1ef2278cbeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a6fc969a0781bbbfb842ad1ef2278cbeb">build</a> ()</td></tr>
-<tr class="memdesc:a6fc969a0781bbbfb842ad1ef2278cbeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build succinct bit vector.  <a href="#a6fc969a0781bbbfb842ad1ef2278cbeb">More...</a><br/></td></tr>
-<tr class="separator:a6fc969a0781bbbfb842ad1ef2278cbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a928a0540638b3e1a6f69cb3c27038a7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a928a0540638b3e1a6f69cb3c27038a7f">build</a> (bool enable_faster_select1=false, bool enable_faster_select0=false)</td></tr>
+<tr class="memdesc:a928a0540638b3e1a6f69cb3c27038a7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build succinct bit vector.  <a href="#a928a0540638b3e1a6f69cb3c27038a7f">More...</a><br/></td></tr>
+<tr class="separator:a928a0540638b3e1a6f69cb3c27038a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26f69cc07d14de4879a95c55efff76d5"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5">size</a> () const </td></tr>
 <tr class="memdesc:a26f69cc07d14de4879a95c55efff76d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns number of the element in bit vector.  <a href="#a26f69cc07d14de4879a95c55efff76d5">More...</a><br/></td></tr>
 <tr class="separator:a26f69cc07d14de4879a95c55efff76d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,7 +131,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:abd40d1db48e8f73e926fc953cec45553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the vector is empty (i.e.  <a href="#abd40d1db48e8f73e926fc953cec45553">More...</a><br/></td></tr>
 <tr class="separator:abd40d1db48e8f73e926fc953cec45553"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab522c5a9364e1679fc5a895e45141b8f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#ab522c5a9364e1679fc5a895e45141b8f">rank</a> (uint64_t i) const   throw (hsds::Exception)</td></tr>
-<tr class="memdesc:ab522c5a9364e1679fc5a895e45141b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns Number of the bits equal to 1 up to position <code>i</code>.  <a href="#ab522c5a9364e1679fc5a895e45141b8f">More...</a><br/></td></tr>
+<tr class="memdesc:ab522c5a9364e1679fc5a895e45141b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns Number of the bits equal to 1 up to position <code>i</code>  <a href="#ab522c5a9364e1679fc5a895e45141b8f">More...</a><br/></td></tr>
 <tr class="separator:ab522c5a9364e1679fc5a895e45141b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a822073506771c4b08d0238f9c0f08213"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a822073506771c4b08d0238f9c0f08213">select0</a> (uint64_t x) const   throw (hsds::Exception)</td></tr>
 <tr class="memdesc:a822073506771c4b08d0238f9c0f08213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the x-th occurrence of 0.  <a href="#a822073506771c4b08d0238f9c0f08213">More...</a><br/></td></tr>
@@ -211,7 +211,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00043">43</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00044">44</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -238,25 +238,43 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00052">52</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00053">53</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a6fc969a0781bbbfb842ad1ef2278cbeb"></a>
+<a class="anchor" id="a928a0540638b3e1a6f69cb3c27038a7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void hsds::BitVector::build </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable_faster_select1</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable_faster_select0</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Build succinct bit vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable_faster_select1</td><td>Enable faster <a class="el" href="classhsds_1_1_bit_vector.html#a4020dd48178e0a01c85883abe0817c47" title="Returns the position of the x-th occurrence of 1.">select1()</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable_faster_select0</td><td>Enable faster <a class="el" href="classhsds_1_1_bit_vector.html#a822073506771c4b08d0238f9c0f08213" title="Returns the position of the x-th occurrence of 0.">select0()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -283,7 +301,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear bit vector. </p>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00058">58</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00059">59</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -309,10 +327,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns whether the vector is empty (i.e. </p>
-<p>whether its size is 0). </p>
+<p>whether its size is 0)</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the container size is 0, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00104">104</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00118">118</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -365,11 +383,11 @@ Public Member Functions</h2></td></tr>
 <p>Get value from bit vector by index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i[in]</td><td>Index of bit vector </td></tr>
+    <tr><td class="paramname">i[in]</td><td>Index of bit vector</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The value of the specified index </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The value of the specified index</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a></td><td>Out of range access </td></tr>
@@ -377,7 +395,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00068">68</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00072">72</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -395,14 +413,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns Number of the bits equal to 1 up to position <code>i</code>. </p>
+<p>Returns Number of the bits equal to 1 up to position <code>i</code> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i[in]</td><td>Index of the bit vector </td></tr>
+    <tr><td class="paramname">i[in]</td><td>Index of the bit vector</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Number of the bits equal to 1 </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of the bits equal to 1</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a></td><td>Out of range access </td></tr>
@@ -453,11 +471,11 @@ Public Member Functions</h2></td></tr>
 <p>Returns the position of the x-th occurrence of 0. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x[in]</td><td>Rank number of 0-bits </td></tr>
+    <tr><td class="paramname">x[in]</td><td>Rank number of 0-bits</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Index of x-th 0. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of x-th 0</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a></td><td>Out of range access </td></tr>
@@ -484,11 +502,11 @@ Public Member Functions</h2></td></tr>
 <p>Returns the position of the x-th occurrence of 1. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x[in]</td><td>Rank number of 1-bits </td></tr>
+    <tr><td class="paramname">x[in]</td><td>Rank number of 1-bits</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Index of x-th 1. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of x-th 1</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a></td><td>Out of range access </td></tr>
@@ -556,7 +574,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns number of the element in bit vector. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00088">88</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00098">98</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -585,13 +603,13 @@ Public Member Functions</h2></td></tr>
 <p>Returns the number of bits that matches with argument in the bit vector. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b[in]</td><td>Boolean </td></tr>
+    <tr><td class="paramname">b[in]</td><td>Boolean</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Number of bits that matches with argument in the bit vector. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bits that matches with argument in the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00096">96</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00109">109</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -625,7 +643,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00148">148</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00174">174</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -635,7 +653,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 27 2013 02:27:58 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 1 2013 19:24:36 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
