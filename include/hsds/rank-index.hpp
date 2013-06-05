@@ -7,7 +7,7 @@
 namespace hsds {
 
 /**
- * @class RnakIndex
+ * @class RankIndex
  *
  * @brief Index structure for rank operation.
  */
