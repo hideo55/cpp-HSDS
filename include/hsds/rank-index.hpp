@@ -7,8 +7,16 @@
 
 namespace hsds {
 
+/**
+ * @class RnakIndex
+ *
+ * @brief
+ */
 class RankIndex {
 public:
+    /**
+     * @brief Constructor
+     */
     RankIndex() :
             abs_(0), rel_(0) {
     }
@@ -78,8 +86,8 @@ public:
     }
 
 private:
-    uint32_t abs_;
-    uint64_t rel_;
+    uint32_t abs_;  ///< Absolute rank value
+    uint64_t rel_;  ///< Relative rank value container
 };
 
 }

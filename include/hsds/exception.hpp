@@ -23,6 +23,7 @@
 namespace hsds {
 /**
  * @class Exception
+ *
  * @brief Exception class for HSDS libraries
  */
 class Exception: public std::exception {
@@ -30,10 +31,11 @@ public:
 
     /**
      * @brief Constructor
+     *
      * @param message[in] Description message of the exception
-     * @param filename[in] Name of file that exception occurred.
-     * @param func[in] Name of function that exception occurred.
-     * @param line[in] Number of line that exception occurred.
+     * @param filename[in] Name of file that exception occurred
+     * @param func[in] Name of function that exception occurred
+     * @param line[in] Number of line that exception occurred
      */
     Exception(const std::string& message, const char* filename, const char* func, uint32_t line) :
             message_(message), filename_(filename), func_(func), line_(line) {
@@ -49,6 +51,7 @@ public:
 
     /**
      * @brief Returns exception message as null terminated character sequence.
+     *
      * @return Exception message
      */
     const char* what() const throw () {
@@ -57,6 +60,7 @@ public:
 
     /**
      * @brief Returns file name of the exception occurred.
+     *
      * @return File name
      */
     const char* getFileName() const {
@@ -65,6 +69,7 @@ public:
 
     /**
      * @brief Returns function name of the exception occurred.
+     *
      * @return Function name
      */
     const char* getFunctionName() const {
@@ -73,6 +78,7 @@ public:
 
     /**
      * @brief Returns line number of the exception occurred.
+     *
      * @return Line number
      */
     const int getLineNumber() const {
