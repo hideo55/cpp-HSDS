@@ -113,7 +113,8 @@ public:
     /**
      * @brief Returns whether the vector is empty (i.e. whether its size is 0)
      *
-     * @return true if the container size is 0, false otherwise.
+     * @retval true Container size equals 0.
+     * @retval false Container size not equals 0.
      */
     bool empty() const {
         return size_ == 0;
