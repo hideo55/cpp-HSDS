@@ -12,6 +12,9 @@
 #include "hsds/popcount.hpp"
 #include "hsds/rank-index.hpp"
 
+/**
+ * @namespace hsds
+ */
 namespace hsds {
 
 const uint32_t S_BLOCK_SIZE = 64;

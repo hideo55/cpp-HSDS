@@ -20,7 +20,11 @@
  #endif //defined(_MSC_VER)
 #endif //!defined(HSDS_EXCEPTION_IF)
 
+/**
+ * @namespace hsds
+ */
 namespace hsds {
+
 /**
  * @class Exception
  *

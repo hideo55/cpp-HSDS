@@ -4,6 +4,10 @@
 #if !defined(_MSC_VER)
 #include <stdint.h>
 #endif // !defined(_MSC_VER)
+
+/**
+ * @namespace hsds
+ */
 namespace hsds {
 
 /**
