@@ -123,7 +123,7 @@ FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base) {
     const int trailing_zero_len = ::__builtin_ctzll((x & MASK_80) >> 7);
 #endif // defined(_MSC_VER)
 #endif // defined(HSDS_USE_POPCNT)
-    base += leading_zero_len;
+    base += trailing_zero_len;
     block >>= trailing_zero_len;
     i -= ((counts << 8) >> trailing_zero_len) & 0xFF;
     return base + SELECT_TABLE[i][block & 0xFF];
