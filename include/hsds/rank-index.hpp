@@ -169,7 +169,7 @@ public:
     }
 
 private:
-    uint32_t abs_;  ///< Absolute rank value
+    uint64_t abs_;  ///< Absolute rank value
     uint64_t rel_;  ///< Relative rank value container
 };
 
