@@ -183,6 +183,7 @@ public:
         select0_table_.swap(x.select0_table_);
         select1_table_.swap(x.select1_table_);
     }
+
 private:
     typedef uint64_t block_type;
     typedef std::vector<block_type> blocks_type;
