@@ -14,7 +14,7 @@ SET(serial "1.0.0")
 SET(soserial "1")
 
 
-INCLUDE(FindSSE)
+INCLUDE(FindSSE/FindSSE)
 FindSSE ()
 IF(SSE3_FOUND)
     IF(SSSE3_FOUND)

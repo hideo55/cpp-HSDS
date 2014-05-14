@@ -1,3 +1,6 @@
 [submodule "docs"]
 	path = docs
 	url = git@github.com:hideo55/cpp-HSDS.git
+[submodule "cmake/FindSSE"]
+	path = cmake/FindSSE
+	url = https://github.com/hideo55/CMake-FindSSE.git
