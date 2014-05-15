@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">Size[in]</td><td>size of bit vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of bit vector </td></tr>
   </table>
   </dd>
 </dl>
@@ -336,7 +336,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00122">122</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00123">123</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -357,7 +357,7 @@ Public Member Functions</h2></td></tr>
 <p>Load bit vector from istream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">is[in]</td><td>The instance of std::istream </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">is</td><td>The instance of std::istream </td></tr>
   </table>
   </dd>
 </dl>
@@ -389,7 +389,7 @@ Public Member Functions</h2></td></tr>
 <p>Get value from bit vector by index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i[in]</td><td>Index of bit vector</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of bit vector</td></tr>
   </table>
   </dd>
 </dl>
@@ -422,7 +422,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns Number of the bits equal to 1 up to position <code>i</code> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i[in]</td><td>Index of the bit vector</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of the bit vector</td></tr>
   </table>
   </dd>
 </dl>
@@ -453,7 +453,7 @@ Public Member Functions</h2></td></tr>
 <p>Save bit vector to the ostream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">os[out]</td><td>The instance of std::ostream </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">os</td><td>The instance of std::ostream </td></tr>
   </table>
   </dd>
 </dl>
@@ -477,7 +477,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns the position of the x-th occurrence of 0. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x[in]</td><td>Rank number of 0-bits</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Rank number of 0-bits</td></tr>
   </table>
   </dd>
 </dl>
@@ -508,7 +508,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns the position of the x-th occurrence of 1. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x[in]</td><td>Rank number of 1-bits</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Rank number of 1-bits</td></tr>
   </table>
   </dd>
 </dl>
@@ -549,7 +549,8 @@ Public Member Functions</h2></td></tr>
 <p>Set value to bit vector by index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i[in]</td><td>Index of bit vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of bit vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Boolean value that indicates the bit to set.(true = 1, false = 0) </td></tr>
   </table>
   </dd>
 </dl>
@@ -580,7 +581,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns number of the element in bit vector. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00101">101</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00102">102</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -609,13 +610,13 @@ Public Member Functions</h2></td></tr>
 <p>Returns the number of bits that matches with argument in the bit vector. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b[in]</td><td>Boolean</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Boolean value that indicates bit type.(true = 1, false = 0)</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of bits that matches with argument in the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00112">112</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00113">113</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -644,12 +645,12 @@ Public Member Functions</h2></td></tr>
 <p>Exchanges the content of the instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x[in,out]</td><td>Another <a class="el" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> instnace </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Another <a class="el" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> instnace </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00178">178</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00179">179</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -659,7 +660,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 6 2013 03:00:53 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri May 16 2014 00:19:14 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

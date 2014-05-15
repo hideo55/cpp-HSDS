@@ -137,66 +137,67 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">return</span> (blocks_[i / <a class="code" href="namespacehsds.html#aecc65d7cf5e2b531ba0460bbcbbbd813">S_BLOCK_SIZE</a>] &amp; (1ULL &lt;&lt; (i % <a class="code" href="namespacehsds.html#aecc65d7cf5e2b531ba0460bbcbbbd813">S_BLOCK_SIZE</a>))) != 0;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> <span class="keyword">set</span>(uint64_t i, <span class="keywordtype">bool</span> b = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#a928a0540638b3e1a6f69cb3c27038a7f" title="Build succinct bit vector.">build</a>(<span class="keywordtype">bool</span> enable_faster_select1 = <span class="keyword">false</span>, <span class="keywordtype">bool</span> enable_faster_select0 = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5">  101</a></span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5" title="Returns number of the element in bit vector.">size</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">return</span> size_;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#aa51a14e297e8ceccfe5186b87af5bc03">  112</a></span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#aa51a14e297e8ceccfe5186b87af5bc03" title="Returns the number of bits that matches with argument in the bit vector.">size</a>(<span class="keywordtype">bool</span> b)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">return</span> b ? (num_of_1s_) : (size_ - num_of_1s_);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#abd40d1db48e8f73e926fc953cec45553">  122</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classhsds_1_1_bit_vector.html#abd40d1db48e8f73e926fc953cec45553" title="Returns whether the vector is empty (i.e.">empty</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">return</span> size_ == 0;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#ab522c5a9364e1679fc5a895e45141b8f" title="Returns Number of the bits equal to 1 up to position i">rank</a>(uint64_t i) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a>);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a822073506771c4b08d0238f9c0f08213" title="Returns the position of the x-th occurrence of 0.">select0</a>(uint64_t x) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a>);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a4020dd48178e0a01c85883abe0817c47" title="Returns the position of the x-th occurrence of 1.">select1</a>(uint64_t x) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a>);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#a9eb0f066626e8573ee62dd8762d339c4" title="Save bit vector to the ostream.">save</a>(std::ostream &amp;os) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#aba3f865b4f2a25fd2965862f23a861e4" title="Load bit vector from istream.">load</a>(std::istream &amp;is);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00178"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a43fb6533bdb1ae8cdf070d686f90bfe6">  178</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#a43fb6533bdb1ae8cdf070d686f90bfe6" title="Exchanges the content of the instance.">swap</a>(<a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;x) {</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        blocks_.swap(x.blocks_);</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        std::swap(size_, x.size_);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        std::swap(num_of_1s_, x.num_of_1s_);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        rank_table_.swap(x.rank_table_);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        select0_table_.swap(x.select0_table_);</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        select1_table_.swap(x.select1_table_);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    }</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keyword">typedef</span> uint64_t block_type;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;block_type&gt; blocks_type;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;RankIndex&gt; rank_dict_type;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;uint32_t&gt; select_dict_type;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    blocks_type blocks_;                </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    rank_dict_type rank_table_;         </div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    select_dict_type select0_table_;    </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    select_dict_type select1_table_;    </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    uint64_t size_;                     </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    uint64_t num_of_1s_;                </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="comment">// Disable copy constructor</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <a class="code" href="classhsds_1_1_bit_vector.html#ab524f702348c9b9adeaac41bcbd7c74e" title="Constructor.">BitVector</a>(<span class="keyword">const</span> <a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;);</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="comment">// Disable assingment operator</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;};</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> <span class="keyword">set</span>(uint64_t i, <span class="keywordtype">bool</span> b = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#a928a0540638b3e1a6f69cb3c27038a7f" title="Build succinct bit vector.">build</a>(<span class="keywordtype">bool</span> enable_faster_select1 = <span class="keyword">false</span>, <span class="keywordtype">bool</span> enable_faster_select0 = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5">  102</a></span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5" title="Returns number of the element in bit vector.">size</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">return</span> size_;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#aa51a14e297e8ceccfe5186b87af5bc03">  113</a></span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#aa51a14e297e8ceccfe5186b87af5bc03" title="Returns the number of bits that matches with argument in the bit vector.">size</a>(<span class="keywordtype">bool</span> b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordflow">return</span> b ? (num_of_1s_) : (size_ - num_of_1s_);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#abd40d1db48e8f73e926fc953cec45553">  123</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classhsds_1_1_bit_vector.html#abd40d1db48e8f73e926fc953cec45553" title="Returns whether the vector is empty (i.e.">empty</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordflow">return</span> size_ == 0;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#ab522c5a9364e1679fc5a895e45141b8f" title="Returns Number of the bits equal to 1 up to position i">rank</a>(uint64_t i) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a>);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a822073506771c4b08d0238f9c0f08213" title="Returns the position of the x-th occurrence of 0.">select0</a>(uint64_t x) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a>);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a4020dd48178e0a01c85883abe0817c47" title="Returns the position of the x-th occurrence of 1.">select1</a>(uint64_t x) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">hsds::Exception</a>);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#a9eb0f066626e8573ee62dd8762d339c4" title="Save bit vector to the ostream.">save</a>(std::ostream &amp;os) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#aba3f865b4f2a25fd2965862f23a861e4" title="Load bit vector from istream.">load</a>(std::istream &amp;is);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00179"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a43fb6533bdb1ae8cdf070d686f90bfe6">  179</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#a43fb6533bdb1ae8cdf070d686f90bfe6" title="Exchanges the content of the instance.">swap</a>(<a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;x) {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        blocks_.swap(x.blocks_);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        std::swap(size_, x.size_);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        std::swap(num_of_1s_, x.num_of_1s_);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        rank_table_.swap(x.rank_table_);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        select0_table_.swap(x.select0_table_);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        select1_table_.swap(x.select1_table_);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keyword">typedef</span> uint64_t block_type;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;block_type&gt; blocks_type;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;RankIndex&gt; rank_dict_type;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;uint32_t&gt; select_dict_type;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    blocks_type blocks_;                </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    rank_dict_type rank_table_;         </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    select_dict_type select0_table_;    </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    select_dict_type select1_table_;    </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    uint64_t size_;                     </div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    uint64_t num_of_1s_;                </div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="comment">// Disable copy constructor</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="classhsds_1_1_bit_vector.html#ab524f702348c9b9adeaac41bcbd7c74e" title="Constructor.">BitVector</a>(<span class="keyword">const</span> <a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="comment">// Disable assingment operator</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;};</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !defined(HSDS_BIT_VECTOR_H_) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !defined(HSDS_BIT_VECTOR_H_) */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 6 2013 03:00:53 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri May 16 2014 00:19:14 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
