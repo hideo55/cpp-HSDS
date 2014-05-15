@@ -20,6 +20,14 @@
  #endif //defined(_MSC_VER)
 #endif //!defined(HSDS_EXCEPTION_IF)
 
+#if !defined(HSDS_DEBUG_IF)
+  #if defined(_DEBUG)
+    #define HSDS_DEBUG_IF(cond__, message__) HSDS_EXCEPTION_IF(cond__, message__)
+  #else // defined(_DEBUG)
+    #define HSDS_DEBUG_IF(cond__, message__)
+  #endif //defined(_DEBUG)
+#endif //!defined(HSDS_DEBUG_IF)
+
 /**
  * @namespace hsds
  */

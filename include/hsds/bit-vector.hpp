@@ -22,9 +22,9 @@ const uint32_t L_BLOCK_SIZE = 512;
 const uint32_t BLOCK_RATE = 8;
 
 // Error messages
-const char* E_OUT_OF_RANGE = "Out of range access";
-const char* E_SAVE_FILE = "Failed to save the bit vector.";
-const char* E_LOAD_FILE = "Failed to read file. File format is invalid.";
+const char* const E_OUT_OF_RANGE = "Out of range access";
+const char* const E_SAVE_FILE = "Failed to save the bit vector.";
+const char* const E_LOAD_FILE = "Failed to read file. File format is invalid.";
 
 /**
  * @class BitVector
@@ -73,7 +73,7 @@ public:
      * @exception hsds::Exception Out of range access
      */
     bool operator[](uint64_t i) const throw (hsds::Exception) {
-        HSDS_EXCEPTION_IF(i >= size_, E_OUT_OF_RANGE);
+        HSDS_DEBUG_IF(i >= size_, E_OUT_OF_RANGE);
         return (blocks_[i / S_BLOCK_SIZE] & (1ULL << (i % S_BLOCK_SIZE))) != 0;
     }
 

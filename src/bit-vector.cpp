@@ -259,7 +259,7 @@ void BitVector::build(bool enable_faster_select1, bool enable_faster_select0) {
 }
 
 uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
-    HSDS_EXCEPTION_IF(i > this->size(), E_OUT_OF_RANGE);
+    HSDS_DEBUG_IF(i > this->size(), E_OUT_OF_RANGE);
     uint64_t rank_id = i / L_BLOCK_SIZE;
     uint64_t block_id = i / S_BLOCK_SIZE;
     uint64_t r = i % S_BLOCK_SIZE;
@@ -294,7 +294,7 @@ uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
 }
 
 uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
-    HSDS_EXCEPTION_IF(x >= this->size(false), E_OUT_OF_RANGE);
+    HSDS_DEBUG_IF(x >= this->size(false), E_OUT_OF_RANGE);
 
     uint64_t begin;
     uint64_t end;
@@ -362,7 +362,7 @@ uint64_t BitVector::select0(uint64_t x) const throw (hsds::Exception) {
 }
 
 uint64_t BitVector::select1(uint64_t x) const throw (hsds::Exception) {
-    HSDS_EXCEPTION_IF(x >= this->size(true), E_OUT_OF_RANGE);
+    HSDS_DEBUG_IF(x >= this->size(true), E_OUT_OF_RANGE);
 
     uint64_t begin;
     uint64_t end;
