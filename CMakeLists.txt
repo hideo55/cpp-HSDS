@@ -58,10 +58,12 @@ IF(WITH_BENCHMARK)
 
     IF(USE_UX)
         SET(BM_DEFINITIONS -DUSE_UX)
+        SET(BM_LIBS ux)
     ENDIF(USE_UX)
 
     IF(USE_MARISA)
         SET(BM_DEFINITIONS ${BM_DEFINITIONS} -DUSE_MARISA)
+        SET(BM_LIBS marisa)
     ENDIF(USE_MARISA)
 
     OPTION(MARISA_INCLUDE_PATH "marisa-trie include path" ./)
@@ -70,7 +72,7 @@ IF(WITH_BENCHMARK)
     ADD_DEFINITIONS(${BM_DEFINITIONS})
     INCLUDE_DIRECTORIES(${MARISA_INCLUDE_PATH} "${PROJECT_SOURCE_DIR}/include")
 
-    TARGET_LINK_LIBRARIES(benchmark_bit-vector hsds-bitvector ux marisa)
+    TARGET_LINK_LIBRARIES(benchmark_bit-vector hsds-bitvector ${BM_LIBS})
 
 ENDIF(WITH_BENCHMARK)
 
