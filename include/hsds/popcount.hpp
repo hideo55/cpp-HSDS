@@ -107,7 +107,7 @@ public:
     }
 
     /**
-     * @biref Calculate hamming weight of 64-bit integer
+     * @brief Calculate hamming weight of 64-bit integer
      *
      * @param[in] x 64-bit integer
      */

@@ -36,10 +36,10 @@ public:
     /**
      * @brief Constructor
      *
-     * @param message[in] Description message of the exception
-     * @param filename[in] Name of file that exception occurred
-     * @param func[in] Name of function that exception occurred
-     * @param line[in] Number of line that exception occurred
+     * @param[in] message Description message of the exception
+     * @param[in] filename Name of file that exception occurred
+     * @param[in] func Name of function that exception occurred
+     * @param[in] line Number of line that exception occurred
      */
     Exception(const std::string& message, const char* filename, const char* func, uint32_t line) :
             message_(message), filename_(filename), func_(func), line_(line) {

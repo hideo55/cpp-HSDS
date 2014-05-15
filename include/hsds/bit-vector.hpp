@@ -42,7 +42,7 @@ public:
     /**
      * @brief Constructor
      *
-     * @param Size[in] size of bit vector
+     * @param[in] size Size of bit vector
      */
     BitVector(uint64_t size) :
             size_(size), num_of_1s_(0) {
@@ -66,7 +66,7 @@ public:
     /**
      * @brief Get value from bit vector by index
      *
-     * @param i[in] Index of bit vector
+     * @param[in] i Index of bit vector
      *
      * @return The value of the specified index
      *
@@ -80,7 +80,8 @@ public:
     /**
      * @brief Set value to bit vector by index
      *
-     * @param i[in] Index of bit vector
+     * @param[in] i Index of bit vector
+     * @param[in] b Boolean value that indicates the bit to set.(true = 1, false = 0)
      */
     void set(uint64_t i, bool b = true);
 
@@ -105,7 +106,7 @@ public:
     /**
      * @brief Returns the number of bits that matches with argument in the bit vector
      *
-     * @param b[in] Boolean
+     * @param[in] b Boolean value that indicates bit type.(true = 1, false = 0)
      *
      * @return Number of bits that matches with argument in the bit vector
      */
@@ -126,7 +127,7 @@ public:
     /**
      * @brief Returns Number of the bits equal to 1 up to position `i`
      *
-     * @param i[in] Index of the bit vector
+     * @param[in] i Index of the bit vector
      *
      * @return Number of the bits equal to 1
      *
@@ -137,7 +138,7 @@ public:
     /**
      * @brief Returns the position of the x-th occurrence of 0
      *
-     * @param x[in] Rank number of 0-bits
+     * @param[in] x Rank number of 0-bits
      *
      * @return Index of x-th 0
      *
@@ -148,7 +149,7 @@ public:
     /**
      * @brief Returns the position of the x-th occurrence of 1
      *
-     * @param x[in] Rank number of 1-bits
+     * @param[in] x Rank number of 1-bits
      *
      * @return Index of x-th 1
      *
@@ -159,21 +160,21 @@ public:
     /**
      * @brief Save bit vector to the ostream
      *
-     * @param os[out] The instance of std::ostream
+     * @param[out] os The instance of std::ostream
      */
     void save(std::ostream &os) const;
 
     /**
      * @brief Load bit vector from istream
      *
-     * @param is[in] The instance of std::istream
+     * @param[in] is The instance of std::istream
      */
     void load(std::istream &is);
 
     /**
      * @brief Exchanges the content of the instance
      *
-     * @param x[in,out] Another BitVector instnace
+     * @param[in,out] x Another BitVector instnace
      */
     void swap(BitVector &x) {
         blocks_.swap(x.blocks_);
