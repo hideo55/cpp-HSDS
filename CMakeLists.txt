@@ -41,11 +41,11 @@ INSTALL(FILES include/hsds/bit-vector.hpp include/hsds/exception.hpp DESTINATION
 # Testing
 ENABLE_TESTING()
 
-ADD_EXECUTABLE(test_bit-vector t/test_bit-vector.cpp)
+ADD_EXECUTABLE(t/test_bit-vector t/test_bit-vector.cpp)
 
-TARGET_LINK_LIBRARIES(test_bit-vector hsds-bitvector)
+TARGET_LINK_LIBRARIES(t/test_bit-vector hsds-bitvector)
 
-ADD_TEST(NAME test_bitvector COMMAND ./test_bit-vector)
+ADD_TEST(NAME test_bitvector COMMAND ./t/test_bit-vector)
 
 # Benchmark
 OPTION(WITH_BENCHMARK "Build benchmark program" OFF)
