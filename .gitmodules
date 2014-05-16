@@ -4,3 +4,6 @@
 [submodule "cmake/FindSSE"]
 	path = cmake/FindSSE
 	url = https://github.com/hideo55/CMake-FindSSE.git
+[submodule "extlib/igloo"]
+	path = extlib/igloo
+	url = https://github.com/joakimkarlsson/igloo.git
