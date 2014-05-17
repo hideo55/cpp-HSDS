@@ -6,11 +6,13 @@ using namespace std;
 using namespace igloo;
 using namespace hsds;
 
+#define AssertThatEx(X,Y) Assert::That(X, Y, __FILE__, __LINE__)
+
 Describe(bit_vector) {
 
     It(create_instance) {
         BitVector* bv = new BitVector();
-        Assert::That(bv != NULL);
+        AssertThatEx(bv != NULL, Is().EqualTo(true));
         delete bv;
     }
 
@@ -20,10 +22,10 @@ Describe(bit_vector) {
         It(build_empty_vector) {
 
             bv.build();
-            Assert::That(bv.size() == 0);
+            AssertThatEx(bv.size(), Is().EqualTo(0));
         }
 
-        It(build_vector) {
+        It(build_normal_vector) {
 
             bv.set(0, true);
             bv.set(100, true);
@@ -33,29 +35,29 @@ Describe(bit_vector) {
             bv.set(1023, true);
             bv.set(1024, true);
             bv.build();
-            Assert::That(bv.size(true), Is().EqualTo(7));
-            Assert::That(bv[0], Is().EqualTo(true));
-            Assert::That(bv[1], Is().EqualTo(false));
-            Assert::That(bv[100], Is().EqualTo(true));
-            Assert::That(bv.rank(1), Is().EqualTo(1));
-            Assert::That(bv.rank(2), Is().EqualTo(1));
-            Assert::That(bv.rank(2), Is().EqualTo(1));
-            Assert::That(bv.rank(100), Is().EqualTo(1));
-            Assert::That(bv.rank(101), Is().EqualTo(2));
-            Assert::That(bv.size(), Is().EqualTo(1025));
+            AssertThatEx(bv.size(true), Is().EqualTo(7));
+            AssertThatEx(bv[0], Is().EqualTo(true));
+            AssertThatEx(bv[1], Is().EqualTo(false));
+            AssertThatEx(bv[100], Is().EqualTo(true));
+            AssertThatEx(bv.rank(1), Is().EqualTo(1));
+            AssertThatEx(bv.rank(2), Is().EqualTo(1));
+            AssertThatEx(bv.rank(2), Is().EqualTo(1));
+            AssertThatEx(bv.rank(100), Is().EqualTo(1));
+            AssertThatEx(bv.rank(101), Is().EqualTo(2));
+            AssertThatEx(bv.size(), Is().EqualTo(1025));
 
-            Assert::That(bv.select1(0), Is().EqualTo(0));
-            Assert::That(bv.select1(1), Is().EqualTo(100));
-            Assert::That(bv.select1(2), Is().EqualTo(101));
-            Assert::That(bv.select1(3), Is().EqualTo(511));
-            Assert::That(bv.select1(4), Is().EqualTo(512));
-            Assert::That(bv.select1(5), Is().EqualTo(1023));
-            Assert::That(bv.select1(6), Is().EqualTo(1024));
+            AssertThatEx(bv.select1(0), Is().EqualTo(0));
+            AssertThatEx(bv.select1(1), Is().EqualTo(100));
+            AssertThatEx(bv.select1(2), Is().EqualTo(101));
+            AssertThatEx(bv.select1(3), Is().EqualTo(511));
+            AssertThatEx(bv.select1(4), Is().EqualTo(512));
+            AssertThatEx(bv.select1(5), Is().EqualTo(1023));
+            AssertThatEx(bv.select1(6), Is().EqualTo(1024));
 
-            Assert::That(bv.size(false), Is().EqualTo(1018));
-            Assert::That(bv.select0(0), Is().EqualTo(1));
-            Assert::That(bv.select0(1), Is().EqualTo(2));
-            Assert::That(bv.select0(100), Is().EqualTo(103));
+            AssertThatEx(bv.size(false), Is().EqualTo(1018));
+            AssertThatEx(bv.select0(0), Is().EqualTo(1));
+            AssertThatEx(bv.select0(1), Is().EqualTo(2));
+            AssertThatEx(bv.select0(100), Is().EqualTo(103));
         }
     };
 };
