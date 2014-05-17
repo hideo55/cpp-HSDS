@@ -1,47 +1,65 @@
-#include <iostream>
-#include <cassert>
+#include <igloo/igloo_alt.h>
 #include "hsds/bit-vector.hpp"
+#include <sstream>
 
 using namespace std;
+using namespace igloo;
 using namespace hsds;
 
-int main(){
-    hsds::BitVector bv;
+Describe(bit_vector) {
 
-    bv.build();
-    assert( bv.size() == 0);
+    It(create_instance) {
+        BitVector* bv = new BitVector();
+        Assert::That(bv != NULL);
+        delete bv;
+    }
 
-    bv.set(0,true);
-    bv.set(100,true);
-    bv.set(101,true);
-    bv.set(511,true);
-    bv.set(512,true);
-    bv.set(1023, true);
-    bv.set(1024, true);
-    bv.build();
-    assert( bv.size(true) == 7 );
-    assert( bv[0] == true );
-    assert( bv[1] == false );
-    assert( bv[100] == true );
-    assert(bv.rank(1) == 1);
-    assert(bv.rank(2) == 1);
-    assert(bv.rank(2) == 1);
-    assert(bv.rank(100) == 1);
-    assert(bv.rank(101) == 2);
-    assert(bv.size() == 1025);
+    Describe(build_bit_vector) {
+        hsds::BitVector bv;
 
-    assert( bv.select1(0) == 0 );
-    assert( bv.select1(1) == 100 );
-    assert( bv.select1(2) == 101 );
-    assert( bv.select1(3) == 511 );
-    assert( bv.select1(4) == 512 );
-    assert( bv.select1(5) == 1023 );
-    assert( bv.select1(6) == 1024 );
-    
-    assert( bv.size(false) == 1018 );
-    assert( bv.select0(0) == 1 );
-    assert( bv.select0(1) == 2 );
-    assert( bv.select0(100) == 103 );
+        It(build_empty_vector) {
 
-    return 0;
+            bv.build();
+            Assert::That(bv.size() == 0);
+        }
+
+        It(build_vector) {
+
+            bv.set(0, true);
+            bv.set(100, true);
+            bv.set(101, true);
+            bv.set(511, true);
+            bv.set(512, true);
+            bv.set(1023, true);
+            bv.set(1024, true);
+            bv.build();
+            Assert::That(bv.size(true), Is().EqualTo(7));
+            Assert::That(bv[0], Is().EqualTo(true));
+            Assert::That(bv[1], Is().EqualTo(false));
+            Assert::That(bv[100], Is().EqualTo(true));
+            Assert::That(bv.rank(1), Is().EqualTo(1));
+            Assert::That(bv.rank(2), Is().EqualTo(1));
+            Assert::That(bv.rank(2), Is().EqualTo(1));
+            Assert::That(bv.rank(100), Is().EqualTo(1));
+            Assert::That(bv.rank(101), Is().EqualTo(2));
+            Assert::That(bv.size(), Is().EqualTo(1025));
+
+            Assert::That(bv.select1(0), Is().EqualTo(0));
+            Assert::That(bv.select1(1), Is().EqualTo(100));
+            Assert::That(bv.select1(2), Is().EqualTo(101));
+            Assert::That(bv.select1(3), Is().EqualTo(511));
+            Assert::That(bv.select1(4), Is().EqualTo(512));
+            Assert::That(bv.select1(5), Is().EqualTo(1023));
+            Assert::That(bv.select1(6), Is().EqualTo(1024));
+
+            Assert::That(bv.size(false), Is().EqualTo(1018));
+            Assert::That(bv.select0(0), Is().EqualTo(1));
+            Assert::That(bv.select0(1), Is().EqualTo(2));
+            Assert::That(bv.select0(100), Is().EqualTo(103));
+        }
+    };
+};
+
+int main(int argc, const char** argv) {
+    return TestRunner::RunAllTests(argc, argv);
 }
