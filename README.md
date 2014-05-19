@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/hideo55/cpp-HSDS.png)](http://travis-ci.org/hideo55/cpp-HSDS)
+[![Build Status](https://travis-ci.org/hideo55/cpp-HSDS.svg?branch=master)](http://travis-ci.org/hideo55/cpp-HSDS)
 
 # HSDS - Hide's Succinct Data Structure library collection
 
