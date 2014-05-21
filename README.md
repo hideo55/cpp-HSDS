@@ -7,6 +7,8 @@
 ```
 $ git clone git://github.com/hideo55/cpp-HSDS.git
 $ cd cpp-HSDS
+$ git submodule init
+$ git submodule update
 $ cmake .
 $ make && make install
 ```
