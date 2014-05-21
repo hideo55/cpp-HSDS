@@ -35,8 +35,10 @@ SET_TARGET_PROPERTIES(hsds-bitvector PROPERTIES VERSION ${serial} SOVERSION ${so
 
 INSTALL(TARGETS hsds-bitvector DESTINATION lib)
 
-INSTALL(FILES include/hsds/bit-vector.hpp include/hsds/exception.hpp DESTINATION include/hsds)
+SET(INSTALL_HEADERS include/hsds/bit-vector.hpp include/hsds/intrin.h include/hsds/exception.hpp)
+SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/popcount.hpp include/hsds/rank-index.hpp)
 
+INSTALL(FILES ${INSTALL_HEADERS} DESTINATION include/hsds)
 
 # Testing
 ENABLE_TESTING()
