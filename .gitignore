@@ -8,10 +8,8 @@ CTestTestfile.cmake
 Makefile
 CMakeFiles
 benchmark_bit-vector
-libhsds-bitvector.1.0.0.dylib
-libhsds-bitvector.1.dylib
-libhsds-bitvector.dylib
-test_bit-vector
+libhsds-bitvector.*
+t/test_bit-vector
 Testing
 
 install_manifest.txt
