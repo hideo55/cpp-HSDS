@@ -105,14 +105,14 @@ public:
     }
 
     void shrink() {
-        HSDS_THROW_IF(fixed_, HSDS_STATE_ERROR);
+        HSDS_EXCEPTION_IF(fixed_, HSDS_STATE_ERROR);
         if (size_ != capacity_) {
             realloc(size_);
         }
     }
 
     void fix() {
-        HSDS_THROW_IF(fixed_, HSDS_STATE_ERROR);
+        HSDS_EXCEPTION_IF(fixed_, HSDS_STATE_ERROR);
         fixed_ = true;
     }
 
