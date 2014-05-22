@@ -17,14 +17,15 @@
  */
 namespace hsds {
 
+namespace {
 const uint32_t S_BLOCK_SIZE = 64;
 const uint32_t L_BLOCK_SIZE = 512;
 const uint32_t BLOCK_RATE = 8;
 
-// Error messages
 const char* const E_OUT_OF_RANGE = "Out of range access";
 const char* const E_SAVE_FILE = "Failed to save the bit vector.";
 const char* const E_LOAD_FILE = "Failed to read file. File format is invalid.";
+}
 
 /**
  * @class BitVector

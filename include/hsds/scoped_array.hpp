@@ -10,13 +10,9 @@
 
 #include <algorithm>
 #include "exception.hpp"
+#include "constants.hpp"
 
 namespace hsds {
-
-namespace {
-const char* HSDS_ERROR_RESET = "Failed to reset";
-const char* HSDS_ERROR_STATE = "Bad state";
-}
 
 template<typename T>
 class ScopedArray {
@@ -33,12 +29,12 @@ public:
     }
 
     void reset(T *array = NULL) {
-        HSDS_EXCEPTION_IF((array != NULL) && (array == array_), HSDS_ERROR_RESET);
+        HSDS_EXCEPTION_IF((array != NULL) && (array == array_), HSDS_RESET_ERROR);
         ScopedArray(array).swap(*this);
     }
 
     T &operator[](std::size_t i) const {
-        HSDS_DEBUG_IF(array_ == NULL, HSDS_ERROR_STATE);
+        HSDS_DEBUG_IF(array_ == NULL, HSDS_STATE_ERROR);
         return array_[i];
     }
 

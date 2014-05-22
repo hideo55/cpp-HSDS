@@ -10,9 +10,9 @@
 
 #include <cstddef>
 #include "scoped_array.hpp"
+#include "constants.hpp"
 #include "exception.hpp"
 
-#define HSDS_SIZE_MAX   ((size_t)~(size_t)0)
 
 namespace hsds {
 
@@ -22,6 +22,7 @@ public:
     Vector() :
             buf_(), objects_(NULL), const_objects_(NULL), size_(0), capacity_(0), fixed_(false) {
     }
+
     ~Vector() {
         if (objects_ != NULL) {
             for (std::size_t i = 0; i < size_; ++i) {
@@ -32,7 +33,7 @@ public:
 
     void map(void *ptr, size_t size) {
         Vector temp;
-        temp.map_(mapper);
+        temp.map_(ptr, size);
         swap(temp);
     }
 
@@ -202,9 +203,12 @@ private:
     std::size_t capacity_;
     bool fixed_;
 
-    void map_(std::istream& is) {
-        UInt64 total_size;
-        mapper.map(&total_size);
+    void map_(void* ptr, std::size_t size) {
+        size_t offset = 0;
+        size_t total_size;
+        total_size = *reinterpret_cast<size_t*>(ptr);
+        HSDS_EXCEPTION_IF(total_size != size, HSDS_SIZE_ERROR);
+        offset += sizeof(total_size);
         HSDS_EXCEPTION_IF(total_size > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
         HSDS_EXCEPTION_IF((total_size % sizeof(T)) != 0, HSDS_FORMAT_ERROR);
         const std::size_t size = (std::size_t)(total_size / sizeof(T));

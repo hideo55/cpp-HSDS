@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include "exception.hpp"
+#include "constants.hpp"
 
 namespace hsds {
 
@@ -33,16 +34,16 @@ public:
     }
 
     void reset(T *ptr = NULL) {
-        HSDS_EXCEPTION_IF((ptr != NULL) && (ptr == ptr_), HSDS_ERROR_RESET);
+        HSDS_EXCEPTION_IF((ptr != NULL) && (ptr == ptr_), HSDS_RESET_ERROR);
         ScopedPtr(ptr).swap(*this);
     }
 
     T &operator*() const {
-        HSDS_DEBUG_IF(ptr_ == NULL, HSDS_ERROR_STATE);
+        HSDS_DEBUG_IF(ptr_ == NULL, HSDS_STATE_ERROR);
         return *ptr_;
     }
     T *operator->() const {
-        HSDS_DEBUG_IF(ptr_ == NULL, HSDS_ERROR_STATE);
+        HSDS_DEBUG_IF(ptr_ == NULL, HSDS_STATE_ERROR);
         return ptr_;
     }
     T *get() const {
