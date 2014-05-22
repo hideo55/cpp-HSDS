@@ -11,6 +11,7 @@
 #include "hsds/exception.hpp"
 #include "hsds/popcount.hpp"
 #include "hsds/rank-index.hpp"
+#include "hsds/vector.hpp"
 
 /**
  * @namespace hsds
@@ -188,9 +189,9 @@ public:
 
 private:
     typedef uint64_t block_type;
-    typedef std::vector<block_type> blocks_type;
-    typedef std::vector<RankIndex> rank_dict_type;
-    typedef std::vector<uint32_t> select_dict_type;
+    typedef hsds::Vector<block_type> blocks_type;
+    typedef hsds::Vector<RankIndex> rank_dict_type;
+    typedef hsds::Vector<uint32_t> select_dict_type;
 
     blocks_type blocks_;                ///< Bit vector
     rank_dict_type rank_table_;         ///< Rank dictionary

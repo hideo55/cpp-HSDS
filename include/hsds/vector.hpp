@@ -9,9 +9,9 @@
 #define HSDS_VECTOR_HPP_
 
 #include <cstddef>
-#include "scoped_array.hpp"
-#include "constants.hpp"
-#include "exception.hpp"
+#include "hsds/scoped_array.hpp"
+#include "hsds/constants.hpp"
+#include "hsds/exception.hpp"
 
 
 namespace hsds {
@@ -176,7 +176,7 @@ public:
         return sizeof(T) * size_;
     }
     std::size_t io_size() const {
-        return sizeof(UInt64) + ((total_size() + 7) & ~(std::size_t) 0x07);
+        return sizeof(size_t) + ((total_size() + 7) & ~(std::size_t) 0x07);
     }
 
     void clear() {
@@ -184,11 +184,11 @@ public:
     }
     void swap(Vector &rhs) {
         buf_.swap(rhs.buf_);
-        HSDS::swap(objects_, rhs.objects_);
-        HSDS::swap(const_objects_, rhs.const_objects_);
-        HSDS::swap(size_, rhs.size_);
-        HSDS::swap(capacity_, rhs.capacity_);
-        HSDS::swap(fixed_, rhs.fixed_);
+        std::swap(objects_, rhs.objects_);
+        std::swap(const_objects_, rhs.const_objects_);
+        std::swap(size_, rhs.size_);
+        std::swap(capacity_, rhs.capacity_);
+        std::swap(fixed_, rhs.fixed_);
     }
 
     static std::size_t max_size() {
@@ -206,15 +206,14 @@ private:
     void map_(void* ptr, std::size_t size) {
         size_t offset = 0;
         size_t total_size;
-        total_size = *reinterpret_cast<size_t*>(ptr);
+        total_size = *static_cast<size_t*>(ptr);
         HSDS_EXCEPTION_IF(total_size != size, HSDS_SIZE_ERROR);
         offset += sizeof(total_size);
         HSDS_EXCEPTION_IF(total_size > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
         HSDS_EXCEPTION_IF((total_size % sizeof(T)) != 0, HSDS_FORMAT_ERROR);
-        const std::size_t size = (std::size_t)(total_size / sizeof(T));
-        mapper.map(&const_objects_, size);
-        mapper.seek((std::size_t)((8 - (total_size % 8)) % 8));
-        size_ = size;
+        const_objects_ = static_cast<T*>(static_cast<char*>(ptr) + offset);
+        offset += total_size;
+        size_ = (std::size_t)(total_size / sizeof(T));
         fix();
     }
 

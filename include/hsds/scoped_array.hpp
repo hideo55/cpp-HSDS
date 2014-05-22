@@ -9,8 +9,8 @@
 #define HSDS_SCOPED_ARRAY_HPP_
 
 #include <algorithm>
-#include "exception.hpp"
-#include "constants.hpp"
+#include "hsds/exception.hpp"
+#include "hsds/constants.hpp"
 
 namespace hsds {
 
