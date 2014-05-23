@@ -1,4 +1,5 @@
 #include <igloo/igloo_alt.h>
+#include <igloo/TapTestListener.h>
 #include "hsds/bit-vector.hpp"
 #include <sstream>
 
@@ -65,7 +66,7 @@ Describe(bit_vector) {
 
     It(clear_vector) {
         hsds::BitVector bv;
-        for(size_t i = 0; i < 100; ++i){
+        for (size_t i = 0; i < 100; ++i) {
             bv.set(i, true);
         }
         bv.build();
@@ -75,7 +76,7 @@ Describe(bit_vector) {
 
     Describe(bit_vector_opration) {
         hsds::BitVector bv;
-        
+
         void SetUp() {
             bv.clear();
             bv.set(0, true);
@@ -88,7 +89,7 @@ Describe(bit_vector) {
             bv.build();
         }
 
-        It(save_and_load_bit_vector){
+        It(save_and_load_bit_vector) {
             ostringstream oss;
             bv.save(oss);
             istringstream iss;
@@ -96,7 +97,7 @@ Describe(bit_vector) {
 
             hsds::BitVector bv2;
             bv2.load(iss);
-            
+
             AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
             AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
             AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
@@ -118,6 +119,12 @@ Describe(bit_vector) {
     };
 };
 
-int main(int argc, const char** argv) {
-    return TestRunner::RunAllTests(argc, argv);
+int main() {
+    DefaultTestResultsOutput output;
+    TestRunner runner(output);
+
+    TapTestListener listener;
+    runner.AddListener(&listener);
+
+    runner.Run();
 }
