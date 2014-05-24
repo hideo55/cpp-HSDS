@@ -498,4 +498,24 @@ void BitVector::load(std::istream &is) {
     HSDS_EXCEPTION_IF(is.fail(), E_LOAD_FILE);
 }
 
+void BitVector::map(void* ptr, uint64_t mapSize) {
+    size_ = *(static_cast<uint64_t*>(ptr));
+    uint64_t offset = sizeof(size_);
+
+    num_of_1s_ = *(reinterpret_cast<uint64_t*>((char*)ptr + offset));
+    offset += sizeof(num_of_1s_);
+
+    blocks_type().swap(blocks_);
+    offset += blocks_.map((char*)ptr + offset, mapSize);
+
+    rank_dict_type().swap(rank_table_);
+    offset += rank_table_.map((char*)ptr + offset, mapSize);
+
+    select_dict_type().swap(select0_table_);
+    offset += select0_table_.map((char*)ptr + offset, mapSize);
+
+    select_dict_type().swap(select1_table_);
+    select1_table_.map((char*)ptr + offset, mapSize);
+}
+
 }

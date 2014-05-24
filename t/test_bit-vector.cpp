@@ -1,6 +1,13 @@
 #include <igloo/igloo_alt.h>
+#include <igloo/TapTestListener.h>
 #include "hsds/bit-vector.hpp"
 #include <sstream>
+#include <fstream>
+#include <cstdlib>
+#include <cstdio>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 using namespace std;
 using namespace igloo;
@@ -65,7 +72,7 @@ Describe(bit_vector) {
 
     It(clear_vector) {
         hsds::BitVector bv;
-        for(size_t i = 0; i < 100; ++i){
+        for (size_t i = 0; i < 100; ++i) {
             bv.set(i, true);
         }
         bv.build();
@@ -75,8 +82,13 @@ Describe(bit_vector) {
 
     Describe(bit_vector_opration) {
         hsds::BitVector bv;
-        
+        std::string tempfile;
+
         void SetUp() {
+            //char* tempname = mktemp("tmpXXXX");
+            //tempfile = tempname;
+            tempfile = "tmp001";
+
             bv.clear();
             bv.set(0, true);
             bv.set(100, true);
@@ -88,18 +100,48 @@ Describe(bit_vector) {
             bv.build();
         }
 
-        It(save_and_load_bit_vector){
-            ostringstream oss;
-            bv.save(oss);
-            istringstream iss;
-            iss.str(oss.str());
+        void TearDown() {
+            remove(tempfile.c_str());
+        }
+
+        It(save_and_load_bit_vector) {
+            ofstream ofs(tempfile.c_str(), ios_base::binary);
+            bv.save(ofs);
+            ofs.close();
+            ifstream ifs(tempfile.c_str());
 
             hsds::BitVector bv2;
-            bv2.load(iss);
-            
+            bv2.load(ifs);
+
             AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
             AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
             AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
+        }
+
+        It(save_and_mmap_bit_vector) {
+            ofstream ofs(tempfile.c_str(), ios_base::binary);
+            bv.save(ofs);
+            ofs.close();
+
+            int fd = open(tempfile.c_str(), O_RDONLY, 0);
+            AssertThatEx(fd != -1, Is().EqualTo(true));
+            struct stat sb;
+            if (fstat(fd, &sb) == -1) {
+                Assert::That(false);
+            }
+
+            void* mmapPtr = mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+            {
+                hsds::BitVector bv2;
+                bv2.map(mmapPtr, sb.st_size);
+
+                AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
+                AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
+                AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
+            }
+
+            munmap(mmapPtr, sb.st_size);
         }
 
         It(swap_bit_vector) {
@@ -118,6 +160,12 @@ Describe(bit_vector) {
     };
 };
 
-int main(int argc, const char** argv) {
-    return TestRunner::RunAllTests(argc, argv);
+int main() {
+    DefaultTestResultsOutput output;
+    TestRunner runner(output);
+
+    TapTestListener listener;
+    runner.AddListener(&listener);
+
+    runner.Run();
 }

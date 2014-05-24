@@ -11,20 +11,22 @@
 #include "hsds/exception.hpp"
 #include "hsds/popcount.hpp"
 #include "hsds/rank-index.hpp"
+#include "hsds/vector.hpp"
 
 /**
  * @namespace hsds
  */
 namespace hsds {
 
+namespace {
 const uint32_t S_BLOCK_SIZE = 64;
 const uint32_t L_BLOCK_SIZE = 512;
 const uint32_t BLOCK_RATE = 8;
 
-// Error messages
 const char* const E_OUT_OF_RANGE = "Out of range access";
 const char* const E_SAVE_FILE = "Failed to save the bit vector.";
 const char* const E_LOAD_FILE = "Failed to read file. File format is invalid.";
+}
 
 /**
  * @class BitVector
@@ -172,6 +174,14 @@ public:
     void load(std::istream &is);
 
     /**
+     * @brief Mapping pointer to bit vector
+     *
+     * @param[in] ptr Pointer of the mmaped file
+     * @param[in] size Size of mmaped file
+     */
+    void map(void* ptr, uint64_t size);
+
+    /**
      * @brief Exchanges the content of the instance
      *
      * @param[in,out] x Another BitVector instnace
@@ -187,9 +197,9 @@ public:
 
 private:
     typedef uint64_t block_type;
-    typedef std::vector<block_type> blocks_type;
-    typedef std::vector<RankIndex> rank_dict_type;
-    typedef std::vector<uint32_t> select_dict_type;
+    typedef hsds::Vector<block_type> blocks_type;
+    typedef hsds::Vector<RankIndex> rank_dict_type;
+    typedef hsds::Vector<uint32_t> select_dict_type;
 
     blocks_type blocks_;                ///< Bit vector
     rank_dict_type rank_table_;         ///< Rank dictionary

@@ -27,7 +27,7 @@ IF(SSE4_2_FOUND)
 ENDIF(SSE4_2_FOUND)
 ADD_DEFINITIONS(${CXX_DFLAGS})
 
-INCLUDE_DIRECTORIES(include extlib/igloo)
+INCLUDE_DIRECTORIES(include extlib/igloo extlib/igloo-TapTestListener)
 
 ADD_LIBRARY(hsds-bitvector SHARED src/bit-vector.cpp)
 
