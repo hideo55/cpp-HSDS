@@ -8,5 +8,5 @@ var searchData=
   ['lo56',['lo56',['../classhsds_1_1_pop_count.html#a75567d028fefed63ad401c55c62522c6',1,'hsds::PopCount']]],
   ['lo64',['lo64',['../classhsds_1_1_pop_count.html#af0776ed4d3ae7d255b5fb4728498d4de',1,'hsds::PopCount']]],
   ['lo8',['lo8',['../classhsds_1_1_pop_count.html#acab6eebe6ce41d587c85261bb3b39abf',1,'hsds::PopCount']]],
-  ['load',['load',['../classhsds_1_1_bit_vector.html#aba3f865b4f2a25fd2965862f23a861e4',1,'hsds::BitVector']]]
+  ['load',['load',['../classhsds_1_1_bit_vector.html#aba3f865b4f2a25fd2965862f23a861e4',1,'hsds::BitVector::load()'],['../classhsds_1_1_vector.html#a2531062970de58a31e6dab07d937b23a',1,'hsds::Vector::load()']]]
 ];

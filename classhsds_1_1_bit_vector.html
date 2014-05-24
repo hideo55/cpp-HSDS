@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,7 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">hsds::BitVector Class Reference</div>  </div>
 </div><!--header-->
@@ -100,9 +101,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab524f702348c9b9adeaac41bcbd7c74e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#ab524f702348c9b9adeaac41bcbd7c74e">BitVector</a> ()</td></tr>
-<tr class="memdesc:ab524f702348c9b9adeaac41bcbd7c74e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab524f702348c9b9adeaac41bcbd7c74e">More...</a><br/></td></tr>
-<tr class="separator:ab524f702348c9b9adeaac41bcbd7c74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a2b43bfdfa0e713c4a4904e30aef615"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a7a2b43bfdfa0e713c4a4904e30aef615">BitVector</a> (uint64_t <a class="el" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5">size</a>)</td></tr>
 <tr class="memdesc:a7a2b43bfdfa0e713c4a4904e30aef615"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a7a2b43bfdfa0e713c4a4904e30aef615">More...</a><br/></td></tr>
 <tr class="separator:a7a2b43bfdfa0e713c4a4904e30aef615"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,14 +143,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aba3f865b4f2a25fd2965862f23a861e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#aba3f865b4f2a25fd2965862f23a861e4">load</a> (std::istream &amp;is)</td></tr>
 <tr class="memdesc:aba3f865b4f2a25fd2965862f23a861e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load bit vector from istream.  <a href="#aba3f865b4f2a25fd2965862f23a861e4">More...</a><br/></td></tr>
 <tr class="separator:aba3f865b4f2a25fd2965862f23a861e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4dafed89c3045b719ae640dc3dd5449"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#ae4dafed89c3045b719ae640dc3dd5449">map</a> (void *ptr, uint64_t <a class="el" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5">size</a>)</td></tr>
+<tr class="memdesc:ae4dafed89c3045b719ae640dc3dd5449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mapping pointer to bit vector.  <a href="#ae4dafed89c3045b719ae640dc3dd5449">More...</a><br/></td></tr>
+<tr class="separator:ae4dafed89c3045b719ae640dc3dd5449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43fb6533bdb1ae8cdf070d686f90bfe6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a43fb6533bdb1ae8cdf070d686f90bfe6">swap</a> (<a class="el" href="classhsds_1_1_bit_vector.html">BitVector</a> &amp;x)</td></tr>
 <tr class="memdesc:a43fb6533bdb1ae8cdf070d686f90bfe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchanges the content of the instance.  <a href="#a43fb6533bdb1ae8cdf070d686f90bfe6">More...</a><br/></td></tr>
 <tr class="separator:a43fb6533bdb1ae8cdf070d686f90bfe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ab524f702348c9b9adeaac41bcbd7c74e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#ab524f702348c9b9adeaac41bcbd7c74e">BitVector</a> ()</td></tr>
+<tr class="memdesc:ab524f702348c9b9adeaac41bcbd7c74e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab524f702348c9b9adeaac41bcbd7c74e">More...</a><br/></td></tr>
+<tr class="separator:ab524f702348c9b9adeaac41bcbd7c74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Succinct bit vector class. </p>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00033">33</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00037">37</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab524f702348c9b9adeaac41bcbd7c74e"></a>
 <div class="memitem">
@@ -170,14 +177,14 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00038">38</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00042">42</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -211,7 +218,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00047">47</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00051">51</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -238,7 +245,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00056">56</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00060">60</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -301,7 +308,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear bit vector. </p>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00062">62</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00066">66</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -336,7 +343,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00123">123</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00127">127</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -358,6 +365,41 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">is</td><td>The instance of std::istream </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae4dafed89c3045b719ae640dc3dd5449"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hsds::BitVector::map </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mapping pointer to bit vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptr</td><td>Pointer of the mmaped file </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of mmaped file </td></tr>
   </table>
   </dd>
 </dl>
@@ -401,7 +443,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00075">75</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00079">79</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -581,7 +623,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns number of the element in bit vector. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00102">102</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00106">106</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -616,7 +658,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of bits that matches with argument in the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00113">113</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00117">117</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -650,7 +692,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00179">179</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00191">191</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -660,7 +702,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 16 2014 02:34:08 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun May 25 2014 01:33:53 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

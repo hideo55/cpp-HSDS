@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,7 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a>  </div>
   <div class="headertitle">
 <div class="title">hsds::Exception Class Reference</div>  </div>
 </div><!--header-->
@@ -126,11 +127,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1d0f68356dd59a82bd74a70a3df01bed"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_exception.html#a1d0f68356dd59a82bd74a70a3df01bed">getLineNumber</a> () const </td></tr>
 <tr class="memdesc:a1d0f68356dd59a82bd74a70a3df01bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns line number of the exception occurred.  <a href="#a1d0f68356dd59a82bd74a70a3df01bed">More...</a><br/></td></tr>
 <tr class="separator:a1d0f68356dd59a82bd74a70a3df01bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a165c47e3aa53851b01299fe248e0db88"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_exception.html#a165c47e3aa53851b01299fe248e0db88">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="classhsds_1_1_exception.html">hsds::Exception</a> &amp;e)</td></tr>
+<tr class="separator:a165c47e3aa53851b01299fe248e0db88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">Exception</a> class for HSDS libraries. </p>
 
-<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00041">41</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00042">42</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a177bbd99e49b356bba7f01619ebda5c5"></a>
 <div class="memitem">
@@ -187,7 +193,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00052">52</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00053">53</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
 
 </div>
 </div>
@@ -214,7 +220,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00060">60</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00061">61</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
 
 </div>
 </div>
@@ -243,7 +249,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns file name of the exception occurred. </p>
 <dl class="section return"><dt>Returns</dt><dd>File name </dd></dl>
 
-<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00078">78</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00079">79</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +277,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns function name of the exception occurred. </p>
 <dl class="section return"><dt>Returns</dt><dd>Function name </dd></dl>
 
-<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00087">87</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00088">88</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
 
 </div>
 </div>
@@ -299,7 +305,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns line number of the exception occurred. </p>
 <dl class="section return"><dt>Returns</dt><dd>Line number </dd></dl>
 
-<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00096">96</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00097">97</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
 
 </div>
 </div>
@@ -327,7 +333,44 @@ Public Member Functions</h2></td></tr>
 <p>Returns exception message as null terminated character sequence. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classhsds_1_1_exception.html" title="Exception class for HSDS libraries.">Exception</a> message </dd></dl>
 
-<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00069">69</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00070">70</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a class="anchor" id="a165c47e3aa53851b01299fe248e0db88"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classhsds_1_1_exception.html">hsds::Exception</a> &amp;&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="exception_8hpp_source.html#l00110">110</a> of file <a class="el" href="exception_8hpp_source.html">exception.hpp</a>.</p>
 
 </div>
 </div>
@@ -337,7 +380,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 16 2014 02:34:08 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun May 25 2014 01:33:53 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

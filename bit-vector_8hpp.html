@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,8 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">bit-vector.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -96,8 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;vector&gt;</code><br/>
 <code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;algorithm&gt;</code><br/>
-<code>#include &quot;<a class="el" href="exception_8hpp_source.html">hsds/exception.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="popcount_8hpp_source.html">hsds/popcount.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="vector_8hpp_source.html">hsds/vector.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="rank-index_8hpp_source.html">hsds/rank-index.hpp</a>&quot;</code><br/>
 </div>
 <p><a href="bit-vector_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -113,26 +111,11 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacehsds"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html">hsds</a></td></tr>
 <tr class="memdesc:namespacehsds"><td class="mdescLeft">&#160;</td><td class="mdescRight">defined(HSDS_DEBUG_IF) <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aecc65d7cf5e2b531ba0460bbcbbbd813"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#aecc65d7cf5e2b531ba0460bbcbbbd813">hsds::S_BLOCK_SIZE</a> = 64</td></tr>
-<tr class="separator:aecc65d7cf5e2b531ba0460bbcbbbd813"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff974546f6f24280f20c970503eef50a"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#aff974546f6f24280f20c970503eef50a">hsds::L_BLOCK_SIZE</a> = 512</td></tr>
-<tr class="separator:aff974546f6f24280f20c970503eef50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fbdb97fb7f9e02b4ba7deeaca45045b"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#a7fbdb97fb7f9e02b4ba7deeaca45045b">hsds::BLOCK_RATE</a> = 8</td></tr>
-<tr class="separator:a7fbdb97fb7f9e02b4ba7deeaca45045b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02d04b2a720e4ba902c863390b763a92"><td class="memItemLeft" align="right" valign="top">const char *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#a02d04b2a720e4ba902c863390b763a92">hsds::E_OUT_OF_RANGE</a> = &quot;Out of range access&quot;</td></tr>
-<tr class="separator:a02d04b2a720e4ba902c863390b763a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae6757ede38351881830f891f67e266f"><td class="memItemLeft" align="right" valign="top">const char *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#aae6757ede38351881830f891f67e266f">hsds::E_SAVE_FILE</a> = &quot;Failed to save the bit vector.&quot;</td></tr>
-<tr class="separator:aae6757ede38351881830f891f67e266f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33e43b8a2d727249118b370c5075e791"><td class="memItemLeft" align="right" valign="top">const char *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehsds.html#a33e43b8a2d727249118b370c5075e791">hsds::E_LOAD_FILE</a> = &quot;Failed to read file. File format is invalid.&quot;</td></tr>
-<tr class="separator:a33e43b8a2d727249118b370c5075e791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 16 2014 02:34:08 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun May 25 2014 01:33:53 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
