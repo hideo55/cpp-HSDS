@@ -25,6 +25,13 @@ public:
     }
 
     /**
+     * @brief Destructor
+     */
+    ~RankIndex() {
+
+    }
+
+    /**
      * @brief Setter method for absolute rank value.
      *
      * @param[in] value Absolute value of rank.

@@ -1,4 +1,5 @@
 #include "hsds/bit-vector.hpp"
+#include "hsds/popcount.hpp"
 
 #if defined(_MSC_VER)
 
