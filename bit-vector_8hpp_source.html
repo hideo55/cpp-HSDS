@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -98,8 +98,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="vector_8hpp.html">hsds/vector.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="rank-index_8hpp.html">hsds/rank-index.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;hsds/vector.hpp&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;hsds/rank-index.hpp&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>hsds {</div>
@@ -126,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a7a2b43bfdfa0e713c4a4904e30aef615">   51</a></span>&#160;    <a class="code" href="classhsds_1_1_bit_vector.html#ab524f702348c9b9adeaac41bcbd7c74e" title="Constructor.">BitVector</a>(uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5" title="Returns number of the element in bit vector.">size</a>) :</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            size_(size), num_of_1s_(0) {</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        uint64_t block_num = (size + S_BLOCK_SIZE - 1) / S_BLOCK_SIZE;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        blocks_.<a class="code" href="classhsds_1_1_vector.html#ac6c0b788b4e8931f37a7652d7c3a233e">resize</a>(block_num);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        blocks_.resize(block_num);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a9eb4aa643aa6e38609b63911de677a4d">   60</a></span>&#160;    <a class="code" href="classhsds_1_1_bit_vector.html#a9eb4aa643aa6e38609b63911de677a4d" title="Destructor.">~BitVector</a>() {</div>
@@ -170,19 +170,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#ae4dafed89c3045b719ae640dc3dd5449" title="Mapping pointer to bit vector.">map</a>(<span class="keywordtype">void</span>* ptr, uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a26f69cc07d14de4879a95c55efff76d5" title="Returns number of the element in bit vector.">size</a>);</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
 <div class="line"><a name="l00191"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a43fb6533bdb1ae8cdf070d686f90bfe6">  191</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhsds_1_1_bit_vector.html#a43fb6533bdb1ae8cdf070d686f90bfe6" title="Exchanges the content of the instance.">swap</a>(<a class="code" href="classhsds_1_1_bit_vector.html" title="Succinct bit vector class.">BitVector</a> &amp;x) {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        blocks_.<a class="code" href="classhsds_1_1_vector.html#ad1cd7e5b8fd10a718a89532c2a81c25d">swap</a>(x.blocks_);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        blocks_.swap(x.blocks_);</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        std::swap(size_, x.size_);</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        std::swap(num_of_1s_, x.num_of_1s_);</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        rank_table_.<a class="code" href="classhsds_1_1_vector.html#ad1cd7e5b8fd10a718a89532c2a81c25d">swap</a>(x.rank_table_);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        select0_table_.<a class="code" href="classhsds_1_1_vector.html#ad1cd7e5b8fd10a718a89532c2a81c25d">swap</a>(x.select0_table_);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        select1_table_.<a class="code" href="classhsds_1_1_vector.html#ad1cd7e5b8fd10a718a89532c2a81c25d">swap</a>(x.select1_table_);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        rank_table_.swap(x.rank_table_);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        select0_table_.swap(x.select0_table_);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        select1_table_.swap(x.select1_table_);</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    }</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keyword">typedef</span> uint64_t block_type;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classhsds_1_1_vector.html">hsds::Vector&lt;block_type&gt;</a> blocks_type;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classhsds_1_1_vector.html">hsds::Vector&lt;RankIndex&gt;</a> rank_dict_type;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classhsds_1_1_vector.html">hsds::Vector&lt;uint32_t&gt;</a> select_dict_type;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keyword">typedef</span> hsds::Vector&lt;block_type&gt; blocks_type;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keyword">typedef</span> hsds::Vector&lt;RankIndex&gt; rank_dict_type;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keyword">typedef</span> hsds::Vector&lt;uint32_t&gt; select_dict_type;</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    blocks_type blocks_;                </div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    rank_dict_type rank_table_;         </div>
@@ -203,7 +203,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun May 25 2014 01:34:33 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun May 25 2014 02:07:48 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
