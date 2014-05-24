@@ -25,16 +25,17 @@ public:
 
     ~Vector() {
         if (objects_ != NULL) {
-            for (std::size_t i = 0; i < size_; ++i) {
+            for (std::uint64_t i = 0; i < size_; ++i) {
                 objects_[i].~T();
             }
         }
     }
 
-    void map(void *ptr, size_t size) {
+    uint64_t map(void *ptr, uint64_t size) {
         Vector temp;
-        temp.map_(ptr, size);
+        uint64_t offset = temp.map_(ptr, size);
         swap(temp);
+        return offset;
     }
 
     void load(std::istream& is) {
@@ -62,38 +63,38 @@ public:
     }
 
     // resize() assumes that T's placement new does not throw an exception.
-    void resize(std::size_t size) {
+    void resize(std::uint64_t size) {
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         reserve(size);
-        for (std::size_t i = size_; i < size; ++i) {
+        for (std::uint64_t i = size_; i < size; ++i) {
             new (&objects_[i]) T;
         }
-        for (std::size_t i = size; i < size_; ++i) {
+        for (std::uint64_t i = size; i < size_; ++i) {
             objects_[i].~T();
         }
         size_ = size;
     }
 
     // resize() assumes that T's placement new does not throw an exception.
-    void resize(std::size_t size, const T &x) {
+    void resize(std::uint64_t size, const T &x) {
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         reserve(size);
-        for (std::size_t i = size_; i < size; ++i) {
+        for (std::uint64_t i = size_; i < size; ++i) {
             new (&objects_[i]) T(x);
         }
-        for (std::size_t i = size; i < size_; ++i) {
+        for (std::uint64_t i = size; i < size_; ++i) {
             objects_[i].~T();
         }
         size_ = size;
     }
 
-    void reserve(std::size_t capacity) {
+    void reserve(std::uint64_t capacity) {
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         if (capacity <= capacity_) {
             return;
         }
         HSDS_DEBUG_IF(capacity > max_size(), HSDS_SIZE_ERROR);
-        std::size_t new_capacity = capacity;
+        std::uint64_t new_capacity = capacity;
         if (capacity_ > (capacity / 2)) {
             if (capacity_ > (max_size() / 2)) {
                 new_capacity = max_size();
@@ -122,7 +123,7 @@ public:
     const T *end() const {
         return const_objects_ + size_;
     }
-    const T &operator[](std::size_t i) const {
+    const T &operator[](std::uint64_t i) const {
         HSDS_DEBUG_IF(i >= size_, HSDS_BOUND_ERROR);
         return const_objects_[i];
     }
@@ -143,7 +144,7 @@ public:
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         return objects_ + size_;
     }
-    T &operator[](std::size_t i) {
+    T &operator[](std::uint64_t i) {
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         HSDS_DEBUG_IF(i >= size_, HSDS_BOUND_ERROR);
         return objects_[i];
@@ -159,10 +160,10 @@ public:
         return objects_[size_ - 1];
     }
 
-    std::size_t size() const {
+    std::uint64_t size() const {
         return size_;
     }
-    std::size_t capacity() const {
+    std::uint64_t capacity() const {
         return capacity_;
     }
     bool fixed() const {
@@ -172,11 +173,11 @@ public:
     bool empty() const {
         return size_ == 0;
     }
-    std::size_t total_size() const {
+    std::uint64_t total_size() const {
         return sizeof(T) * size_;
     }
-    std::size_t io_size() const {
-        return sizeof(size_t) + ((total_size() + 7) & ~(std::size_t) 0x07);
+    std::uint64_t io_size() const {
+        return sizeof(uint64_t) + ((total_size() + 7) & ~(std::uint64_t) 0x07);
     }
 
     void clear() {
@@ -191,7 +192,7 @@ public:
         std::swap(fixed_, rhs.fixed_);
     }
 
-    static std::size_t max_size() {
+    static std::uint64_t max_size() {
         return HSDS_SIZE_MAX / sizeof(T);
     }
 
@@ -199,52 +200,51 @@ private:
     ScopedArray<char> buf_;
     T *objects_;
     const T *const_objects_;
-    std::size_t size_;
-    std::size_t capacity_;
+    std::uint64_t size_;
+    std::uint64_t capacity_;
     bool fixed_;
 
-    void map_(void* ptr, std::size_t size) {
-        size_t offset = 0;
-        size_t total_size;
-        total_size = *static_cast<size_t*>(ptr);
-        HSDS_EXCEPTION_IF(total_size != size, HSDS_SIZE_ERROR);
+    uint64_t map_(void* ptr, std::uint64_t mapSize) {
+        uint64_t offset = 0;
+        uint64_t total_size = *reinterpret_cast<uint64_t*>(ptr);
         offset += sizeof(total_size);
         HSDS_EXCEPTION_IF(total_size > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
-        HSDS_EXCEPTION_IF((total_size % sizeof(T)) != 0, HSDS_FORMAT_ERROR);
-        const_objects_ = static_cast<T*>(static_cast<char*>(ptr) + offset);
-        offset += total_size;
-        size_ = (std::size_t)(total_size / sizeof(T));
+        HSDS_EXCEPTION_IF(total_size > mapSize, HSDS_SIZE_ERROR);
+        const_objects_ = reinterpret_cast<T*>(static_cast<char*>(ptr) + offset);
+        offset += total_size * sizeof(T);
+        size_ = total_size;
         fix();
+        return offset;
     }
 
     void read_(std::istream& is) {
-        size_t total_size;
-        is.read((char *)&total_size, sizeof(size_t));
+        uint64_t total_size;
+        is.read((char *)&total_size, sizeof(uint64_t));
         HSDS_EXCEPTION_IF(total_size > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
         HSDS_EXCEPTION_IF((total_size % sizeof(T)) != 0, HSDS_FORMAT_ERROR);
-        const std::size_t size = (std::size_t)(total_size / sizeof(T));
+        const std::uint64_t size = (std::uint64_t)(total_size / sizeof(T));
         resize(size);
         is.read((char *)objects_, total_size);
     }
 
     void write_(std::ostream& os) const {
-        size_t totalSize = total_size();
-        os.write((char*)&totalSize, sizeof(size_t));
+        uint64_t totalSize = total_size();
+        os.write((char*)&totalSize, sizeof(uint64_t));
         os.write((char*)const_objects_, size_);
     }
 
     // realloc() assumes that T's placement new does not throw an exception.
-    void realloc(std::size_t new_capacity) {
+    void realloc(std::uint64_t new_capacity) {
         HSDS_DEBUG_IF(new_capacity > max_size(), HSDS_SIZE_ERROR);
 
         ScopedArray<char> new_buf(new (std::nothrow) char[sizeof(T) * new_capacity]);
         HSDS_DEBUG_IF(new_buf.get() == NULL, HSDS_MEMORY_ERROR);
         T *new_objects = reinterpret_cast<T *>(new_buf.get());
 
-        for (std::size_t i = 0; i < size_; ++i) {
+        for (std::uint64_t i = 0; i < size_; ++i) {
             new (&new_objects[i]) T(objects_[i]);
         }
-        for (std::size_t i = 0; i < size_; ++i) {
+        for (std::uint64_t i = 0; i < size_; ++i) {
             objects_[i].~T();
         }
 

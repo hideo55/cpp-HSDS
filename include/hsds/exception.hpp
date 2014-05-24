@@ -3,6 +3,7 @@
 
 #include <exception>
 #include <stdexcept>
+#include <iostream>
 #include <string>
 #if !defined(_MSC_VER)
  #include <stdint.h>
@@ -97,12 +98,20 @@ public:
         return line_;
     }
 
+    friend std::ostream& operator<<(std::ostream& os, hsds::Exception& e);
+
 private:
     std::string message_;
     const char* filename_;
     const char* func_;
     uint32_t line_;
 };
+
+std::ostream& operator<<(std::ostream& os, hsds::Exception& e){
+    os << e.what() << " at " << e.getFileName() << ":" << e.getLineNumber() << std::endl;
+    return os;
+}
+
 }
 
 #endif /* HSDS_EXCEPTION_H_ */

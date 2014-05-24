@@ -174,6 +174,14 @@ public:
     void load(std::istream &is);
 
     /**
+     * @brief Mapping pointer to bit vector
+     *
+     * @param[in] ptr Pointer of the mmaped file
+     * @param[in] size Size of mmaped file
+     */
+    void map(void* ptr, uint64_t size);
+
+    /**
      * @brief Exchanges the content of the instance
      *
      * @param[in,out] x Another BitVector instnace
