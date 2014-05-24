@@ -700,7 +700,13 @@ RECURSIVE              = NO
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                =
+EXCLUDE                = include/hsds/vector.hpp \
+                         include/hsds/popcount.hpp \
+                         include/hsds/rank-index.hpp \
+                         include/hsds/intrin.h \
+                         include/hsds/scoped_ptr.hpp \
+                         include/hsds/scoped_array.hpp \
+                         include/hsds/constants.hpp
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
