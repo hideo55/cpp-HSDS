@@ -30,8 +30,10 @@ ADD_DEFINITIONS(${CXX_DFLAGS})
 INCLUDE_DIRECTORIES(include extlib/igloo extlib/igloo-TapTestListener)
 
 ADD_LIBRARY(hsds-bitvector SHARED src/bit-vector.cpp)
-
 SET_TARGET_PROPERTIES(hsds-bitvector PROPERTIES VERSION ${serial} SOVERSION ${soserial})
+
+ADD_LIBRARY(hsds-waveletmatrix SHARED src/wavelet-matrix.cpp)
+SET_TARGET_PROPERTIES(hsds-waveletmatrix PROPERTIES VERSION ${serial} SOVERSION ${soserial})
 
 INSTALL(TARGETS hsds-bitvector DESTINATION lib)
 

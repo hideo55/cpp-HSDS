@@ -9,6 +9,7 @@ Makefile
 CMakeFiles
 benchmark_bit-vector
 libhsds-bitvector.*
+libhsds-waveletmatrix.*
 t/test_bit-vector
 Testing
 
