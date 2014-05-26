@@ -259,7 +259,11 @@ void BitVector::build(bool enable_faster_select1, bool enable_faster_select0) {
     }
 }
 
-uint64_t BitVector::rank(uint64_t i) const throw (hsds::Exception) {
+uint64_t BitVector::rank0(uint64_t i) const throw (hsds::Exception) {
+    return i - rank1(i);
+}
+
+uint64_t BitVector::rank1(uint64_t i) const throw (hsds::Exception) {
     HSDS_DEBUG_IF(i > this->size(), E_OUT_OF_RANGE);
     uint64_t rank_id = i / L_BLOCK_SIZE;
     uint64_t block_id = i / S_BLOCK_SIZE;

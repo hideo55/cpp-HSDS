@@ -129,6 +129,17 @@ public:
     }
 
     /**
+     * @brief Returns Number of the bits equal to 0 up to position `i`
+     *
+     * @param[in] i Index of the bit vector
+     *
+     * @return Number of the bits equal to 0
+     *
+     * @exception hsds::Exception Out of range access
+     */
+    uint64_t rank0(uint64_t i) const throw (hsds::Exception);
+
+    /**
      * @brief Returns Number of the bits equal to 1 up to position `i`
      *
      * @param[in] i Index of the bit vector
@@ -137,7 +148,7 @@ public:
      *
      * @exception hsds::Exception Out of range access
      */
-    uint64_t rank(uint64_t i) const throw (hsds::Exception);
+    uint64_t rank1(uint64_t i) const throw (hsds::Exception);
 
     /**
      * @brief Returns the position of the x-th occurrence of 0

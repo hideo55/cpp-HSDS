@@ -117,7 +117,7 @@ void benchmark_hsds(const std::vector<bool> &bits, const std::vector<uint32_t> &
             Timer timer;
             uint64_t total = 0;
             for (size_t j = 0; j < rank_queries.size(); ++j) {
-                total += dic.rank(rank_queries[j]);
+                total += dic.rank1(rank_queries[j]);
             }
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
@@ -170,7 +170,7 @@ void benchmark_hsds_fast(const std::vector<bool> &bits, const std::vector<uint32
             Timer timer;
             uint64_t total = 0;
             for (size_t j = 0; j < rank_queries.size(); ++j) {
-                total += dic.rank(rank_queries[j]);
+                total += dic.rank1(rank_queries[j]);
             }
             times.push_back(timer.elapsed());
             assert(total != uint64_t(-1));
