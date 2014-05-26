@@ -60,8 +60,7 @@ public:
 private:
     T *ptr_;
 
-    // Disallows copy and assignment.
-    ScopedPtr(const ScopedPtr &);
+    // Disable assingment operator
     ScopedPtr &operator=(const ScopedPtr &);
 };
 

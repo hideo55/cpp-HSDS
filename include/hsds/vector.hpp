@@ -80,7 +80,7 @@ public:
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         reserve(size);
         for (uint64_t i = size_; i < size; ++i) {
-            new (&objects_[i]) T(x);
+            new (&objects_[i]) T;
         }
         for (uint64_t i = size; i < size_; ++i) {
             objects_[i].~T();
@@ -254,8 +254,7 @@ private:
         capacity_ = new_capacity;
     }
 
-    // Disallows copy and assignment.
-    Vector(const Vector &);
+    // Disable assingment operator
     Vector &operator=(const Vector &);
 };
 

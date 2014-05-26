@@ -221,8 +221,6 @@ private:
     uint64_t size_;                     ///< Size of bit vector
     uint64_t num_of_1s_;                ///< Nuber of the 1-bits
 
-    // Disable copy constructor
-    BitVector(const BitVector &);
     // Disable assingment operator
     BitVector &operator=(const BitVector &);
 };

@@ -15,7 +15,10 @@
 namespace hsds {
 
 const int BIT_REVERSE_TABLE_MAX_BITS = 16;
-const uint64_t NOT_FOUND = 0xFFFFFFFFFFFFFFFFLLU;
+
+bool uint2bit(uint64_t c, uint64_t i) {
+    return ((c >> (sizeof(uint64_t) * 8 - 1 - i)) & 0x1ULL) == 0x1ULL;
+}
 
 struct ListResult {
     ListResult(uint64_t c, uint64_t freq) :
@@ -30,7 +33,6 @@ struct ListResult {
     }
 };
 
-template<typename T>
 class WaveletMatrix {
 public:
     /**
@@ -45,10 +47,14 @@ public:
 
     void clear();
 
-    void build(std::vector<T>& src);
+    void build(std::vector<uint64_t>& src);
 
     inline uint64_t size() const {
         return size_;
+    }
+
+    inline uint64_t bitSize() const {
+    return bitSize_;
     }
 
     uint64_t lookup(uint64_t pos) const;
@@ -112,17 +118,15 @@ public:
     void load(std::ostream& os);
 private:
     uint64_t size_;
-    hsds::Vector<hsds::BitVector> bv_;
-    hsds::Vector<hsds::Vector<uint64_t> > nodeBeginPos_;
-    hsds::Vector<uint64_t> zeros_;
-    hsds::Vector<uint64_t> reverse_;
+    const uint64_t bitSize_;
     uint64_t alphabet_num_;
     uint64_t alphabet_bit_num_;
+    hsds::Vector<hsds::BitVector> bv_;
+    hsds::Vector<hsds::Vector<uint64_t> >nodeBeginPos_;
+    hsds::Vector<uint64_t> seps_;
 
-    uint64_t getAlphabetNum(const hsds::Vector<uint64_t>& array) const;
+    uint64_t getAlphabetNum(const std::vector<uint64_t>& array) const;
     uint64_t log2(uint64_t x) const;
-    void setArray(const hsds::Vector<uint64_t>& array);
-    void setBitReverseTable();
 };
 
 }

@@ -53,8 +53,7 @@ public:
 private:
     T *array_;
 
-    // Disallows copy and assignment.
-    ScopedArray(const ScopedArray &);
+    // Disable assingment operator
     ScopedArray &operator=(const ScopedArray &);
 };
 

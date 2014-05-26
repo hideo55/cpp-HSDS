@@ -33,6 +33,7 @@ ADD_LIBRARY(hsds-bitvector SHARED src/bit-vector.cpp)
 SET_TARGET_PROPERTIES(hsds-bitvector PROPERTIES VERSION ${serial} SOVERSION ${soserial})
 
 ADD_LIBRARY(hsds-waveletmatrix SHARED src/wavelet-matrix.cpp)
+TARGET_LINK_LIBRARIES(hsds-waveletmatrix hsds-bitvector)
 SET_TARGET_PROPERTIES(hsds-waveletmatrix PROPERTIES VERSION ${serial} SOVERSION ${soserial})
 
 INSTALL(TARGETS hsds-bitvector DESTINATION lib)
