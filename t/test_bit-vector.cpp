@@ -46,11 +46,14 @@ Describe(bit_vector) {
             AssertThatEx(bv[0], Is().EqualTo(true));
             AssertThatEx(bv[1], Is().EqualTo(false));
             AssertThatEx(bv[100], Is().EqualTo(true));
-            AssertThatEx(bv.rank(1), Is().EqualTo(1));
-            AssertThatEx(bv.rank(2), Is().EqualTo(1));
-            AssertThatEx(bv.rank(2), Is().EqualTo(1));
-            AssertThatEx(bv.rank(100), Is().EqualTo(1));
-            AssertThatEx(bv.rank(101), Is().EqualTo(2));
+            AssertThatEx(bv.rank1(1), Is().EqualTo(1));
+            AssertThatEx(bv.rank1(2), Is().EqualTo(1));
+            AssertThatEx(bv.rank1(100), Is().EqualTo(1));
+            AssertThatEx(bv.rank1(101), Is().EqualTo(2));
+            AssertThatEx(bv.rank0(1), Is().EqualTo(0));
+            AssertThatEx(bv.rank0(2), Is().EqualTo(1));
+            AssertThatEx(bv.rank0(100), Is().EqualTo(99));
+            AssertThatEx(bv.rank0(101), Is().EqualTo(99));
             AssertThatEx(bv.size(), Is().EqualTo(1025));
 
             AssertThatEx(bv.select1(0), Is().EqualTo(0));
