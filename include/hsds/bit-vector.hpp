@@ -27,6 +27,8 @@ const char* const E_SAVE_FILE = "Failed to save the bit vector.";
 const char* const E_LOAD_FILE = "Failed to read file. File format is invalid.";
 }
 
+const uint64_t NOT_FOUND = 0xFFFFFFFFFFFFFFFF;
+
 class Exception;
 class PopCount;
 
@@ -36,7 +38,6 @@ class PopCount;
  */
 class BitVector {
 public:
-    static const uint64_t NOT_FOUND = 0xFFFFFFFFFFFFFFFF;      
 
     /**
      * @brief Constructor
