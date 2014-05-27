@@ -63,13 +63,13 @@ Describe(bit_vector) {
             AssertThatEx(bv.select1(4), Is().EqualTo(512));
             AssertThatEx(bv.select1(5), Is().EqualTo(1023));
             AssertThatEx(bv.select1(6), Is().EqualTo(1024));
-            AssertThatEx(bv.select1(7), Is().EqualTo(BitVector::NOT_FOUND));
+            AssertThatEx(bv.select1(7), Is().EqualTo(hsds::NOT_FOUND));
 
             AssertThatEx(bv.size(false), Is().EqualTo(1018));
             AssertThatEx(bv.select0(0), Is().EqualTo(1));
             AssertThatEx(bv.select0(1), Is().EqualTo(2));
             AssertThatEx(bv.select0(100), Is().EqualTo(103));
-            AssertThatEx(bv.select0(1018), Is().EqualTo(BitVector::NOT_FOUND));
+            AssertThatEx(bv.select0(1018), Is().EqualTo(hsds::NOT_FOUND));
 
             AssertThatEx(bv.empty(), Is().EqualTo(false));
         }
