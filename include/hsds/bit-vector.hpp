@@ -8,7 +8,8 @@
 #include <iostream>
 #include <algorithm>
 #include <stdint.h>
-#include "hsds/scoped_ptr.hpp"
+#include "hsds/vector.hpp"
+#include "hsds/rank-index.hpp"
 
 #if defined(_MSC_VER)
 
@@ -208,10 +209,10 @@ private:
     typedef hsds::Vector<RankIndex> rank_dict_type;
     typedef hsds::Vector<uint32_t> select_dict_type;
 
-    ScopedPtr<blocks_type> blocks_;                ///< Bit vector
-    ScopedPtr<rank_dict_type> rank_table_;         ///< Rank dictionary
-    ScopedPtr<select_dict_type> select0_table_;    ///< Select dictionary for 0-bits
-    ScopedPtr<select_dict_type> select1_table_;    ///< Select dictionary for 1-bits
+    blocks_type blocks_;                ///< Bit vector
+    rank_dict_type rank_table_;         ///< Rank dictionary
+    select_dict_type select0_table_;    ///< Select dictionary for 0-bits
+    select_dict_type select1_table_;    ///< Select dictionary for 1-bits
     uint64_t size_;                     ///< Size of bit vector
     uint64_t num_of_1s_;                ///< Nuber of the 1-bits
 

@@ -53,6 +53,9 @@ public:
 private:
     T *ptr_;
 
+    // Disable copy constructor
+    ScopedPtr(const ScopedPtr &);
+
     // Disable assingment operator
     ScopedPtr &operator=(const ScopedPtr &);
 };

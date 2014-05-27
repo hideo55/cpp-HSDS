@@ -14,6 +14,7 @@
 #include <vector>
 #include "hsds/scoped_ptr.hpp"
 #include "hsds/bit-vector.hpp"
+#include "hsds/vector.hpp"
 
 namespace hsds {
 
@@ -92,9 +93,9 @@ private:
     const uint64_t bitSize_;
     uint64_t alphabetNum_;
     uint64_t alphabetBitNum_;
-    ScopedPtr<bv_type> bv_;
-    ScopedPtr<range_type> nodeBeginPos_;
-    ScopedPtr<uint64_vector_type> seps_;
+    bv_type bv_;
+    range_type nodeBeginPos_;
+    uint64_vector_type seps_;
 
     uint64_t getAlphabetNum(const std::vector<uint64_t>& array) const;
     uint64_t log2(uint64_t x) const;

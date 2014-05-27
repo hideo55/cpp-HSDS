@@ -6,15 +6,7 @@
  */
 
 #include "hsds/wavelet-matrix.hpp"
-#include "hsds/internal/vector.hpp"
-#include "hsds/internal/rank-index.hpp"
 #include <algorithm>
-
-#define INIT_SCOPED_PTR(X,Y)    \
-{                               \
-    ScopedPtr<X> temp(new X);   \
-    Y.swap(temp);               \
-}
 
 namespace hsds {
 
@@ -22,9 +14,6 @@ using namespace std;
 
 WaveletMatrix::WaveletMatrix() :
         size_(0), bitSize_(sizeof(uint64_t) * 8), alphabetNum_(0), alphabetBitNum_(0) {
-    INIT_SCOPED_PTR(bv_type, bv_);
-    INIT_SCOPED_PTR(range_type, nodeBeginPos_);
-    INIT_SCOPED_PTR(uint64_vector_type, seps_);
 }
 
 WaveletMatrix::~WaveletMatrix() {
@@ -48,11 +37,8 @@ void WaveletMatrix::build(vector<uint64_t>& src) {
     alphabetNum_ = getAlphabetNum(src);
     alphabetBitNum_ = log2(alphabetNum_);
 
-    bv_type& bv = *bv_;
-    range_type& nodeBeginPos = *nodeBeginPos_;
-
     size_ = static_cast<uint64_t>(src.size());
-    nodeBeginPos.resize(alphabetBitNum_);
+    nodeBeginPos_.resize(alphabetBitNum_);
 
     Vector<uint64_t> dummy;
     dummy.push_back(0);
@@ -60,13 +46,13 @@ void WaveletMatrix::build(vector<uint64_t>& src) {
     Vector<uint64_t>* prev_begin_pos = &dummy;
 
     for (uint64_t i = 0; i < alphabetBitNum_; ++i) {
-        nodeBeginPos[i].resize(1 << (i + 1));
+        nodeBeginPos_[i].resize(1 << (i + 1));
 
         for (uint64_t j = 0; j < size_; ++j) {
             int bit = (src[j] >> (alphabetBitNum_ - i - 1)) & 1;
             uint64_t subscript = src[j] >> (alphabetBitNum_ - i);
-            bv[i].set((*prev_begin_pos)[subscript]++, bit);
-            ++nodeBeginPos[i][(subscript << 1) | bit];
+            bv_[i].set((*prev_begin_pos)[subscript]++, bit);
+            ++nodeBeginPos_[i][(subscript << 1) | bit];
         }
 
         uint64_t cur_max = (uint64_t) 1 << i;
@@ -85,13 +71,13 @@ void WaveletMatrix::build(vector<uint64_t>& src) {
         uint64_t sum = 0;
 
         for (uint64_t j = 0; j < cur_max; ++j, rev ^= cur_max - (cur_max / 2 / (j & -j))) {
-            uint64_t t = nodeBeginPos[i][rev];
-            nodeBeginPos[i][rev] = sum;
+            uint64_t t = nodeBeginPos_[i][rev];
+            nodeBeginPos_[i][rev] = sum;
             sum += t;
         }
 
-        (*bv_)[i].build(true, true);
-        prev_begin_pos = &(nodeBeginPos[i]);
+        bv_[i].build(true, true);
+        prev_begin_pos = &(nodeBeginPos_[i]);
     }
 }
 
@@ -102,15 +88,15 @@ uint64_t WaveletMatrix::lookup(uint64_t pos) const {
     uint64_t index = pos;
     uint64_t c = 0;
 
-    for (size_t i = 0; i < bv_->size(); ++i) {
-        const BitVector& bv = (*bv_)[i];
+    for (size_t i = 0; i < bv_.size(); ++i) {
+        const BitVector& bv = bv_[i];
         uint64_t bit = bv[index];
         c <<= 1;
         c |= bit;
 
         if (bit) {
             index = bv.rank1(index);
-            index += (*nodeBeginPos_)[i][1];
+            index += nodeBeginPos_[i][1];
         } else {
             index = bv.rank0(index);
         }
@@ -127,18 +113,15 @@ uint64_t WaveletMatrix::rank(uint64_t c, uint64_t pos) const {
         return 0;
     }
 
-    const bv_type& bv = *bv_;
-    const range_type& nodeBeginPos = *nodeBeginPos_;
-
-    uint64_t beginPos = nodeBeginPos[alphabetBitNum_ - 1][c];
+    uint64_t beginPos = nodeBeginPos_[alphabetBitNum_ - 1][c];
     uint64_t endPos = pos;
 
     for (size_t i = 0; i < alphabetBitNum_; ++i) {
-        const BitVector& b = bv[i];
+        const BitVector& bv = bv_[i];
         unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
-        endPos = bit ? b.rank1(endPos) : b.rank0(endPos);
+        endPos = bit ? bv.rank1(endPos) : bv.rank0(endPos);
         if (bit) {
-            endPos += nodeBeginPos[i][1];
+            endPos += nodeBeginPos_[i][1];
         }
     }
     return endPos - beginPos;
@@ -178,9 +161,6 @@ void WaveletMatrix::rankAll(uint64_t c, uint64_t begin_pos, uint64_t end_pos, ui
         return;
     }
 
-    const bv_type& bv = *bv_;
-    const range_type& nodeBeginPos = *nodeBeginPos_;
-
     uint64_t more_and_less[2] =
     { 0 };
     uint64_t node_num = 0;
@@ -188,26 +168,26 @@ void WaveletMatrix::rankAll(uint64_t c, uint64_t begin_pos, uint64_t end_pos, ui
     bool to_end = (end_pos == size_);
 
     for (size_t i = 0; i < alphabetBitNum_; ++i) {
-        const BitVector& b = bv[i];
+        const BitVector& bv = bv_[i];
         unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
         uint64_t range_bits = end_pos - begin_pos;
         uint64_t begin_zero, end_zero;
 
         if (from_zero) {
-            begin_zero = nodeBeginPos[i][node_num];
+            begin_zero = nodeBeginPos_[i][node_num];
         } else {
-            begin_zero = b.rank0(begin_pos);
+            begin_zero = bv.rank0(begin_pos);
         }
 
         if (to_end) {
-            end_zero = nodeBeginPos[i][node_num + 1];
+            end_zero = nodeBeginPos_[i][node_num + 1];
         } else {
-            end_zero = b.rank0(end_pos);
+            end_zero = bv.rank0(end_pos);
         }
 
         if (bit) {
-            begin_pos += nodeBeginPos[i][1] - begin_zero;
-            end_pos += nodeBeginPos[i][1] - end_zero;
+            begin_pos += nodeBeginPos_[i][1] - begin_zero;
+            end_pos += nodeBeginPos_[i][1] - end_zero;
         } else {
             begin_pos = begin_zero;
             end_pos = end_zero;
@@ -229,19 +209,16 @@ uint64_t WaveletMatrix::selectFromPos(uint64_t c, uint64_t pos, uint64_t rank) c
         return NOT_FOUND;
     }
 
-    const bv_type& bv = *bv_;
-    const range_type& nodeBeginPos = *nodeBeginPos_;
-
     uint64_t index;
     if (pos == 0) {
-        index = nodeBeginPos[alphabetBitNum_ - 1][c];
+        index = nodeBeginPos_[alphabetBitNum_ - 1][c];
     } else {
         index = pos;
         for (uint64_t i = 0; i < alphabetBitNum_; ++i) {
             unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
-            index = bit ? bv[i].rank1(index) : bv[i].rank0(index);
+            index = bit ? bv_[i].rank1(index) : bv_[i].rank0(index);
             if (bit) {
-                index += nodeBeginPos[i][1];
+                index += nodeBeginPos_[i][1];
             }
         }
     }
@@ -251,10 +228,10 @@ uint64_t WaveletMatrix::selectFromPos(uint64_t c, uint64_t pos, uint64_t rank) c
     for (int i = alphabetBitNum_ - 1; i >= 0; --i) {
         unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
         if (bit) {
-            index -= nodeBeginPos[i][1];
+            index -= nodeBeginPos_[i][1];
         }
 
-        index = (bit ? bv[i].select1(index) : bv[i].select0(index)) + 1;
+        index = (bit ? bv_[i].select1(index) : bv_[i].select0(index)) + 1;
         if (index == hsds::NOT_FOUND) {
             return hsds::NOT_FOUND;
         }
@@ -306,27 +283,24 @@ void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t
 
     val = 0;
 
-    const bv_type& bv = *bv_;
-    const range_type& nodeBeginPos = *nodeBeginPos_;
-
     uint64_t node_num = 0;
     uint64_t begin_zero, end_zero;
     bool from_zero = (begin_pos == 0);
     bool to_end = (end_pos == size_);
 
     for (size_t i = 0; i < alphabetBitNum_; ++i) {
-        const BitVector& b = bv[i];
+        const BitVector& bv = bv_[i];
 
         if (from_zero) {
-            begin_zero = nodeBeginPos[i][node_num];
+            begin_zero = nodeBeginPos_[i][node_num];
         } else {
-            begin_zero = b.rank0(begin_pos);
+            begin_zero = bv.rank0(begin_pos);
         }
 
         if (to_end) {
-            end_zero = nodeBeginPos[i][node_num + 1];
+            end_zero = nodeBeginPos_[i][node_num + 1];
         } else {
-            end_zero = b.rank0(end_pos);
+            end_zero = bv.rank0(end_pos);
         }
 
         uint64_t zero_bits = end_zero - begin_zero;
@@ -334,8 +308,8 @@ void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t
 
         if (bit) {
             k -= zero_bits;
-            begin_pos += nodeBeginPos[i][1] - begin_zero;
-            end_pos += nodeBeginPos[i][1] - end_zero;
+            begin_pos += nodeBeginPos_[i][1] - begin_zero;
+            end_pos += nodeBeginPos_[i][1] - end_zero;
         } else {
             begin_pos = begin_zero;
             end_pos = end_zero;
@@ -345,19 +319,19 @@ void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t
         val |= bit;
     }
 
-    pos = select(val, begin_pos + k - nodeBeginPos[alphabetBitNum_ - 1][val] + 1) - 1;
+    pos = select(val, begin_pos + k - nodeBeginPos_[alphabetBitNum_ - 1][val] + 1) - 1;
 
 }
 
 void WaveletMatrix::save(std::ostream& os) const {
     os.write((const char*) (&alphabetNum_), sizeof(alphabetNum_));
     os.write((const char*) (&size_), sizeof(size_));
-    for (size_t i = 0; i < bv_->size(); ++i) {
-        (*bv_)[i].save(os);
+    for (size_t i = 0; i < bv_.size(); ++i) {
+        bv_[i].save(os);
     }
-    for (size_t i = 0; i < bv_->size(); ++i) {
+    for (size_t i = 0; i < bv_.size(); ++i) {
         for (size_t j = 0; j < (size_t) (1 << (i + 1)); ++j) {
-            os.write((const char*) (&(*nodeBeginPos_)[i][j]), sizeof(range_type));
+            os.write((const char*) (&nodeBeginPos_[i][j]), sizeof(range_type));
         }
     }
 }
@@ -368,18 +342,16 @@ void WaveletMatrix::load(std::istream& is) {
     alphabetBitNum_ = log2(alphabetNum_);
     is.read((char*) (&size_), sizeof(size_));
 
-    bv_->resize(alphabetBitNum_);
-    for (size_t i = 0; i < bv_->size(); ++i) {
-        (*bv_)[i].load(is);
+    bv_.resize(alphabetBitNum_);
+    for (size_t i = 0; i < bv_.size(); ++i) {
+        bv_[i].load(is);
     }
 
-    range_type& nodeBeginPos = *nodeBeginPos_;
-
-    nodeBeginPos.resize(bv_->size());
-    for (size_t i = 0; i < bv_->size(); ++i) {
-        nodeBeginPos[i].resize(1 << (i + 1));
+    nodeBeginPos_.resize(bv_.size());
+    for (size_t i = 0; i < bv_.size(); ++i) {
+        nodeBeginPos_[i].resize(1 << (i + 1));
         for (size_t j = 0; j < (size_t) (1 << (i + 1)); ++j) {
-            is.read((char*) (&nodeBeginPos[i][j]), sizeof(nodeBeginPos[i][j]));
+            is.read((char*) (&nodeBeginPos_[i][j]), sizeof(nodeBeginPos_[i][j]));
         }
     }
 }
