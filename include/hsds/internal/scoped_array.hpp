@@ -34,7 +34,6 @@ public:
     }
 
     T &operator[](std::size_t i) const {
-        HSDS_DEBUG_IF(array_ == NULL, HSDS_STATE_ERROR);
         return array_[i];
     }
 

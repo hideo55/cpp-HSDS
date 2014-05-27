@@ -39,8 +39,7 @@ SET_TARGET_PROPERTIES(hsds-waveletmatrix PROPERTIES VERSION ${serial} SOVERSION 
 INSTALL(TARGETS hsds-bitvector DESTINATION lib)
 
 SET(INSTALL_HEADERS include/hsds/bit-vector.hpp include/hsds/exception.hpp include/hsds/constants.hpp)
-SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/rank-index.hpp include/hsds/vector.hpp)
-SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/scoped_ptr.hpp include/hsds/scoped_array.hpp)
+SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/scoped_ptr.hpp)
 
 INSTALL(FILES ${INSTALL_HEADERS} DESTINATION include/hsds)
 
@@ -48,10 +47,12 @@ INSTALL(FILES ${INSTALL_HEADERS} DESTINATION include/hsds)
 ENABLE_TESTING()
 
 ADD_EXECUTABLE(t/test_bit-vector t/test_bit-vector.cpp)
-
 TARGET_LINK_LIBRARIES(t/test_bit-vector hsds-bitvector)
-
 ADD_TEST(NAME test_bitvector COMMAND ./t/test_bit-vector)
+
+ADD_EXECUTABLE(t/test_wavelet-matrix t/test_wavelet-matrix.cpp)
+TARGET_LINK_LIBRARIES(t/test_wavelet-matrix hsds-bitvector hsds-waveletmatrix)
+ADD_TEST(NAME test_waveletmatrix COMMAND ./t/test_wavelet-matrix)
 
 # Benchmark
 OPTION(WITH_BENCHMARK "Build benchmark program" OFF)

@@ -14,11 +14,6 @@
 
 namespace hsds {
 
-namespace {
-const char* HSDS_ERROR_RESET = "Failed to reset";
-const char* HSDS_ERROR_STATE = "Bad state";
-}
-
 template<typename T>
 class ScopedPtr {
 public:
@@ -39,11 +34,9 @@ public:
     }
 
     T &operator*() const {
-        HSDS_DEBUG_IF(ptr_ == NULL, HSDS_STATE_ERROR);
         return *ptr_;
     }
     T *operator->() const {
-        HSDS_DEBUG_IF(ptr_ == NULL, HSDS_STATE_ERROR);
         return ptr_;
     }
     T *get() const {

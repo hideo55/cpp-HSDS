@@ -8,9 +8,17 @@
 #include <iostream>
 #include <algorithm>
 #include <stdint.h>
-#include "hsds/vector.hpp"
-#include "hsds/rank-index.hpp"
+#include "hsds/scoped_ptr.hpp"
 
+#if defined(_MSC_VER)
+
+#define FORCE_INLINE    __forceinline
+
+#else
+
+#define FORCE_INLINE    inline __attribute__((always_inline))
+
+#endif
 
 /**
  * @namespace hsds
@@ -29,8 +37,12 @@ const char* const E_LOAD_FILE = "Failed to read file. File format is invalid.";
 
 const uint64_t NOT_FOUND = 0xFFFFFFFFFFFFFFFF;
 
+// forward declaration
 class Exception;
 class PopCount;
+class RankIndex;
+template<typename T>
+class Vector;
 
 /**
  * @class BitVector
@@ -42,26 +54,19 @@ public:
     /**
      * @brief Constructor
      */
-    BitVector() :
-            size_(0), num_of_1s_(0) {
-    }
+    BitVector();
 
     /**
      * @brief Constructor
      *
      * @param[in] size Size of bit vector
      */
-    BitVector(uint64_t size) :
-            size_(size), num_of_1s_(0) {
-        uint64_t block_num = (size + S_BLOCK_SIZE - 1) / S_BLOCK_SIZE;
-        blocks_.resize(block_num);
-    }
+    BitVector(uint64_t size);
 
     /**
      * @brief Destructor
      */
-    ~BitVector() {
-    }
+    virtual ~BitVector();
 
     /**
      * @brief Clear bit vector
@@ -76,13 +81,8 @@ public:
      * @param[in] i Index of bit vector
      *
      * @return The value of the specified index
-     *
-     * @exception hsds::Exception Out of range access
      */
-    bool operator[](uint64_t i) const throw (hsds::Exception) {
-        HSDS_DEBUG_IF(i >= size_, E_OUT_OF_RANGE);
-        return (blocks_[i / S_BLOCK_SIZE] & (1ULL << (i % S_BLOCK_SIZE))) != 0;
-    }
+    bool operator[](uint64_t i) const;
 
     /**
      * @brief Set value to bit vector by index
@@ -106,7 +106,7 @@ public:
      *
      * @return Size of the bit vector
      */
-    uint64_t size() const {
+    FORCE_INLINE uint64_t size() const {
         return size_;
     }
 
@@ -117,7 +117,7 @@ public:
      *
      * @return Number of bits that matches with argument in the bit vector
      */
-    uint64_t size(bool b) const {
+    FORCE_INLINE uint64_t size(bool b) const {
         return b ? (num_of_1s_) : (size_ - num_of_1s_);
     }
 
@@ -127,7 +127,7 @@ public:
      * @retval true Container size equals 0.
      * @retval false Container size not equals 0.
      */
-    bool empty() const {
+    FORCE_INLINE bool empty() const {
         return size_ == 0;
     }
 
@@ -137,10 +137,8 @@ public:
      * @param[in] i Index of the bit vector
      *
      * @return Number of the bits equal to 0
-     *
-     * @exception hsds::Exception Out of range access
      */
-    uint64_t rank0(uint64_t i) const throw (hsds::Exception);
+    uint64_t rank0(uint64_t i) const;
 
     /**
      * @brief Returns Number of the bits equal to 1 up to position `i`
@@ -148,10 +146,8 @@ public:
      * @param[in] i Index of the bit vector
      *
      * @return Number of the bits equal to 1
-     *
-     * @exception hsds::Exception Out of range access
      */
-    uint64_t rank1(uint64_t i) const throw (hsds::Exception);
+    uint64_t rank1(uint64_t i) const;
 
     /**
      * @brief Returns the position of the x-th occurrence of 0
@@ -159,10 +155,8 @@ public:
      * @param[in] x Rank number of 0-bits
      *
      * @return Index of x-th 0
-     *
-     * @exception hsds::Exception Out of range access
      */
-    uint64_t select0(uint64_t x) const throw (hsds::Exception);
+    uint64_t select0(uint64_t x) const;
 
     /**
      * @brief Returns the position of the x-th occurrence of 1
@@ -170,46 +164,43 @@ public:
      * @param[in] x Rank number of 1-bits
      *
      * @return Index of x-th 1
-     *
-     * @exception hsds::Exception Out of range access
      */
-    uint64_t select1(uint64_t x) const throw (hsds::Exception);
+    uint64_t select1(uint64_t x) const;
 
     /**
      * @brief Save bit vector to the ostream
      *
      * @param[out] os The instance of std::ostream
+     *
+     * @exception hsds::Exception When failed to save file.
      */
-    void save(std::ostream &os) const;
+    void save(std::ostream &os) const throw (hsds::Exception);
 
     /**
      * @brief Load bit vector from istream
      *
      * @param[in] is The instance of std::istream
+     *
+     * @exception hsds::Exception When failed to load file.
      */
-    void load(std::istream &is);
+    void load(std::istream &is) throw (hsds::Exception);
 
     /**
      * @brief Mapping pointer to bit vector
      *
      * @param[in] ptr Pointer of the mmaped file
      * @param[in] size Size of mmaped file
+     *
+     * @exception hsds::Exception When failed to load file.
      */
-    void map(void* ptr, uint64_t size);
+    void map(void* ptr, uint64_t size) throw (hsds::Exception);
 
     /**
      * @brief Exchanges the content of the instance
      *
-     * @param[in,out] x Another BitVector instnace
+     * @param[in,out] x Another BitVector instance
      */
-    void swap(BitVector &x) {
-        blocks_.swap(x.blocks_);
-        std::swap(size_, x.size_);
-        std::swap(num_of_1s_, x.num_of_1s_);
-        rank_table_.swap(x.rank_table_);
-        select0_table_.swap(x.select0_table_);
-        select1_table_.swap(x.select1_table_);
-    }
+    void swap(BitVector &x);
 
 private:
     typedef uint64_t block_type;
@@ -217,10 +208,10 @@ private:
     typedef hsds::Vector<RankIndex> rank_dict_type;
     typedef hsds::Vector<uint32_t> select_dict_type;
 
-    blocks_type blocks_;                ///< Bit vector
-    rank_dict_type rank_table_;         ///< Rank dictionary
-    select_dict_type select0_table_;    ///< Select dictionary for 0-bits
-    select_dict_type select1_table_;    ///< Select dictionary for 1-bits
+    ScopedPtr<blocks_type> blocks_;                ///< Bit vector
+    ScopedPtr<rank_dict_type> rank_table_;         ///< Rank dictionary
+    ScopedPtr<select_dict_type> select0_table_;    ///< Select dictionary for 0-bits
+    ScopedPtr<select_dict_type> select1_table_;    ///< Select dictionary for 1-bits
     uint64_t size_;                     ///< Size of bit vector
     uint64_t num_of_1s_;                ///< Nuber of the 1-bits
 
