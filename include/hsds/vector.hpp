@@ -80,7 +80,7 @@ public:
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         reserve(size);
         for (uint64_t i = size_; i < size; ++i) {
-            new (&objects_[i]) T;
+            new (&objects_[i]) T(x);
         }
         for (uint64_t i = size; i < size_; ++i) {
             objects_[i].~T();
@@ -206,31 +206,30 @@ private:
 
     uint64_t map_(void* ptr, uint64_t mapSize) {
         uint64_t offset = 0;
-        uint64_t total_size = *reinterpret_cast<uint64_t*>(ptr);
-        offset += sizeof(total_size);
+        uint64_t data_num = *reinterpret_cast<uint64_t*>(ptr);
+        offset += sizeof(data_num);
+        uint64_t total_size = data_num * sizeof(T);
         HSDS_EXCEPTION_IF(total_size > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
         HSDS_EXCEPTION_IF(total_size > mapSize, HSDS_SIZE_ERROR);
         const_objects_ = reinterpret_cast<T*>(static_cast<char*>(ptr) + offset);
-        offset += total_size * sizeof(T);
-        size_ = total_size;
+        offset += total_size;
+        size_ = data_num;
         fix();
         return offset;
     }
 
     void read_(std::istream& is) {
-        uint64_t total_size;
-        is.read((char *)&total_size, sizeof(uint64_t));
-        HSDS_EXCEPTION_IF(total_size > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
-        HSDS_EXCEPTION_IF((total_size % sizeof(T)) != 0, HSDS_FORMAT_ERROR);
-        const uint64_t size = (uint64_t)(total_size / sizeof(T));
-        resize(size);
-        is.read((char *)objects_, total_size);
+        uint64_t data_num;
+        is.read((char *)&data_num, sizeof(uint64_t));
+        HSDS_EXCEPTION_IF((data_num * sizeof(T)) > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
+        resize(data_num);
+        is.read((char *)objects_, data_num * sizeof(T));
     }
 
     void write_(std::ostream& os) const {
-        uint64_t totalSize = total_size();
-        os.write((char*)&totalSize, sizeof(uint64_t));
-        os.write((char*)const_objects_, size_);
+        uint64_t data_num = size();
+        os.write((char*)&data_num, sizeof(uint64_t));
+        os.write((char*)const_objects_, total_size());
     }
 
     // realloc() assumes that T's placement new does not throw an exception.

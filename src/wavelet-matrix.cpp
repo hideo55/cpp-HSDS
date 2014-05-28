@@ -35,9 +35,13 @@ void WaveletMatrix::swap(WaveletMatrix& x) {
 void WaveletMatrix::build(vector<uint64_t>& src) {
     clear();
     alphabetNum_ = getAlphabetNum(src);
+    
+    if(alphabetNum_ == 0) return;
+    
     alphabetBitNum_ = log2(alphabetNum_);
 
     size_ = static_cast<uint64_t>(src.size());
+    bv_.resize(alphabetBitNum_, size_);
     nodeBeginPos_.resize(alphabetBitNum_);
 
     Vector<uint64_t> dummy;
@@ -46,7 +50,7 @@ void WaveletMatrix::build(vector<uint64_t>& src) {
     Vector<uint64_t>* prev_begin_pos = &dummy;
 
     for (uint64_t i = 0; i < alphabetBitNum_; ++i) {
-        nodeBeginPos_[i].resize(1 << (i + 1));
+        nodeBeginPos_[i].resize(1 << (i + 1), 0);
 
         for (uint64_t j = 0; j < size_; ++j) {
             int bit = (src[j] >> (alphabetBitNum_ - i - 1)) & 1;
