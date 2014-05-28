@@ -13,7 +13,6 @@
 #include "hsds/constants.hpp"
 #include "hsds/exception.hpp"
 
-
 namespace hsds {
 
 template<typename T>
@@ -23,11 +22,21 @@ public:
             buf_(), objects_(NULL), const_objects_(NULL), size_(0), capacity_(0), fixed_(false) {
     }
 
+    Vector(const Vector& rhs) {
+        size_ = rhs.size_;
+        capacity_ = rhs.capacity_;
+        fixed_ = rhs.fixed_;
+        ScopedArray<char> new_buf(new (std::nothrow) char[sizeof(T) * capacity_]);
+        objects_ = reinterpret_cast<T *>(new_buf.get());
+        const_objects_ = objects_;
+        for (uint64_t i = 0; i < size_; ++i) {
+            new (&objects_[i]) T(rhs.objects_[i]);
+        }
+    }
+
     ~Vector() {
-        if (objects_ != NULL) {
-            for (uint64_t i = 0; i < size_; ++i) {
-                objects_[i].~T();
-            }
+        for (uint64_t i = 0; i < size_; ++i) {
+            objects_[i].~T();
         }
     }
 
@@ -49,16 +58,14 @@ public:
     }
 
     void push_back(const T &x) {
-        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
-        HSDS_DEBUG_IF(size_ == max_size(), HSDS_SIZE_ERROR);
+        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);HSDS_DEBUG_IF(size_ == max_size(), HSDS_SIZE_ERROR);
         reserve(size_ + 1);
         new (&objects_[size_]) T(x);
         ++size_;
     }
 
     void pop_back() {
-        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
-        HSDS_DEBUG_IF(size_ == 0, HSDS_STATE_ERROR);
+        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);HSDS_DEBUG_IF(size_ == 0, HSDS_STATE_ERROR);
         objects_[--size_].~T();
     }
 
@@ -92,8 +99,7 @@ public:
         HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
         if (capacity <= capacity_) {
             return;
-        }
-        HSDS_DEBUG_IF(capacity > max_size(), HSDS_SIZE_ERROR);
+        }HSDS_DEBUG_IF(capacity > max_size(), HSDS_SIZE_ERROR);
         uint64_t new_capacity = capacity;
         if (capacity_ > (capacity / 2)) {
             if (capacity_ > (max_size() / 2)) {
@@ -145,18 +151,15 @@ public:
         return objects_ + size_;
     }
     T &operator[](uint64_t i) {
-        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
-        HSDS_DEBUG_IF(i >= size_, HSDS_BOUND_ERROR);
+        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);HSDS_DEBUG_IF(i >= size_, HSDS_BOUND_ERROR);
         return objects_[i];
     }
     T &front() {
-        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
-        HSDS_DEBUG_IF(size_ == 0, HSDS_STATE_ERROR);
+        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);HSDS_DEBUG_IF(size_ == 0, HSDS_STATE_ERROR);
         return objects_[0];
     }
     T &back() {
-        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);
-        HSDS_DEBUG_IF(size_ == 0, HSDS_STATE_ERROR);
+        HSDS_DEBUG_IF(fixed_, HSDS_STATE_ERROR);HSDS_DEBUG_IF(size_ == 0, HSDS_STATE_ERROR);
         return objects_[size_ - 1];
     }
 
@@ -220,22 +223,21 @@ private:
 
     void read_(std::istream& is) {
         uint64_t data_num;
-        is.read((char *)&data_num, sizeof(uint64_t));
+        is.read((char *) &data_num, sizeof(uint64_t));
         HSDS_EXCEPTION_IF((data_num * sizeof(T)) > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
         resize(data_num);
-        is.read((char *)objects_, data_num * sizeof(T));
+        is.read((char *) objects_, data_num * sizeof(T));
     }
 
     void write_(std::ostream& os) const {
         uint64_t data_num = size();
-        os.write((char*)&data_num, sizeof(uint64_t));
-        os.write((char*)const_objects_, total_size());
+        os.write((char*) &data_num, sizeof(uint64_t));
+        os.write((char*) const_objects_, total_size());
     }
 
     // realloc() assumes that T's placement new does not throw an exception.
     void realloc(uint64_t new_capacity) {
         HSDS_DEBUG_IF(new_capacity > max_size(), HSDS_SIZE_ERROR);
-
         ScopedArray<char> new_buf(new (std::nothrow) char[sizeof(T) * new_capacity]);
         HSDS_DEBUG_IF(new_buf.get() == NULL, HSDS_MEMORY_ERROR);
         T *new_objects = reinterpret_cast<T *>(new_buf.get());

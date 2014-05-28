@@ -14,3 +14,4 @@ t/test_bit-vector
 Testing
 
 install_manifest.txt
+t/test_wavelet-matrix

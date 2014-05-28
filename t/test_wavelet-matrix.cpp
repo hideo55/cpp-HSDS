@@ -19,6 +19,18 @@ Describe(wavelet_matrix) {
         AssertThatEx(wm->size(), Is().EqualTo(0));
         delete wm;
     }
+
+    It(build) {
+        WaveletMatrix wm;
+        vector<uint64_t> v;
+        v.push_back(5);
+        v.push_back(0);
+        v.push_back(10);
+        v.push_back(1);
+        v.push_back(3);
+        wm.build(v);
+        cout << wm.lookup(0) << endl;
+    }
 };
 
 int main() {
