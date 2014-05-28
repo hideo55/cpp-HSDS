@@ -9,7 +9,7 @@
 #define HSDS_VECTOR_HPP_
 
 #include <cstddef>
-#include "hsds/internal/scoped_array.hpp"
+#include "hsds/scoped_array.hpp"
 #include "hsds/constants.hpp"
 #include "hsds/exception.hpp"
 

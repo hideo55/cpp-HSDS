@@ -38,8 +38,8 @@ SET_TARGET_PROPERTIES(hsds-waveletmatrix PROPERTIES VERSION ${serial} SOVERSION 
 
 INSTALL(TARGETS hsds-bitvector DESTINATION lib)
 
-SET(INSTALL_HEADERS include/hsds/bit-vector.hpp include/hsds/exception.hpp include/hsds/constants.hpp)
-SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/scoped_ptr.hpp)
+SET(INSTALL_HEADERS include/hsds/bit-vector.hpp include/hsds/exception.hpp include/hsds/constants.hpp include/hsds/rank-index.hpp)
+SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/vector.hpp include/hsds/scoped_array.hpp include/hsds/scoped_ptr.hpp)
 
 INSTALL(FILES ${INSTALL_HEADERS} DESTINATION include/hsds)
 
