@@ -22,6 +22,8 @@ const char* const HSDS_RESET_ERROR = "Failed to reset";
 const char* const HSDS_STATE_ERROR = "Bad state";
 const char* const HSDS_SIZE_ERROR = "Invalid size";
 const char* const HSDS_FORMAT_ERROR = "Invalid format";
+const char* const HSDS_BOUND_ERROR = "Out of bound access";
+const char* const HSDS_MEMORY_ERROR = "Bad alloc";
 }
 
 
