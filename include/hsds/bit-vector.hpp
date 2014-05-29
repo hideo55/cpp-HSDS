@@ -143,7 +143,7 @@ public:
      *
      * @return Number of the bits
      */
-    inline uint64_t rank(uint64_t i, bool b = true) const {
+    FORCE_INLINE  uint64_t rank(uint64_t i, bool b = true) const {
         return b ? rank1(i) : rank0(i);
     }
 
@@ -173,7 +173,7 @@ public:
      *
      * @return Index of x-th 0
      */
-    inline uint64_t select(uint64_t x, bool b = true) const {
+    FORCE_INLINE  uint64_t select(uint64_t x, bool b = true) const {
         return b ? select1(x) : select0(x);
     }
 
