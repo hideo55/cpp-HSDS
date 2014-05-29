@@ -192,10 +192,12 @@ public:
      * @param[in] ptr Pointer of the mmaped file
      * @param[in] size Size of mmaped file
      *
+     * @return Mapped size(byte size of offset from `ptr`).
+     *
      * @exception hsds::Exception When failed to load file.
      */
-    void map(void* ptr, uint64_t size) throw (hsds::Exception);
-
+    uint64_t map(void* ptr, uint64_t size) throw (hsds::Exception);
+    
     /**
      * @brief Exchanges the content of the instance
      *
