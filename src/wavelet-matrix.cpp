@@ -59,7 +59,6 @@ void WaveletMatrix::build(vector<uint64_t>& src) {
             uint64_t subscript = src[j] >> (alphabetBitNum_ - i);
             bv_[i].set((*prev_begin_pos)[subscript]++, bit);
             ++nodeBeginPos_[i][(subscript << 1) | bit];
-            cout << nodeBeginPos_[i][(subscript << 1) | bit] << endl;
         }
 
         uint64_t cur_max = (uint64_t) 1 << i;
