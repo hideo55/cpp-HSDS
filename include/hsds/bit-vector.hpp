@@ -1,3 +1,7 @@
+/**
+ * @file bit-vector.hpp
+ * @brief Definittion of BitVector
+ */
 #if !defined(HSDS_BIT_VECTOR_H_)
 #define HSDS_BIT_VECTOR_H_
 

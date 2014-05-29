@@ -129,7 +129,7 @@ BitVector::BitVector() :
 BitVector::BitVector(uint64_t size) :
         size_(size), num_of_1s_(0) {
     uint64_t block_num = (size + S_BLOCK_SIZE - 1) / S_BLOCK_SIZE;
-    blocks_.resize(block_num);
+    blocks_.resize(block_num, 0);
 }
 
 BitVector::~BitVector() {
@@ -148,9 +148,10 @@ void BitVector::set(uint64_t i, bool b) {
     uint64_t block_id = i / S_BLOCK_SIZE;
     uint64_t r = i % S_BLOCK_SIZE;
 
-    while (block_id >= blocks_.size()) {
-        blocks_.push_back(0);
+    if (block_id >= blocks_.size()) {
+        blocks_.resize(block_id + 1, 0);
     }
+
     uint64_t m = 0x1ULL << r;
     if (b) {
         blocks_[block_id] |= m;
@@ -226,7 +227,6 @@ void BitVector::build(bool enable_faster_select1, bool enable_faster_select0) {
             select0_table_.push_back(i * S_BLOCK_SIZE + pos);
             num_0s_in_lblock -= L_BLOCK_SIZE;
         }
-
         num_1s_in_lblock += count1s;
         num_0s_in_lblock += count0s;
         num_of_1s_ += count1s;
@@ -507,7 +507,7 @@ uint64_t BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
 
     offset += select1_table_.map((char*) ptr + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset > mapSize, E_LOAD_FILE);
-    
+
     return offset;
 }
 

@@ -143,8 +143,9 @@ Describe(bit_vector) {
 
             {
                 hsds::BitVector bv2;
-                bv2.map(mmapPtr, sb.st_size);
+                uint64_t mapped = bv2.map(mmapPtr, sb.st_size);
 
+                AssertThatEx(mapped, Is().EqualTo(sb.st_size));
                 AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
                 AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
                 AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
@@ -176,5 +177,5 @@ int main() {
     TapTestListener listener;
     runner.AddListener(&listener);
 
-    runner.Run();
+    return runner.Run();
 }

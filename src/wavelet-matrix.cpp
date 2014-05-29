@@ -329,20 +329,18 @@ void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t
 
 }
 
-void WaveletMatrix::save(std::ostream& os) const {
+void WaveletMatrix::save(std::ostream& os) const throw(hsds::Exception) {
     os.write((const char*) (&alphabetNum_), sizeof(alphabetNum_));
     os.write((const char*) (&size_), sizeof(size_));
     for (size_t i = 0; i < bv_.size(); ++i) {
         bv_[i].save(os);
     }
     for (size_t i = 0; i < bv_.size(); ++i) {
-        for (size_t j = 0; j < (size_t) (1 << (i + 1)); ++j) {
-            os.write((const char*) (&nodeBeginPos_[i][j]), sizeof(range_type));
-        }
+        nodeBeginPos_[i].save(os);
     }
 }
 
-void WaveletMatrix::load(std::istream& is) {
+void WaveletMatrix::load(std::istream& is) throw(hsds::Exception) {
     clear();
     is.read((char*) (&alphabetNum_), sizeof(alphabetNum_));
     alphabetBitNum_ = log2(alphabetNum_);
@@ -355,11 +353,32 @@ void WaveletMatrix::load(std::istream& is) {
 
     nodeBeginPos_.resize(bv_.size());
     for (size_t i = 0; i < bv_.size(); ++i) {
-        nodeBeginPos_[i].resize(1 << (i + 1));
-        for (size_t j = 0; j < (size_t) (1 << (i + 1)); ++j) {
-            is.read((char*) (&nodeBeginPos_[i][j]), sizeof(nodeBeginPos_[i][j]));
-        }
+        nodeBeginPos_[i].load(is);
     }
+}
+
+uint64_t WaveletMatrix::map(void* ptr, uint64_t mapSize) throw(hsds::Exception) {
+    clear();
+    alphabetNum_ = *(static_cast<uint64_t*>(ptr));
+    uint64_t offset = sizeof(alphabetNum_);
+    HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
+
+    alphabetBitNum_ = log2(alphabetNum_);
+
+    size_ = *(reinterpret_cast<uint64_t*>((char*)ptr + offset));
+    offset = sizeof(size_);
+    HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
+
+    bv_.resize(alphabetBitNum_);
+    for(size_t i = 0; i < alphabetBitNum_; ++i) {
+        offset += bv_[i].map((char*)ptr + offset, mapSize);
+    }
+
+    nodeBeginPos_.resize(bv_.size());
+    for (size_t i = 0; i < bv_.size(); ++i) {
+        offset += nodeBeginPos_[i].map((char*)ptr + offset, mapSize);
+    }
+    return offset;
 }
 
 uint64_t WaveletMatrix::getAlphabetNum(const std::vector<uint64_t>& array) const {
