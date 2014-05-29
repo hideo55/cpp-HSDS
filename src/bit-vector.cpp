@@ -463,7 +463,6 @@ uint64_t BitVector::select1(uint64_t x) const {
 void BitVector::save(std::ostream &os) const throw (hsds::Exception) {
     os.write((char*) &size_, sizeof(size_));
     os.write((char*) &num_of_1s_, sizeof(num_of_1s_));
-
     blocks_.save(os);
     rank_table_.save(os);
     select0_table_.save(os);

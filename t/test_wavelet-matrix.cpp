@@ -76,7 +76,7 @@ Describe(wavelet_matrix) {
             }
         }
 #if !defined(_MSC_VER)
-        It_Skip(T004_save_and_mmap) {
+        It(T004_save_and_mmap) {
             tempFile = "t/T004.bin";
             {
                 WaveletMatrix wm;
