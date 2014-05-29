@@ -26,6 +26,7 @@
 #endif
 
 /**
+ * @brief The namespace for Hide's Succinct Data Structures
  * @namespace hsds
  */
 namespace hsds {
