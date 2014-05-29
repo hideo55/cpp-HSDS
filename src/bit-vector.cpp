@@ -496,16 +496,16 @@ uint64_t BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
     offset += sizeof(num_of_1s_);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += blocks_.map((char*) ptr + offset, mapSize);
+    offset += blocks_.map((char*) ptr + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += rank_table_.map((char*) ptr + offset, mapSize);
+    offset += rank_table_.map((char*) ptr + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += select0_table_.map((char*) ptr + offset, mapSize);
+    offset += select0_table_.map((char*) ptr + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += select1_table_.map((char*) ptr + offset, mapSize);
+    offset += select1_table_.map((char*) ptr + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset > mapSize, E_LOAD_FILE);
     
     return offset;
