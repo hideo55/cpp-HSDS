@@ -1,5 +1,5 @@
 /**
- * @file wavvelet_matrix.hpp
+ * @file wavelet-matrix.hpp
  * @brief Definittion of WaveletMatrix
  */
 
@@ -121,13 +121,13 @@ public:
     uint64_t rankMoreThan(uint64_t c, uint64_t pos) const;
 
     /**
-     * Compute the frequency of characters c' < c, c'=c, and c' > c, in the subarray A[0...pos)
-     * 
-     * @param[in] c The character
-     * @param[in] pos The position of the end of the prefix (not inclusive)
-     * @param[out] rank The frefquency of c in A[0...pos)
-     * @param[out] rank_less_than The frequency of c' < c in A[0...pos)
-     * @param[out] rank_more_than The frequency of c' > c in A[0...pos)
+     * Compute the frequency of characters c' < c, c'=c, and c' > c, in the subarray A[begin_pos...end_pos)
+     * @param c The character
+     * @param begin_pos The beginning position of the array (not inclusive)
+     * @param end_pos The ending position of the array (not inclusive)
+     * @param rank The frefquency of c in A[0...pos)
+     * @param rank_less_than The frequency of c' < c in A[0...pos)
+     * @param rank_more_than The frequency of c' > c in A[0...pos)
      */
     void rankAll(uint64_t c, uint64_t begin_pos, uint64_t end_pos, uint64_t& rank, uint64_t& rank_less_than,
             uint64_t& rank_more_than) const;
@@ -178,7 +178,7 @@ public:
      *
      * @param[in] min_c The smallerest character to be examined
      * @param[in] max_c The uppker bound of the character to be examined
-     * @param[in] beg_pos The beginning position of the array (inclusive)
+     * @param[in] begin_pos The beginning position of the array (inclusive)
      * @param[in] end_pos The ending position of the array (not inclusive)
      *
      * @return The frequency of characters min_c <= c < max_c in the subarray A[beg_pos .. end_pos)
@@ -189,7 +189,7 @@ public:
     /**
      * Range Max Query
      *
-     * @param[in] beg_pos The beginning position
+     * @param[in] begin_pos The beginning position
      * @param[in] end_pos The ending position
      * @param[out] pos The position where the largest value appeared in the subarray A[beg_pos .. end_pos)
      *            If there are many items having the largest values, the smallest pos will be reporeted
@@ -200,7 +200,7 @@ public:
     /**
      * Range Min Query
      *
-     * @param[in] beg_pos The beginning position
+     * @param[in] begin_pos The beginning position
      * @param[in] end_pos The ending position
      * @param[out] pos The position where the smallest value appeared in the subarray A[beg_pos .. end_pos)
      *            If there are many items having the smalles values, the smallest pos will be reporeted
@@ -211,7 +211,7 @@ public:
     /**
      * Range Quantile Query, Return the K-th smallest value in the subarray
      *
-     * @param[in] beg_pos The beginning position
+     * @param[in] begin_pos The beginning position
      * @param[in] end_pos The ending position
      * @param[in] k The order (should be smaller than end_pos - beg_pos).
      * @param[out] pos The position where the k-th largest value appeared in the subarray A[beg_pos .. end_pos)

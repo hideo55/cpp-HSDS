@@ -46,8 +46,6 @@ const uint64_t NOT_FOUND = 0xFFFFFFFFFFFFFFFF;
 class Exception;
 class PopCount;
 class RankIndex;
-template<typename T>
-class Vector;
 
 /**
  * @class BitVector
