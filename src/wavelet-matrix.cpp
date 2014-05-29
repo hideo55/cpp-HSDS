@@ -99,12 +99,9 @@ uint64_t WaveletMatrix::lookup(uint64_t pos) const {
         uint64_t bit = bv[index];
         c <<= 1;
         c |= bit;
-
+        index = bv.rank(index, bit);
         if (bit) {
-            index = bv.rank1(index);
             index += nodeBeginPos_[i][1];
-        } else {
-            index = bv.rank0(index);
         }
     }
     return c;
@@ -125,7 +122,7 @@ uint64_t WaveletMatrix::rank(uint64_t c, uint64_t pos) const {
     for (size_t i = 0; i < alphabetBitNum_; ++i) {
         const BitVector& bv = bv_[i];
         unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
-        endPos = bit ? bv.rank1(endPos) : bv.rank0(endPos);
+        endPos = bv.rank(endPos, bit);
         if (bit) {
             endPos += nodeBeginPos_[i][1];
         }
@@ -222,7 +219,7 @@ uint64_t WaveletMatrix::selectFromPos(uint64_t c, uint64_t pos, uint64_t rank) c
         index = pos;
         for (uint64_t i = 0; i < alphabetBitNum_; ++i) {
             unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
-            index = bit ? bv_[i].rank1(index) : bv_[i].rank0(index);
+            index = bv_[i].rank(index, bit);
             if (bit) {
                 index += nodeBeginPos_[i][1];
             }
@@ -237,7 +234,7 @@ uint64_t WaveletMatrix::selectFromPos(uint64_t c, uint64_t pos, uint64_t rank) c
             index -= nodeBeginPos_[i][1];
         }
 
-        index = (bit ? bv_[i].select1(index) : bv_[i].select0(index)) + 1;
+        index = bv_[i].select(index, bit) + 1;
         if (index == hsds::NOT_FOUND) {
             return hsds::NOT_FOUND;
         }

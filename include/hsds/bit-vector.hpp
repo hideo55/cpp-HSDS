@@ -136,6 +136,18 @@ public:
     }
 
     /**
+     * @brief Returns Number of the bits equal to `b` up to position `i`
+     *
+     * @param[in] i Index of the bit vector
+     * @param[in] b The kind of bit.(true:1, false:0)
+     *
+     * @return Number of the bits
+     */
+    inline uint64_t rank(uint64_t i, bool b = true) const {
+        return b ? rank1(i) : rank0(i);
+    }
+
+    /**
      * @brief Returns Number of the bits equal to 0 up to position `i`
      *
      * @param[in] i Index of the bit vector
@@ -152,6 +164,18 @@ public:
      * @return Number of the bits equal to 1
      */
     uint64_t rank1(uint64_t i) const;
+
+    /**
+     * @brief Returns the position of the x-th occurrence of `b`
+     *
+     * @param[in] x Rank number of b-bits
+     * @param[in] b The kind of bit.(true:1, false:0)
+     *
+     * @return Index of x-th 0
+     */
+    inline uint64_t select(uint64_t x, bool b = true) const {
+        return b ? select1(x) : select0(x);
+    }
 
     /**
      * @brief Returns the position of the x-th occurrence of 0
