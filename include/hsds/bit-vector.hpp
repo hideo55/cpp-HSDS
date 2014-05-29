@@ -187,12 +187,12 @@ public:
     void load(std::istream &is) throw (hsds::Exception);
 
     /**
-     * @brief Mapping pointer to bit vector
+     * @brief Mapping pointer to BitVector
      *
      * @param[in] ptr Pointer of the mmaped file
      * @param[in] size Size of mmaped file
      *
-     * @return Mapped size(byte size of offset from `ptr`).
+     * @return Actually mapped size(byte size of offset from `ptr`).
      *
      * @exception hsds::Exception When failed to load file.
      */
