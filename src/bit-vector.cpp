@@ -487,7 +487,7 @@ void BitVector::load(std::istream &is) throw (hsds::Exception) {
     HSDS_EXCEPTION_IF(is.fail(), E_LOAD_FILE);
 }
 
-void BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
+uint64_t BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
     size_ = *(static_cast<uint64_t*>(ptr));
     uint64_t offset = sizeof(size_);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
@@ -507,6 +507,8 @@ void BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
 
     offset += select1_table_.map((char*) ptr + offset, mapSize);
     HSDS_EXCEPTION_IF(offset > mapSize, E_LOAD_FILE);
+    
+    return offset;
 }
 
 void BitVector::swap(BitVector &x) {
