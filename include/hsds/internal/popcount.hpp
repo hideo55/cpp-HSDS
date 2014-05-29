@@ -4,7 +4,7 @@
 #if !defined(_MSC_VER)
 #include <stdint.h>
 #endif // !defined(_MSC_VER)
-#include "hsds/intrin.h"
+#include "hsds/internal/intrin.h"
 
 namespace hsds {
 

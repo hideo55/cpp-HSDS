@@ -34,7 +34,6 @@ public:
     }
 
     T &operator[](std::size_t i) const {
-        HSDS_DEBUG_IF(array_ == NULL, HSDS_STATE_ERROR);
         return array_[i];
     }
 
@@ -53,8 +52,7 @@ public:
 private:
     T *array_;
 
-    // Disallows copy and assignment.
-    ScopedArray(const ScopedArray &);
+    // Disable assingment operator
     ScopedArray &operator=(const ScopedArray &);
 };
 

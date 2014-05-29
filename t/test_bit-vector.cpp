@@ -114,13 +114,17 @@ Describe(bit_vector) {
             bv.save(ofs);
             ofs.close();
             ifstream ifs(tempfile.c_str());
+/*
+            {
+                hsds::BitVector bv2;
+                bv2.load(ifs);
 
-            hsds::BitVector bv2;
-            bv2.load(ifs);
+                AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
+                AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
+                AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
 
-            AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
-            AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
-            AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
+            }
+            */
         }
 
         It(save_and_mmap_bit_vector) {
@@ -139,8 +143,9 @@ Describe(bit_vector) {
 
             {
                 hsds::BitVector bv2;
-                bv2.map(mmapPtr, sb.st_size);
+                uint64_t mapped = bv2.map(mmapPtr, sb.st_size);
 
+                AssertThatEx(mapped, Is().EqualTo(sb.st_size));
                 AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
                 AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
                 AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
@@ -172,5 +177,5 @@ int main() {
     TapTestListener listener;
     runner.AddListener(&listener);
 
-    runner.Run();
+    return runner.Run();
 }
