@@ -2,7 +2,7 @@
  * vector.hpp
  *
  *  Created on: 2014/05/22
- *      Author: hide
+ *      Author: Hideaki Ohno
  */
 
 #if !defined(HSDS_VECTOR_HPP_)
@@ -27,7 +27,8 @@ public:
         capacity_ = rhs.capacity_;
         fixed_ = rhs.fixed_;
         ScopedArray<char> new_buf(new (std::nothrow) char[sizeof(T) * capacity_]);
-        objects_ = reinterpret_cast<T *>(new_buf.get());
+        buf_.swap(new_buf);
+        objects_ = reinterpret_cast<T *>(buf_.get());
         const_objects_ = objects_;
         for (uint64_t i = 0; i < size_; ++i) {
             new (&objects_[i]) T(rhs.objects_[i]);
