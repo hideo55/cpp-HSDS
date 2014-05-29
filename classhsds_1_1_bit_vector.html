@@ -128,12 +128,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a588e53a745f2059809a4b9a202d59aab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="bit-vector_8hpp.html#ac032d233a8ebfcd82fd49d0824eefb18">FORCE_INLINE</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a588e53a745f2059809a4b9a202d59aab">empty</a> () const </td></tr>
 <tr class="memdesc:a588e53a745f2059809a4b9a202d59aab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the vector is empty (i.e.  <a href="#a588e53a745f2059809a4b9a202d59aab">More...</a><br/></td></tr>
 <tr class="separator:a588e53a745f2059809a4b9a202d59aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2de2d9ac57591f1497881f08097c95cb"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a2de2d9ac57591f1497881f08097c95cb">rank</a> (uint64_t i, bool b=true) const </td></tr>
+<tr class="memdesc:a2de2d9ac57591f1497881f08097c95cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns Number of the bits equal to <code>b</code> up to position <code>i</code>  <a href="#a2de2d9ac57591f1497881f08097c95cb">More...</a><br/></td></tr>
+<tr class="separator:a2de2d9ac57591f1497881f08097c95cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add3d1c234d7cc39cb871fef79c9e7479"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#add3d1c234d7cc39cb871fef79c9e7479">rank0</a> (uint64_t i) const </td></tr>
 <tr class="memdesc:add3d1c234d7cc39cb871fef79c9e7479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns Number of the bits equal to 0 up to position <code>i</code>  <a href="#add3d1c234d7cc39cb871fef79c9e7479">More...</a><br/></td></tr>
 <tr class="separator:add3d1c234d7cc39cb871fef79c9e7479"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81de01e7bed88fee88b5521a0d23b0bd"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a81de01e7bed88fee88b5521a0d23b0bd">rank1</a> (uint64_t i) const </td></tr>
 <tr class="memdesc:a81de01e7bed88fee88b5521a0d23b0bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns Number of the bits equal to 1 up to position <code>i</code>  <a href="#a81de01e7bed88fee88b5521a0d23b0bd">More...</a><br/></td></tr>
 <tr class="separator:a81de01e7bed88fee88b5521a0d23b0bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34f14f81007e53c89f50e49c246e8229"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a34f14f81007e53c89f50e49c246e8229">select</a> (uint64_t x, bool b=true) const </td></tr>
+<tr class="memdesc:a34f14f81007e53c89f50e49c246e8229"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the x-th occurrence of <code>b</code>  <a href="#a34f14f81007e53c89f50e49c246e8229">More...</a><br/></td></tr>
+<tr class="separator:a34f14f81007e53c89f50e49c246e8229"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a822073506771c4b08d0238f9c0f08213"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a822073506771c4b08d0238f9c0f08213">select0</a> (uint64_t x) const </td></tr>
 <tr class="memdesc:a822073506771c4b08d0238f9c0f08213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the x-th occurrence of 0.  <a href="#a822073506771c4b08d0238f9c0f08213">More...</a><br/></td></tr>
 <tr class="separator:a822073506771c4b08d0238f9c0f08213"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -433,6 +439,52 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a2de2d9ac57591f1497881f08097c95cb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t hsds::BitVector::rank </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>b</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns Number of the bits equal to <code>b</code> up to position <code>i</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of the bit vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>The kind of bit.(true:1, false:0)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of the bits </dd></dl>
+
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00146">146</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="add3d1c234d7cc39cb871fef79c9e7479"></a>
 <div class="memitem">
 <div class="memproto">
@@ -510,6 +562,52 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a34f14f81007e53c89f50e49c246e8229"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t hsds::BitVector::select </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>b</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the position of the x-th occurrence of <code>b</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Rank number of b-bits </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>The kind of bit.(true:1, false:0)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of x-th 0 </dd></dl>
+
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00176">176</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -691,7 +789,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 29 2014 23:39:28 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri May 30 2014 01:59:52 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
