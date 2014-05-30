@@ -139,7 +139,7 @@ public:
      * @brief Returns Number of the bits equal to `b` up to position `i`
      *
      * @param[in] i Index of the bit vector
-     * @param[in] b The kind of bit.(true:1, false:0)
+     * @param[in] b Boolean value that indicates bit type.(true = 1, false = 0)
      *
      * @return Number of the bits
      */
@@ -169,7 +169,7 @@ public:
      * @brief Returns the position of the x-th occurrence of `b`
      *
      * @param[in] x Rank number of b-bits
-     * @param[in] b The kind of bit.(true:1, false:0)
+     * @param[in] b Boolean value that indicates bit type.(true = 1, false = 0)
      *
      * @return Index of x-th 0
      */
