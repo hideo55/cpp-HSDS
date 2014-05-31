@@ -22,23 +22,49 @@ Describe(wavelet_matrix) {
     It(T001_create_instance) {
         WaveletMatrix* wm = new WaveletMatrix();
         AssertThatEx(wm != NULL, Is().EqualTo(true));
-        AssertThatEx(wm->size(), Is().EqualTo(0));
+        AssertThatEx(wm->size(), Is().EqualTo(0UL));
         delete wm;
     }
 
-    It(T002_build_and_lookup) {
+    It(T002_build_and_access) {
+        // https://code.google.com/p/wat-array/wiki/WatArrayIntro
         WaveletMatrix wm;
         vector<uint64_t> v;
         v.push_back(5);
+        v.push_back(1);
+        v.push_back(0);
         v.push_back(4);
+        v.push_back(2);
+        v.push_back(2);
+        v.push_back(0);
         v.push_back(3);
-        v.push_back(0);
-        v.push_back(0);
+
         wm.build(v);
 
         for (size_t i = 0; i < v.size(); ++i) {
             AssertThatEx(wm.lookup(i), Is().EqualTo(v[i]));
         }
+
+        uint64_t pos = 0, val = 0;
+        AssertThatEx( wm.rank(3, 6), Is().EqualTo(0UL));// =0 ... The number of 3 in vec[0..6)
+        AssertThatEx( wm.rank(0, 6), Is().EqualTo(1UL));// =2 ... The number of 0 in vec[0..6)
+        AssertThatEx( wm.rank(0, 7), Is().EqualTo(2UL));// =2 ... The number of 2 in vec[0..7)
+        AssertThatEx( wm.rank(2, 6), Is().EqualTo(2UL));// =2 ... The number of 2 in vec[0..5)
+        AssertThatEx( wm.rank(1, 10), Is().EqualTo(hsds::NOT_FOUND));// pos > wm.size()
+        AssertThatEx( wm.select(2, 1), Is().EqualTo(4UL)); // =4 ... The second 2 appeared in vec[4]
+        AssertThatEx( wm.select(2, 2), Is().EqualTo(5UL)); // =5 ... The second 2 appeared in vec[5]
+        AssertThatEx( wm.select(0, 2), Is().EqualTo(6UL)); // =6 ... The second 2 appeared in vec[6]
+        AssertThatEx( wm.rankLessThan(4, 5), Is().EqualTo(3UL)); // =3 .. {1,0,2}  appear in vec[0..5)
+        AssertThatEx( wm.rankMoreThan(4, 5), Is().EqualTo(4UL)); // =4 ... {5, 4} appear in vec[0..5)
+        AssertThatEx( wm.freqRange(2, 5, 2, 6), Is().EqualTo(3UL)); // = 3 ... {4, 2, 2} appear in A[2...5)
+
+        wm.maxRange(1, 6, pos, val); // =(pos=3, val=4). A[3]=4 is the maximum in vec[1...6)
+        AssertThatEx( pos, Is().EqualTo(3UL));
+        AssertThatEx( val, Is().EqualTo(4UL));
+
+        wm.quantileRange(1, 6, 3, pos, val); // = (pos=4, val=2). Sort A[1...6) = 001224, and take the (3+1)-th value
+        AssertThatEx( pos, Is().EqualTo(4UL));
+        AssertThatEx( val, Is().EqualTo(2UL));
     }
 
     Describe(IO) {
@@ -99,7 +125,7 @@ Describe(wavelet_matrix) {
                 uint64_t mappedSize = 0;
                 try {
                     mappedSize = wm.map(mmapPtr, sb.st_size);
-                    AssertThatEx(mappedSize, Is().EqualTo(sb.st_size));
+                    AssertThatEx(mappedSize, Is().EqualTo((unsigned)sb.st_size));
 
                     for (size_t i = 0; i < v.size(); ++i) {
                         AssertThatEx(wm.lookup(i), Is().EqualTo(v[i]));
