@@ -29,7 +29,7 @@ Describe(bit_vector) {
 
         It(build_empty_vector) {
             bv.build();
-            AssertThatEx(bv.size(), Is().EqualTo(0));
+            AssertThatEx(bv.size(), Is().EqualTo(0UL));
         }
 
         It(build_normal_vector) {
@@ -42,33 +42,33 @@ Describe(bit_vector) {
             bv.set(1023, true);
             bv.set(1024, true);
             bv.build();
-            AssertThatEx(bv.size(true), Is().EqualTo(7));
+            AssertThatEx(bv.size(true), Is().EqualTo(7UL));
             AssertThatEx(bv[0], Is().EqualTo(true));
             AssertThatEx(bv[1], Is().EqualTo(false));
             AssertThatEx(bv[100], Is().EqualTo(true));
-            AssertThatEx(bv.rank1(1), Is().EqualTo(1));
-            AssertThatEx(bv.rank1(2), Is().EqualTo(1));
-            AssertThatEx(bv.rank1(100), Is().EqualTo(1));
-            AssertThatEx(bv.rank1(101), Is().EqualTo(2));
-            AssertThatEx(bv.rank0(1), Is().EqualTo(0));
-            AssertThatEx(bv.rank0(2), Is().EqualTo(1));
-            AssertThatEx(bv.rank0(100), Is().EqualTo(99));
-            AssertThatEx(bv.rank0(101), Is().EqualTo(99));
-            AssertThatEx(bv.size(), Is().EqualTo(1025));
+            AssertThatEx(bv.rank1(1), Is().EqualTo(1UL));
+            AssertThatEx(bv.rank1(2), Is().EqualTo(1UL));
+            AssertThatEx(bv.rank1(100), Is().EqualTo(1UL));
+            AssertThatEx(bv.rank1(101), Is().EqualTo(2UL));
+            AssertThatEx(bv.rank0(1), Is().EqualTo(0UL));
+            AssertThatEx(bv.rank0(2), Is().EqualTo(1UL));
+            AssertThatEx(bv.rank0(100), Is().EqualTo(99UL));
+            AssertThatEx(bv.rank0(101), Is().EqualTo(99UL));
+            AssertThatEx(bv.size(), Is().EqualTo(1025UL));
 
-            AssertThatEx(bv.select1(0), Is().EqualTo(0));
-            AssertThatEx(bv.select1(1), Is().EqualTo(100));
-            AssertThatEx(bv.select1(2), Is().EqualTo(101));
-            AssertThatEx(bv.select1(3), Is().EqualTo(511));
-            AssertThatEx(bv.select1(4), Is().EqualTo(512));
-            AssertThatEx(bv.select1(5), Is().EqualTo(1023));
-            AssertThatEx(bv.select1(6), Is().EqualTo(1024));
+            AssertThatEx(bv.select1(0), Is().EqualTo(0UL));
+            AssertThatEx(bv.select1(1), Is().EqualTo(100UL));
+            AssertThatEx(bv.select1(2), Is().EqualTo(101UL));
+            AssertThatEx(bv.select1(3), Is().EqualTo(511UL));
+            AssertThatEx(bv.select1(4), Is().EqualTo(512UL));
+            AssertThatEx(bv.select1(5), Is().EqualTo(1023UL));
+            AssertThatEx(bv.select1(6), Is().EqualTo(1024UL));
             AssertThatEx(bv.select1(7), Is().EqualTo(hsds::NOT_FOUND));
 
-            AssertThatEx(bv.size(false), Is().EqualTo(1018));
-            AssertThatEx(bv.select0(0), Is().EqualTo(1));
-            AssertThatEx(bv.select0(1), Is().EqualTo(2));
-            AssertThatEx(bv.select0(100), Is().EqualTo(103));
+            AssertThatEx(bv.size(false), Is().EqualTo(1018UL));
+            AssertThatEx(bv.select0(0), Is().EqualTo(1UL));
+            AssertThatEx(bv.select0(1), Is().EqualTo(2UL));
+            AssertThatEx(bv.select0(100), Is().EqualTo(103UL));
             AssertThatEx(bv.select0(1018), Is().EqualTo(hsds::NOT_FOUND));
 
             AssertThatEx(bv.empty(), Is().EqualTo(false));
@@ -82,7 +82,7 @@ Describe(bit_vector) {
         }
         bv.build();
         bv.clear();
-        AssertThatEx(bv.size(), Is().EqualTo(0));
+        AssertThatEx(bv.size(), Is().EqualTo(0UL));
     }
 
     Describe(bit_vector_opration) {
@@ -114,7 +114,6 @@ Describe(bit_vector) {
             bv.save(ofs);
             ofs.close();
             ifstream ifs(tempfile.c_str());
-/*
             {
                 hsds::BitVector bv2;
                 bv2.load(ifs);
@@ -124,7 +123,6 @@ Describe(bit_vector) {
                 AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
 
             }
-            */
         }
 
         It(save_and_mmap_bit_vector) {
@@ -145,7 +143,7 @@ Describe(bit_vector) {
                 hsds::BitVector bv2;
                 uint64_t mapped = bv2.map(mmapPtr, sb.st_size);
 
-                AssertThatEx(mapped, Is().EqualTo(sb.st_size));
+                AssertThatEx(mapped, Is().EqualTo((unsigned)sb.st_size));
                 AssertThatEx(bv2.size(), Is().EqualTo(bv.size()));
                 AssertThatEx(bv2.size(true), Is().EqualTo(bv.size(true)));
                 AssertThatEx(bv2.size(false), Is().EqualTo(bv.size(false)));
@@ -159,7 +157,7 @@ Describe(bit_vector) {
             hsds::BitVector bv2;
             bv2.swap(bv);
 
-            AssertThatEx(bv.size(), Is().EqualTo(0));
+            AssertThatEx(bv.size(), Is().EqualTo(0UL));
             AssertThatEx(bv.empty(), Is().EqualTo(true));
 
             AssertThatEx(bv2.size(), Is().EqualTo(origSize));

@@ -50,6 +50,7 @@ Describe(wavelet_matrix) {
         AssertThatEx( wm.rank(0, 6), Is().EqualTo(1UL));// =2 ... The number of 0 in vec[0..6)
         AssertThatEx( wm.rank(0, 7), Is().EqualTo(2UL));// =2 ... The number of 2 in vec[0..7)
         AssertThatEx( wm.rank(2, 6), Is().EqualTo(2UL));// =2 ... The number of 2 in vec[0..5)
+        AssertThatEx( wm.rank(5, 6), Is().EqualTo(1UL));// =1 ... The number of 5 in vec[0..6)
         AssertThatEx( wm.rank(1, 10), Is().EqualTo(hsds::NOT_FOUND));// pos > wm.size()
         AssertThatEx( wm.select(2, 1), Is().EqualTo(4UL)); // =4 ... The second 2 appeared in vec[4]
         AssertThatEx( wm.select(2, 2), Is().EqualTo(5UL)); // =5 ... The second 2 appeared in vec[5]
