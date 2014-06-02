@@ -15,15 +15,18 @@ $ make && make install
 
 ## Libraries
 
-### BitVector - Succinct bit vector
+### BitVector
+
+`BitVector` class is implementation of Succinct Bit Vector(a.k.a. Fully Indexable Dictionary.
 
 #### Sample
+
 ```c++
 #include "hsds/bit-vector.hpp"
 
 using namespace hsds;
 
-void main(){
+int main(){
     BitVector bv;
     bv.set(0, true);
     bv.set(100, true);
@@ -32,10 +35,11 @@ void main(){
     
     bv.build();
     
-    uint64_t pos = bv.select1(0)// 0;
-    pos = bv.select1(1)// 100;
-    pos = bv.select0(0)// 1;
-    
+    uint64_t pos = bv.select1(0); // =0
+    pos = bv.select1(1);          // =100
+    pos = bv.select0(0);          // =1
+ 
+    return 0;   
 }
 
 ```
@@ -44,6 +48,46 @@ void main(){
 ```sh
 $ g++ sample.cpp -o sample -lhsds-bitvector
 ```
+
+### WaveletMatrix
+
+```c++
+#include "hsds/wavelet-matrix.hpp"
+
+using namespace std;
+using namespace hsds;
+
+void main(){
+    vector<uint64_t> vec;
+    vec.push_back(1);
+    vec.push_back(3);
+    vec.push_back(1);
+    vec.push_back(4);
+    vec.push_back(2);
+    vec.push_back(10);
+    vec.push_back(1);
+
+    WaveletMatix wm;
+    
+    wm.build(vec);
+    
+    cout << wm.lookup(3) << endl;          // =4 ... vec[3]
+    cout << wm.rank(2, 6) << endl;         // =2 ... The number of 2 in vec[0..5]
+    cout << wm.select(2,2) << endl;        // =5 ... The second 2 appeared in vec[5]
+    cout << wm.rankLessThan(4, 5) << endl; // =3 ... {1,0,2}  appear in vec[0..5]
+    cout << wm.rankMoreThan(4, 5) << endl; // =4 ... {5, 4} appear in vec[0..5]
+    
+    return 0;    
+}
+
+```
+
+#### Build
+```sh
+$ g++ sample.cpp -o sample -lhsds-waveletmatrix
+```
+
+#### Sample
 
 ## Document
 
