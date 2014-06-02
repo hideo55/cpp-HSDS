@@ -1,4 +1,5 @@
 #include <igloo/igloo_alt.h>
+#include <string>
 #include <igloo/TapTestListener.h>
 #include "hsds/wavelet-matrix.hpp"
 #include <sstream>
@@ -27,7 +28,7 @@ Describe(wavelet_matrix) {
     }
 
     It(T002_build_and_access) {
-        // https://code.google.com/p/wat-array/wiki/WatArrayIntro
+    // https://code.google.com/p/wat-array/wiki/WatArrayIntro
         WaveletMatrix wm;
         vector<uint64_t> v;
         v.push_back(5);
@@ -46,24 +47,24 @@ Describe(wavelet_matrix) {
         }
 
         uint64_t pos = 0, val = 0;
-        AssertThatEx( wm.rank(3, 6), Is().EqualTo(0UL));// =0 ... The number of 3 in vec[0..6)
-        AssertThatEx( wm.rank(0, 6), Is().EqualTo(1UL));// =2 ... The number of 0 in vec[0..6)
-        AssertThatEx( wm.rank(0, 7), Is().EqualTo(2UL));// =2 ... The number of 2 in vec[0..7)
-        AssertThatEx( wm.rank(2, 6), Is().EqualTo(2UL));// =2 ... The number of 2 in vec[0..5)
-        AssertThatEx( wm.rank(5, 6), Is().EqualTo(1UL));// =1 ... The number of 5 in vec[0..6)
-        AssertThatEx( wm.rank(1, 10), Is().EqualTo(hsds::NOT_FOUND));// pos > wm.size()
+        AssertThatEx( wm.rank(3, 6), Is().EqualTo(0UL)); // =0 ... The number of 3 in vec[0..6)
+        AssertThatEx( wm.rank(0, 6), Is().EqualTo(1UL)); // =2 ... The number of 0 in vec[0..6)
+        AssertThatEx( wm.rank(0, 7), Is().EqualTo(2UL)); // =2 ... The number of 2 in vec[0..7)
+        AssertThatEx( wm.rank(2, 6), Is().EqualTo(2UL)); // =2 ... The number of 2 in vec[0..5)
+        AssertThatEx( wm.rank(5, 6), Is().EqualTo(1UL)); // =1 ... The number of 5 in vec[0..6)
+        AssertThatEx( wm.rank(1, 10), Is().EqualTo(hsds::NOT_FOUND)); // pos > wm.size()
         AssertThatEx( wm.select(2, 1), Is().EqualTo(4UL)); // =4 ... The second 2 appeared in vec[4]
-        AssertThatEx( wm.select(2, 2), Is().EqualTo(5UL)); // =5 ... The second 2 appeared in vec[5]
-        AssertThatEx( wm.select(0, 2), Is().EqualTo(6UL)); // =6 ... The second 2 appeared in vec[6]
+        AssertThatEx( wm.select(2, 2), Is().EqualTo(5UL)); // =5 ... The second 2 appeared in vec[5] // =6 ... The second 2 appeared in vec[6]
         AssertThatEx( wm.rankLessThan(4, 5), Is().EqualTo(3UL)); // =3 .. {1,0,2}  appear in vec[0..5)
         AssertThatEx( wm.rankMoreThan(4, 5), Is().EqualTo(4UL)); // =4 ... {5, 4} appear in vec[0..5)
         AssertThatEx( wm.freqRange(2, 5, 2, 6), Is().EqualTo(3UL)); // = 3 ... {4, 2, 2} appear in A[2...5)
+        AssertThatEx( wm.freqSum(0,3), Is().EqualTo(5UL)); // =5 0 <= c < 3 = (0,0,1,2,2)
 
         wm.maxRange(1, 6, pos, val); // =(pos=3, val=4). A[3]=4 is the maximum in vec[1...6)
         AssertThatEx( pos, Is().EqualTo(3UL));
         AssertThatEx( val, Is().EqualTo(4UL));
 
-        wm.minRange(3,6, pos, val); // =(pos=6, vak=0) A[6]=0 is minimum in vec[3..6)
+        wm.minRange(3, 6, pos, val); // =(pos=6, vak=0) A[6]=0 is minimum in vec[3..6)
         AssertThatEx( pos, Is().EqualTo(6UL));
         AssertThatEx( val, Is().EqualTo(0UL));
 
