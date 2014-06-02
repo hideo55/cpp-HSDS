@@ -57,6 +57,7 @@ Describe(wavelet_matrix) {
         AssertThatEx( wm.select(2, 2), Is().EqualTo(5UL)); // =5 ... The second 2 appeared in vec[5] // =6 ... The second 2 appeared in vec[6]
         AssertThatEx( wm.rankLessThan(4, 5), Is().EqualTo(3UL)); // =3 .. {1,0,2}  appear in vec[0..5)
         AssertThatEx( wm.rankMoreThan(4, 5), Is().EqualTo(4UL)); // =4 ... {5, 4} appear in vec[0..5)
+        AssertThatEx( wm.freq(2), Is().EqualTo(2UL)); // =2 ... {2, 2} appear in vec
         AssertThatEx( wm.freqRange(2, 5, 2, 6), Is().EqualTo(3UL)); // = 3 ... {4, 2, 2} appear in A[2...5)
         AssertThatEx( wm.freqSum(0,3), Is().EqualTo(5UL)); // =5 0 <= c < 3 = (0,0,1,2,2)
 
