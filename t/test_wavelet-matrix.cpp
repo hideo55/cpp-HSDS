@@ -63,6 +63,10 @@ Describe(wavelet_matrix) {
         AssertThatEx( pos, Is().EqualTo(3UL));
         AssertThatEx( val, Is().EqualTo(4UL));
 
+        wm.minRange(3,6, pos, val); // =(pos=6, vak=0) A[6]=0 is minimum in vec[3..6)
+        AssertThatEx( pos, Is().EqualTo(6UL));
+        AssertThatEx( val, Is().EqualTo(0UL));
+
         wm.quantileRange(1, 6, 3, pos, val); // = (pos=4, val=2). Sort A[1...6) = 001224, and take the (3+1)-th value
         AssertThatEx( pos, Is().EqualTo(4UL));
         AssertThatEx( val, Is().EqualTo(2UL));
