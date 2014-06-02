@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rank',['rank',['../classhsds_1_1_bit_vector.html#a2de2d9ac57591f1497881f08097c95cb',1,'hsds::BitVector::rank()'],['../classhsds_1_1_wavelet_matrix.html#af95cd8855095da6c1d539a79a0fffe08',1,'hsds::WaveletMatrix::rank()']]],
+  ['rank',['rank',['../classhsds_1_1_bit_vector.html#a9f62d4f283c264b71e4888640d1736ca',1,'hsds::BitVector::rank()'],['../classhsds_1_1_wavelet_matrix.html#af95cd8855095da6c1d539a79a0fffe08',1,'hsds::WaveletMatrix::rank()']]],
   ['rank0',['rank0',['../classhsds_1_1_bit_vector.html#add3d1c234d7cc39cb871fef79c9e7479',1,'hsds::BitVector']]],
   ['rank1',['rank1',['../classhsds_1_1_bit_vector.html#a81de01e7bed88fee88b5521a0d23b0bd',1,'hsds::BitVector']]],
   ['rankall',['rankAll',['../classhsds_1_1_wavelet_matrix.html#a98837fca42e702cce9975debb4a407b8',1,'hsds::WaveletMatrix']]],

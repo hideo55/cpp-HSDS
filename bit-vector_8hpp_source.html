@@ -162,7 +162,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span> size_ == 0;</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a2de2d9ac57591f1497881f08097c95cb">  146</a></span>&#160;    <span class="keyword">inline</span> uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a2de2d9ac57591f1497881f08097c95cb" title="Returns Number of the bits equal to b up to position i">rank</a>(uint64_t i, <span class="keywordtype">bool</span> b = <span class="keyword">true</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a9f62d4f283c264b71e4888640d1736ca">  146</a></span>&#160;    <a class="code" href="bit-vector_8hpp.html#ac032d233a8ebfcd82fd49d0824eefb18">FORCE_INLINE</a>  uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a9f62d4f283c264b71e4888640d1736ca" title="Returns Number of the bits equal to b up to position i">rank</a>(uint64_t i, <span class="keywordtype">bool</span> b = <span class="keyword">true</span>)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keywordflow">return</span> b ? <a class="code" href="classhsds_1_1_bit_vector.html#a81de01e7bed88fee88b5521a0d23b0bd" title="Returns Number of the bits equal to 1 up to position i">rank1</a>(i) : <a class="code" href="classhsds_1_1_bit_vector.html#add3d1c234d7cc39cb871fef79c9e7479" title="Returns Number of the bits equal to 0 up to position i">rank0</a>(i);</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    }</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
@@ -170,7 +170,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a81de01e7bed88fee88b5521a0d23b0bd" title="Returns Number of the bits equal to 1 up to position i">rank1</a>(uint64_t i) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#a34f14f81007e53c89f50e49c246e8229">  176</a></span>&#160;    <span class="keyword">inline</span> uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#a34f14f81007e53c89f50e49c246e8229" title="Returns the position of the x-th occurrence of b">select</a>(uint64_t x, <span class="keywordtype">bool</span> b = <span class="keyword">true</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00176"></a><span class="lineno"><a class="code" href="classhsds_1_1_bit_vector.html#ae693456051b234aa3badceb5a83a7e68">  176</a></span>&#160;    <a class="code" href="bit-vector_8hpp.html#ac032d233a8ebfcd82fd49d0824eefb18">FORCE_INLINE</a>  uint64_t <a class="code" href="classhsds_1_1_bit_vector.html#ae693456051b234aa3badceb5a83a7e68" title="Returns the position of the x-th occurrence of b">select</a>(uint64_t x, <span class="keywordtype">bool</span> b = <span class="keyword">true</span>)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">return</span> b ? <a class="code" href="classhsds_1_1_bit_vector.html#a4020dd48178e0a01c85883abe0817c47" title="Returns the position of the x-th occurrence of 1.">select1</a>(x) : <a class="code" href="classhsds_1_1_bit_vector.html#a822073506771c4b08d0238f9c0f08213" title="Returns the position of the x-th occurrence of 0.">select0</a>(x);</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    }</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
@@ -209,7 +209,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 30 2014 01:59:52 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 3 2014 02:07:48 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
