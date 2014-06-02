@@ -271,7 +271,7 @@ uint64_t WaveletMatrix::freqRange(uint64_t min_c, uint64_t max_c, uint64_t begin
 }
 
 void WaveletMatrix::maxRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos, uint64_t& val) const {
-    quantileRange(begin_pos, end_pos, end_pos - begin_pos , pos, val);
+    quantileRange(begin_pos, end_pos, end_pos - begin_pos, pos, val);
 }
 
 void WaveletMatrix::minRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos, uint64_t& val) const {
@@ -280,7 +280,8 @@ void WaveletMatrix::minRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos
 
 void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t k, uint64_t& pos,
         uint64_t& val) const {
-    if ((end_pos > size_ || begin_pos >= end_pos) || (k >= end_pos - begin_pos)) {
+    ++end_pos;
+    if ((end_pos > size_ || begin_pos >= end_pos) || k > end_pos - begin_pos) {
         pos = NOT_FOUND;
         val = NOT_FOUND;
         return;
@@ -297,7 +298,7 @@ void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t
         const BitVector& bv = bv_[i];
 
         if (from_zero) {
-            begin_zero = nodeBeginPos_[i][node_num] ;
+            begin_zero = nodeBeginPos_[i][node_num];
         } else {
             begin_zero = bv.rank0(begin_pos);
         }
@@ -325,7 +326,6 @@ void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t
     }
 
     pos = select(val, begin_pos + k - nodeBeginPos_[alphabetBitNum_ - 1][val] + 1);
-
 }
 
 void WaveletMatrix::save(std::ostream& os) const throw (hsds::Exception) {
