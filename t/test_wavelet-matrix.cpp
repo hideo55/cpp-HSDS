@@ -55,8 +55,9 @@ Describe(wavelet_matrix) {
         AssertThatEx( wm.rank(1, 10), Is().EqualTo(hsds::NOT_FOUND)); // pos > wm.size()
         AssertThatEx( wm.select(2, 1), Is().EqualTo(4UL)); // =4 ... The second 2 appeared in vec[4]
         AssertThatEx( wm.select(2, 2), Is().EqualTo(5UL)); // =5 ... The second 2 appeared in vec[5] // =6 ... The second 2 appeared in vec[6]
+        cout << 5 - wm.rank(4,5) - wm.rankLessThan(4, 5) << endl;;
         AssertThatEx( wm.rankLessThan(4, 5), Is().EqualTo(3UL)); // =3 .. {1,0,2}  appear in vec[0..5)
-        AssertThatEx( wm.rankMoreThan(4, 5), Is().EqualTo(4UL)); // =4 ... {5, 4} appear in vec[0..5)
+        AssertThatEx( wm.rankMoreThan(3, 5), Is().EqualTo(2UL)); // =2 ... {5, 4} appear in vec[0..5)
         AssertThatEx( wm.freq(2), Is().EqualTo(2UL)); // =2 ... {2, 2} appear in vec
         AssertThatEx( wm.freqRange(2, 5, 2, 6), Is().EqualTo(3UL)); // = 3 ... {4, 2, 2} appear in A[2...5)
         AssertThatEx( wm.freqSum(0,3), Is().EqualTo(5UL)); // =5 0 <= c < 3 = (0,0,1,2,2)
@@ -65,12 +66,12 @@ Describe(wavelet_matrix) {
         AssertThatEx( pos, Is().EqualTo(3UL));
         AssertThatEx( val, Is().EqualTo(4UL));
 
-        wm.minRange(3, 6, pos, val); // =(pos=6, vak=0) A[6]=0 is minimum in vec[3..6)
-        AssertThatEx( pos, Is().EqualTo(6UL));
+        wm.minRange(1, 6, pos, val); // =(pos=2, val=0) A[6]=0 is minimum in vec[3..6)
+        AssertThatEx( pos, Is().EqualTo(2UL));
         AssertThatEx( val, Is().EqualTo(0UL));
 
-        wm.quantileRange(1, 6, 3, pos, val); // = (pos=4, val=2). Sort A[1...6) = 001224, and take the (3+1)-th value
-        AssertThatEx( pos, Is().EqualTo(4UL));
+        wm.quantileRange(1, 6, 3, pos, val); // = (pos=4, val=2). Sort A[1...6) = 01224, and take the (3+1)-th value
+        AssertThatEx( pos, Is().EqualTo(5UL));
         AssertThatEx( val, Is().EqualTo(2UL));
     }
 

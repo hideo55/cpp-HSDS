@@ -165,43 +165,28 @@ void WaveletMatrix::rankAll(uint64_t c, uint64_t begin_pos, uint64_t end_pos, ui
         return;
     }
 
-    uint64_t more_and_less[2] =
-    { 0 };
-    uint64_t node_num = 0;
-    bool from_zero = (begin_pos == 0);
-    bool to_end = (end_pos == size_);
+    uint64_t beg_node = 0;
+    uint64_t end_node = size_;
+    uint64_t pos = end_pos;
 
-    for (size_t i = 0; i < alphabetBitNum_; ++i) {
+    for (size_t i = 0; i < alphabetBitNum_ && begin_pos < end_pos; ++i) {
         const BitVector& bv = bv_[i];
         unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
-        uint64_t range_bits = end_pos - begin_pos;
-        uint64_t begin_zero, end_zero;
-
-        if (from_zero) {
-            begin_zero = nodeBeginPos_[i][node_num];
+        uint64_t beg_node_zero = bv.rank0(beg_node);
+        uint64_t beg_node_one  = beg_node - beg_node_zero;
+        uint64_t end_node_zero = bv.rank0(end_node);
+        uint64_t boundary      = beg_node + end_node_zero - beg_node_zero;
+        if (!bit){
+          rank_more_than += bv.rank1(pos) - beg_node_one;
+          pos      = beg_node + bv.rank0(pos) - beg_node_zero;
+          end_node = boundary;
         } else {
-            begin_zero = bv.rank0(begin_pos);
+          rank_less_than += bv.rank0(pos) - beg_node_zero;
+          pos      = boundary + bv.rank1(pos) - (beg_node - beg_node_zero);
+          beg_node = boundary;
         }
-
-        if (to_end) {
-            end_zero = nodeBeginPos_[i][node_num + 1];
-        } else {
-            end_zero = bv.rank0(end_pos);
-        }
-
-        if (bit) {
-            begin_pos += nodeBeginPos_[i][1] - begin_zero;
-            end_pos += nodeBeginPos_[i][1] - end_zero;
-        } else {
-            begin_pos = begin_zero;
-            end_pos = end_zero;
-        }
-        more_and_less[bit] += range_bits - (end_pos - begin_pos);
-        node_num |= bit << i;
     }
-    rank_less_than = more_and_less[1];
-    rank_more_than = more_and_less[0];
-    rank = end_pos - begin_pos;
+    rank = pos - beg_node;
 }
 
 uint64_t WaveletMatrix::select(uint64_t c, uint64_t rank) const {
@@ -235,7 +220,7 @@ uint64_t WaveletMatrix::selectFromPos(uint64_t c, uint64_t pos, uint64_t rank) c
             index -= nodeBeginPos_[i][1];
         }
 
-        index = bv_[i].select(index -1, bit) + 1;
+        index = bv_[i].select(index - 1, bit) + 1;
 
         if (index == hsds::NOT_FOUND) {
             return hsds::NOT_FOUND;
@@ -271,7 +256,7 @@ uint64_t WaveletMatrix::freqRange(uint64_t min_c, uint64_t max_c, uint64_t begin
 }
 
 void WaveletMatrix::maxRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos, uint64_t& val) const {
-    quantileRange(begin_pos, end_pos, end_pos - begin_pos, pos, val);
+    quantileRange(begin_pos, end_pos, end_pos - begin_pos - 1, pos, val);
 }
 
 void WaveletMatrix::minRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos, uint64_t& val) const {
@@ -280,8 +265,7 @@ void WaveletMatrix::minRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos
 
 void WaveletMatrix::quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t k, uint64_t& pos,
         uint64_t& val) const {
-    ++end_pos;
-    if ((end_pos > size_ || begin_pos >= end_pos) || k > end_pos - begin_pos) {
+    if ((end_pos > size_ || begin_pos >= end_pos) || k >= end_pos - begin_pos) {
         pos = NOT_FOUND;
         val = NOT_FOUND;
         return;
