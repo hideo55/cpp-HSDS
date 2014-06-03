@@ -17,7 +17,7 @@ $ make && make install
 
 ### BitVector
 
-`BitVector` class is implementation of Succinct Bit Vector(a.k.a. Fully Indexable Dictionary.
+`BitVector` class is implementation of Succinct Bit Vector(a.k.a. Fully Indexable Dictionary).
 
 #### Sample
 
