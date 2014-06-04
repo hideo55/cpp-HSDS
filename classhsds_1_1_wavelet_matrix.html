@@ -118,6 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa800377b4a4fcf66936db405a0c5db6b"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#aa800377b4a4fcf66936db405a0c5db6b">size</a> () const </td></tr>
 <tr class="memdesc:aa800377b4a4fcf66936db405a0c5db6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of elements.  <a href="#aa800377b4a4fcf66936db405a0c5db6b">More...</a><br/></td></tr>
 <tr class="separator:aa800377b4a4fcf66936db405a0c5db6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f5acae7818ebfeccabc9c0b235a60df"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#a9f5acae7818ebfeccabc9c0b235a60df">operator[]</a> (uint64_t pos)</td></tr>
+<tr class="memdesc:a9f5acae7818ebfeccabc9c0b235a60df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lookup A[pos].  <a href="#a9f5acae7818ebfeccabc9c0b235a60df">More...</a><br/></td></tr>
+<tr class="separator:a9f5acae7818ebfeccabc9c0b235a60df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a0755f1d36b0e569590b9592140e4e7"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#a4a0755f1d36b0e569590b9592140e4e7">lookup</a> (uint64_t pos) const </td></tr>
 <tr class="memdesc:a4a0755f1d36b0e569590b9592140e4e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lookup A[pos].  <a href="#a4a0755f1d36b0e569590b9592140e4e7">More...</a><br/></td></tr>
 <tr class="separator:a4a0755f1d36b0e569590b9592140e4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -564,6 +567,41 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a9f5acae7818ebfeccabc9c0b235a60df"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t hsds::WaveletMatrix::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>pos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Lookup A[pos]. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>The position</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>return A[pos] if found, or return NOT_FOUND if pos &gt;= size </dd></dl>
+
+<p>Definition at line <a class="el" href="wavelet-matrix_8hpp_source.html#l00089">89</a> of file <a class="el" href="wavelet-matrix_8hpp_source.html">wavelet-matrix.hpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a23c191a8eb6d0a2d089a895e7f82c737"></a>
 <div class="memitem">
 <div class="memproto">
@@ -958,7 +996,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 3 2014 02:07:48 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 4 2014 20:48:39 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
