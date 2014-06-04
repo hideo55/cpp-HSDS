@@ -36,10 +36,11 @@ ADD_LIBRARY(hsds-waveletmatrix SHARED src/wavelet-matrix.cpp)
 TARGET_LINK_LIBRARIES(hsds-waveletmatrix hsds-bitvector)
 SET_TARGET_PROPERTIES(hsds-waveletmatrix PROPERTIES VERSION ${serial} SOVERSION ${soserial})
 
-INSTALL(TARGETS hsds-bitvector DESTINATION lib)
+INSTALL(TARGETS hsds-bitvector hsds-waveletmatrix DESTINATION lib)
 
 SET(INSTALL_HEADERS include/hsds/bit-vector.hpp include/hsds/exception.hpp include/hsds/constants.hpp include/hsds/rank-index.hpp)
 SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/vector.hpp include/hsds/scoped_array.hpp include/hsds/scoped_ptr.hpp)
+SET(INSTALL_HEADERS ${INSTALL_HEADERS} include/hsds/wavelet-matrix.hpp)
 
 INSTALL(FILES ${INSTALL_HEADERS} DESTINATION include/hsds)
 
