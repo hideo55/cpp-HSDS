@@ -44,6 +44,7 @@ Describe(wavelet_matrix) {
 
         for (size_t i = 0; i < v.size(); ++i) {
             AssertThatEx(wm.lookup(i), Is().EqualTo(v[i]));
+            AssertThatEx(wm[i], Is().EqualTo(v[i]));
         }
 
         uint64_t pos = 0, val = 0;

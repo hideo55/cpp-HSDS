@@ -81,6 +81,17 @@ public:
 
     /**
      * Lookup A[pos]
+     *
+     * @param[in] pos The position
+     *
+     * @return return A[pos] if found, or return NOT_FOUND if pos >= size
+     */
+    inline uint64_t operator[](uint64_t pos) {
+        return lookup(pos);
+    }
+
+    /**
+     * Lookup A[pos]
      * 
      * @param[in] pos The position
      *
