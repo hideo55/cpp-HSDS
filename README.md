@@ -71,7 +71,7 @@ void main(){
     
     wm.build(vec);
     
-    cout << wm.lookup(3) << endl;          // =4 ... vec[3]
+    cout << wm[3] << endl;          // =4 ... vec[3]
     cout << wm.rank(2, 6) << endl;         // =2 ... The number of 2 in vec[0..5]
     cout << wm.select(2,2) << endl;        // =5 ... The second 2 appeared in vec[5]
     cout << wm.rankLessThan(4, 5) << endl; // =3 ... {1,0,2}  appear in vec[0..5]
