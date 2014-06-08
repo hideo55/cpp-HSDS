@@ -51,6 +51,8 @@ $ g++ sample.cpp -o sample -lhsds-bitvector
 
 ### WaveletMatrix
 
+`WaveletMatrix` class is implementation of [the Wavelet Matrix](http://www.dcc.uchile.cl/~gnavarro/ps/spire12.4.pdf).
+
 ```c++
 #include "hsds/wavelet-matrix.hpp"
 
