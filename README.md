@@ -79,6 +79,10 @@ void main(){
     cout << wm.rankLessThan(4, 5) << endl; // =3 ... {1,0,2}  appear in vec[0..5]
     cout << wm.rankMoreThan(4, 5) << endl; // =1 ... {5} appear in vec[0..5]
     
+    uint64_t pos = 0, val = 0;
+    wm.maxRange(1, 6, pos, val); // =(pos=3, val=4). A[3]=4 is the maximum in vec[1...6)
+    wm.minRange(1, 6, pos, val); // =(pos=2, val=0) A[6]=0 is minimum in vec[3..6)
+    
     return 0;    
 }
 
