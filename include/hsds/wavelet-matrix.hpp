@@ -10,6 +10,7 @@
 #include <stdint.h>
 #endif // !defined(_MSC_VER)
 #include <vector>
+#include <queue>
 #include "hsds/scoped_ptr.hpp"
 #include "hsds/bit-vector.hpp"
 #include "hsds/vector.hpp"
@@ -34,6 +35,22 @@ bool uint2bit(uint64_t bits, uint64_t pos) {
 
 // forward declaration
 class Exception;
+
+/**
+ * @brief Result of list* API
+ */
+struct ListResult {
+    ListResult(uint64_t c, uint64_t freq) :
+            c(c), freq(freq) {
+    }
+    uint64_t c;
+    uint64_t freq;
+    bool operator <(const ListResult& lr) const {
+        if (c != lr.c)
+            return c < lr.c;
+        return freq < lr.freq;
+    }
+};
 
 /**
  * @brief Wavelet matrix class. See also http://www.dcc.uchile.cl/~gnavarro/ps/spire12.4.pdf
@@ -145,23 +162,23 @@ public:
             uint64_t& rank_more_than) const;
 
     /**
-     * Compute the select = the position of the (rank+1)-th occurence of 'c' in the array. 
+     * Compute the select = the position of the (rank+1)-th occurrence of 'c' in the array.
      * 
      * @param[in] c Character to be examined
      * @param[in] rank The rank of the character
      *
-     * @return The position of the (rank+1)-th occurence of 'c' in the array. 
+     * @return The position of the (rank+1)-th occurrence of 'c' in the array.
      *         or NOT_FOUND if c >= alphabet_num or rank > freq(c)
      */
     uint64_t select(uint64_t c, uint64_t rank) const;
 
     /**
-     * Compute the select = the position of the (rank+1)-th occurence of 'c' in the suffix of the array starting from 'pos'
+     * Compute the select = the position of the (rank+1)-th occurrence of 'c' in the suffix of the array starting from 'pos'
      *
      * @param[in] c Character to be examined
      * @param[in] pos The beginning position of the suffix (inclusive)
      * @param[in] rank The rank of the character
-     * @return The position of the (rank+1)-th occurence of 'c' in the suffix of the array. 
+     * @return The position of the (rank+1)-th occurrence of 'c' in the suffix of the array.
      *         or NOT_FOUND if c >= alphabet_num or rank > freq(c) - rank(c, pos)
      */
     uint64_t selectFromPos(uint64_t c, uint64_t pos, uint64_t rank) const;
@@ -188,8 +205,8 @@ public:
     /**
      * Compute the frequency of characters min_c <= c' < max_c in the subarray A[beg_pos ... end_pos)
      *
-     * @param[in] min_c The smallerest character to be examined
-     * @param[in] max_c The uppker bound of the character to be examined
+     * @param[in] min_c The smallest character to be examined
+     * @param[in] max_c The upper bound of the character to be examined
      * @param[in] begin_pos The beginning position of the array (inclusive)
      * @param[in] end_pos The ending position of the array (not inclusive)
      *
@@ -204,7 +221,7 @@ public:
      * @param[in] begin_pos The beginning position
      * @param[in] end_pos The ending position
      * @param[out] pos The position where the largest value appeared in the subarray A[beg_pos .. end_pos)
-     *            If there are many items having the largest values, the smallest pos will be reporeted
+     *            If there are many items having the largest values, the smallest pos will be reported
      * @param[out] val The largest value appeared in the subarray A[beg_pos ... end_pos)
      */
     void maxRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos, uint64_t& val) const;
@@ -215,7 +232,7 @@ public:
      * @param[in] begin_pos The beginning position
      * @param[in] end_pos The ending position
      * @param[out] pos The position where the smallest value appeared in the subarray A[beg_pos .. end_pos)
-     *            If there are many items having the smalles values, the smallest pos will be reporeted
+     *            If there are many items having the smallest values, the smallest pos will be reported
      * @param[out] val The smallest value appeared in the subarray A[beg_pos ... end_pos)
      */
     void minRange(uint64_t begin_pos, uint64_t end_pos, uint64_t& pos, uint64_t& val) const;
@@ -227,10 +244,52 @@ public:
      * @param[in] end_pos The ending position
      * @param[in] k The order (should be smaller than end_pos - beg_pos).
      * @param[out] pos The position where the k-th largest value appeared in the subarray A[beg_pos .. end_pos)
-     *            If there are many items having the k-th largest values, the smallest pos will be reporeted
+     *            If there are many items having the k-th largest values, the smallest pos will be reported
      * @param[out] val The k-th largest value appeared in the subarray A[beg_pos ... end_pos)
      */
     void quantileRange(uint64_t begin_pos, uint64_t end_pos, uint64_t k, uint64_t& pos, uint64_t& val) const;
+
+    /**
+     * List the distinct characters appeared in A[beg_pos ... end_pos) from most frequent ones
+     *
+     * @param min_c The smallest character to be examined
+     * @param max_c The upper bound of the character to be examined
+     * @param beg_pos The beginning position of the array (inclusive)
+     * @param end_pos The ending position of the array (not inclusive)
+     * @param num The maximum number of reporting results.
+     * @param res The distinct characters in the A[beg_pos ... end_pos) from most frequent ones.
+     *            Each item consists of c:character and freq: frequency of c.
+     */
+    void listModeRange(uint64_t min_c, uint64_t max_c, uint64_t beg_pos, uint64_t end_pos, uint64_t num,
+            std::vector<ListResult>& res) const;
+
+    /**
+     * List the distinct characters in A[beg_pos ... end_pos) min_c <= c < max_c  from smallest ones
+     *
+     * @param min_c The smallest character to be examined
+     * @param max_c The upper bound of the character to be examined
+     * @param beg_pos The beginning position of the array (inclusive)
+     * @param end_pos The ending position of the array (not inclusive)
+     * @param num The maximum number of reporting results.
+     * @param res The distinct characters in the A[beg_pos ... end_pos) from smallest ones.
+     *            Each item consists of c:character and freq: frequency of c.
+     */
+    void listMinRange(uint64_t min_c, uint64_t max_c, uint64_t beg_pos, uint64_t end_pos, uint64_t num,
+            std::vector<ListResult>& res) const;
+
+    /**
+     * List the distinct characters appeared in A[beg_pos ... end_pos) from largest ones
+     *
+     * @param min_c The smallest character to be examined
+     * @param max_c The upper bound of the character to be examined
+     * @param beg_pos The beginning position of the array (inclusive)
+     * @param end_pos The ending position of the array (not inclusive)
+     * @param num The maximum number of reporting results.
+     * @param res The distinct characters in the A[beg_pos ... end_pos) from largest ones.
+     *            Each item consists of c:character and freq: frequency of c.
+     */
+    void listMaxRange(uint64_t min_c, uint64_t max_c, uint64_t beg_pos, uint64_t end_pos, uint64_t num,
+            std::vector<ListResult>& res) const;
 
     /**
      * Save the current status to a stream
@@ -272,7 +331,7 @@ private:
     uint64_t alphabetNum_;
     uint64_t alphabetBitNum_;
     bv_type bv_;
-    range_type nodeBeginPos_;
+    range_type nodePos_;
     uint64_vector_type seps_;
 
     inline uint64_t bitSize() const {
@@ -281,6 +340,64 @@ private:
 
     uint64_t getAlphabetNum(const std::vector<uint64_t>& array) const;
     uint64_t log2(uint64_t x) const;
+
+    struct QueryOnNode {
+        QueryOnNode(uint64_t beg_node, uint64_t end_node, uint64_t beg_pos, uint64_t end_pos, uint64_t depth,
+                uint64_t prefix_char) :
+                beg_node(beg_node),
+                    end_node(end_node),
+                    beg_pos(beg_pos),
+                    end_pos(end_pos),
+                    depth(depth),
+                    prefix_char(prefix_char) {
+        }
+        uint64_t beg_node;
+        uint64_t end_node;
+        uint64_t beg_pos;
+        uint64_t end_pos;
+        uint64_t depth;
+        uint64_t prefix_char;
+        void print() {
+            std::cout << beg_node << " " << end_node << " " << beg_pos << " " << end_pos << " " << depth << " ";
+            for (uint64_t i = 0; i < depth; ++i) {
+                std::cout << ((prefix_char >> (depth - (i + 1))) & 1LLU);
+            }
+            std::cout << std::endl;
+        }
+    };
+
+    class ListModeComparator;
+    class ListMinComparator;
+    class ListMaxComparator;
+
+    template<class Comparator>
+    void listRange(uint64_t min_c, uint64_t max_c, uint64_t beg_pos, uint64_t end_pos, uint64_t num,
+            std::vector<ListResult>& res) const {
+        res.clear();
+        if (end_pos > size_ || beg_pos >= end_pos)
+            return;
+
+        std::priority_queue<QueryOnNode, std::vector<QueryOnNode>, Comparator> qons;
+        qons.push(QueryOnNode(0, size_, beg_pos, end_pos, 0, 0));
+
+        while (res.size() < num && !qons.empty()) {
+            QueryOnNode qon = qons.top();
+            qons.pop();
+            if (qon.depth >= alphabetBitNum_) {
+                res.push_back(ListResult(qon.prefix_char, qon.end_pos - qon.beg_pos));
+            } else {
+                std::vector<QueryOnNode> next;
+                expandNode(min_c, max_c, qon, next);
+                for (size_t i = 0; i < next.size(); ++i) {
+                    qons.push(next[i]);
+                }
+            }
+        }
+    }
+
+    uint64_t prefixCode(uint64_t x, uint64_t len, uint64_t bit_num) const;
+    bool checkPrefix(uint64_t prefix, uint64_t depth, uint64_t min_c, uint64_t max_c) const;
+    void expandNode(uint64_t min_c, uint64_t max_c, const QueryOnNode& qon, std::vector<QueryOnNode>& next) const;
 };
 
 }

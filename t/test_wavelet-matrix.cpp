@@ -74,6 +74,34 @@ Describe(wavelet_matrix) {
         wm.quantileRange(1, 6, 3, pos, val); // = (pos=4, val=2). Sort A[1...6) = 01224, and take the (3+1)-th value
         AssertThatEx( pos, Is().EqualTo(5UL));
         AssertThatEx( val, Is().EqualTo(2UL));
+
+
+        std::vector<ListResult> result;
+        wm.listModeRange(1,3, 0, 8, 3, result);
+        AssertThatEx(result.size(), Is().EqualTo(2UL));
+        AssertThatEx(result[0].c, Is().EqualTo(2UL));
+        AssertThatEx(result[0].freq, Is().EqualTo(2UL));
+        AssertThatEx(result[1].c, Is().EqualTo(1UL));
+        AssertThatEx(result[1].freq, Is().EqualTo(1UL));
+
+        result.clear();
+        wm.listMaxRange(1,5, 0, 8, 3, result);
+        AssertThatEx(result.size(), Is().EqualTo(3UL));
+        AssertThatEx(result[0].c, Is().EqualTo(4UL));
+        AssertThatEx(result[0].freq, Is().EqualTo(1UL));
+        AssertThatEx(result[1].c, Is().EqualTo(3UL));
+        AssertThatEx(result[1].freq, Is().EqualTo(1UL));
+        AssertThatEx(result[2].c, Is().EqualTo(2UL));
+        AssertThatEx(result[2].freq, Is().EqualTo(2UL));
+        result.clear();
+        wm.listMinRange(0,5, 0, 8, 3, result);
+        AssertThatEx(result.size(), Is().EqualTo(3UL));
+        AssertThatEx(result[0].c, Is().EqualTo(0UL));
+        AssertThatEx(result[0].freq, Is().EqualTo(2UL));
+        AssertThatEx(result[1].c, Is().EqualTo(1UL));
+        AssertThatEx(result[1].freq, Is().EqualTo(1UL));
+        AssertThatEx(result[2].c, Is().EqualTo(2UL));
+        AssertThatEx(result[2].freq, Is().EqualTo(2UL));
     }
 
     Describe(IO) {
