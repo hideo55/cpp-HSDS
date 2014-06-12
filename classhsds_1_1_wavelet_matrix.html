@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">hsds::WaveletMatrix Class Reference</div>  </div>
@@ -137,10 +138,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a98837fca42e702cce9975debb4a407b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the frequency of characters c' &lt; c, c'=c, and c' &gt; c, in the subarray A[begin_pos...end_pos)  <a href="#a98837fca42e702cce9975debb4a407b8">More...</a><br/></td></tr>
 <tr class="separator:a98837fca42e702cce9975debb4a407b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3b66bbd369992e180124ebb8fd3b527"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#ac3b66bbd369992e180124ebb8fd3b527">select</a> (uint64_t c, uint64_t <a class="el" href="classhsds_1_1_wavelet_matrix.html#af95cd8855095da6c1d539a79a0fffe08">rank</a>) const </td></tr>
-<tr class="memdesc:ac3b66bbd369992e180124ebb8fd3b527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the select = the position of the (rank+1)-th occurence of 'c' in the array.  <a href="#ac3b66bbd369992e180124ebb8fd3b527">More...</a><br/></td></tr>
+<tr class="memdesc:ac3b66bbd369992e180124ebb8fd3b527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the select = the position of the (rank+1)-th occurrence of 'c' in the array.  <a href="#ac3b66bbd369992e180124ebb8fd3b527">More...</a><br/></td></tr>
 <tr class="separator:ac3b66bbd369992e180124ebb8fd3b527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a955adb66a706d07594958ff1452433e0"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#a955adb66a706d07594958ff1452433e0">selectFromPos</a> (uint64_t c, uint64_t pos, uint64_t <a class="el" href="classhsds_1_1_wavelet_matrix.html#af95cd8855095da6c1d539a79a0fffe08">rank</a>) const </td></tr>
-<tr class="memdesc:a955adb66a706d07594958ff1452433e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the select = the position of the (rank+1)-th occurence of 'c' in the suffix of the array starting from 'pos'.  <a href="#a955adb66a706d07594958ff1452433e0">More...</a><br/></td></tr>
+<tr class="memdesc:a955adb66a706d07594958ff1452433e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the select = the position of the (rank+1)-th occurrence of 'c' in the suffix of the array starting from 'pos'.  <a href="#a955adb66a706d07594958ff1452433e0">More...</a><br/></td></tr>
 <tr class="separator:a955adb66a706d07594958ff1452433e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa90baa4939c6416a35735734995baa0a"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#aa90baa4939c6416a35735734995baa0a">freq</a> (uint64_t c) const </td></tr>
 <tr class="memdesc:aa90baa4939c6416a35735734995baa0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the frequency of the character c.  <a href="#aa90baa4939c6416a35735734995baa0a">More...</a><br/></td></tr>
@@ -160,6 +161,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a23c191a8eb6d0a2d089a895e7f82c737"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#a23c191a8eb6d0a2d089a895e7f82c737">quantileRange</a> (uint64_t begin_pos, uint64_t end_pos, uint64_t k, uint64_t &amp;pos, uint64_t &amp;val) const </td></tr>
 <tr class="memdesc:a23c191a8eb6d0a2d089a895e7f82c737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range Quantile Query, Return the K-th smallest value in the subarray.  <a href="#a23c191a8eb6d0a2d089a895e7f82c737">More...</a><br/></td></tr>
 <tr class="separator:a23c191a8eb6d0a2d089a895e7f82c737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96cc003f6e047af5264d8fa1c77adbca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#a96cc003f6e047af5264d8fa1c77adbca">listModeRange</a> (uint64_t min_c, uint64_t max_c, uint64_t beg_pos, uint64_t end_pos, uint64_t num, std::vector&lt; <a class="el" href="structhsds_1_1_list_result.html">ListResult</a> &gt; &amp;res) const </td></tr>
+<tr class="memdesc:a96cc003f6e047af5264d8fa1c77adbca"><td class="mdescLeft">&#160;</td><td class="mdescRight">List the distinct characters appeared in A[beg_pos ...  <a href="#a96cc003f6e047af5264d8fa1c77adbca">More...</a><br/></td></tr>
+<tr class="separator:a96cc003f6e047af5264d8fa1c77adbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae086d7ed2a0322bbe6a1a94ea8c3d0b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#ae086d7ed2a0322bbe6a1a94ea8c3d0b3">listMinRange</a> (uint64_t min_c, uint64_t max_c, uint64_t beg_pos, uint64_t end_pos, uint64_t num, std::vector&lt; <a class="el" href="structhsds_1_1_list_result.html">ListResult</a> &gt; &amp;res) const </td></tr>
+<tr class="memdesc:ae086d7ed2a0322bbe6a1a94ea8c3d0b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">List the distinct characters in A[beg_pos ...  <a href="#ae086d7ed2a0322bbe6a1a94ea8c3d0b3">More...</a><br/></td></tr>
+<tr class="separator:ae086d7ed2a0322bbe6a1a94ea8c3d0b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11e6c69eb38dbca720f57543429de355"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#a11e6c69eb38dbca720f57543429de355">listMaxRange</a> (uint64_t min_c, uint64_t max_c, uint64_t beg_pos, uint64_t end_pos, uint64_t num, std::vector&lt; <a class="el" href="structhsds_1_1_list_result.html">ListResult</a> &gt; &amp;res) const </td></tr>
+<tr class="memdesc:a11e6c69eb38dbca720f57543429de355"><td class="mdescLeft">&#160;</td><td class="mdescRight">List the distinct characters appeared in A[beg_pos ...  <a href="#a11e6c69eb38dbca720f57543429de355">More...</a><br/></td></tr>
+<tr class="separator:a11e6c69eb38dbca720f57543429de355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af993d0961981bd1cb2a7d4ada066709a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_wavelet_matrix.html#af993d0961981bd1cb2a7d4ada066709a">save</a> (std::ostream &amp;os) const   throw (hsds::Exception)</td></tr>
 <tr class="memdesc:af993d0961981bd1cb2a7d4ada066709a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the current status to a stream.  <a href="#af993d0961981bd1cb2a7d4ada066709a">More...</a><br/></td></tr>
 <tr class="separator:af993d0961981bd1cb2a7d4ada066709a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,7 +184,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Wavelet matrix class. </p>
 <p>See also <a href="http://www.dcc.uchile.cl/~gnavarro/ps/spire12.4.pdf">http://www.dcc.uchile.cl/~gnavarro/ps/spire12.4.pdf</a> </p>
 
-<p>Definition at line <a class="el" href="wavelet-matrix_8hpp_source.html#l00041">41</a> of file <a class="el" href="wavelet-matrix_8hpp_source.html">wavelet-matrix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="wavelet-matrix_8hpp_source.html#l00058">58</a> of file <a class="el" href="wavelet-matrix_8hpp_source.html">wavelet-matrix.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a12f32d9bce7831f167febf3a9ab52903"></a>
 <div class="memitem">
@@ -325,8 +335,8 @@ Public Member Functions</h2></td></tr>
 <p>end_pos)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">min_c</td><td>The smallerest character to be examined </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">max_c</td><td>The uppker bound of the character to be examined </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">min_c</td><td>The smallest character to be examined </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_c</td><td>The upper bound of the character to be examined </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">begin_pos</td><td>The beginning position of the array (inclusive) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">end_pos</td><td>The ending position of the array (not inclusive)</td></tr>
   </table>
@@ -369,6 +379,198 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Return the frequency of min_c &lt;= c &lt; max_c in the array. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a11e6c69eb38dbca720f57543429de355"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hsds::WaveletMatrix::listMaxRange </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>min_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>max_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>beg_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>end_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structhsds_1_1_list_result.html">ListResult</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>res</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>List the distinct characters appeared in A[beg_pos ... </p>
+<p>end_pos) from largest ones</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_c</td><td>The smallest character to be examined </td></tr>
+    <tr><td class="paramname">max_c</td><td>The upper bound of the character to be examined </td></tr>
+    <tr><td class="paramname">beg_pos</td><td>The beginning position of the array (inclusive) </td></tr>
+    <tr><td class="paramname">end_pos</td><td>The ending position of the array (not inclusive) </td></tr>
+    <tr><td class="paramname">num</td><td>The maximum number of reporting results. </td></tr>
+    <tr><td class="paramname">res</td><td>The distinct characters in the A[beg_pos ... end_pos) from largest ones. Each item consists of c:character and freq: frequency of c. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae086d7ed2a0322bbe6a1a94ea8c3d0b3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hsds::WaveletMatrix::listMinRange </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>min_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>max_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>beg_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>end_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structhsds_1_1_list_result.html">ListResult</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>res</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>List the distinct characters in A[beg_pos ... </p>
+<p>end_pos) min_c &lt;= c &lt; max_c from smallest ones</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_c</td><td>The smallest character to be examined </td></tr>
+    <tr><td class="paramname">max_c</td><td>The upper bound of the character to be examined </td></tr>
+    <tr><td class="paramname">beg_pos</td><td>The beginning position of the array (inclusive) </td></tr>
+    <tr><td class="paramname">end_pos</td><td>The ending position of the array (not inclusive) </td></tr>
+    <tr><td class="paramname">num</td><td>The maximum number of reporting results. </td></tr>
+    <tr><td class="paramname">res</td><td>The distinct characters in the A[beg_pos ... end_pos) from smallest ones. Each item consists of c:character and freq: frequency of c. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a96cc003f6e047af5264d8fa1c77adbca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hsds::WaveletMatrix::listModeRange </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>min_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>max_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>beg_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>end_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structhsds_1_1_list_result.html">ListResult</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>res</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>List the distinct characters appeared in A[beg_pos ... </p>
+<p>end_pos) from most frequent ones</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_c</td><td>The smallest character to be examined </td></tr>
+    <tr><td class="paramname">max_c</td><td>The upper bound of the character to be examined </td></tr>
+    <tr><td class="paramname">beg_pos</td><td>The beginning position of the array (inclusive) </td></tr>
+    <tr><td class="paramname">end_pos</td><td>The ending position of the array (not inclusive) </td></tr>
+    <tr><td class="paramname">num</td><td>The maximum number of reporting results. </td></tr>
+    <tr><td class="paramname">res</td><td>The distinct characters in the A[beg_pos ... end_pos) from most frequent ones. Each item consists of c:character and freq: frequency of c. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -510,7 +712,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">begin_pos</td><td>The beginning position </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">end_pos</td><td>The ending position </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pos</td><td>The position where the largest value appeared in the subarray A[beg_pos .. end_pos) If there are many items having the largest values, the smallest pos will be reporeted </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pos</td><td>The position where the largest value appeared in the subarray A[beg_pos .. end_pos) If there are many items having the largest values, the smallest pos will be reported </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">val</td><td>The largest value appeared in the subarray A[beg_pos ... end_pos) </td></tr>
   </table>
   </dd>
@@ -559,7 +761,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">begin_pos</td><td>The beginning position </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">end_pos</td><td>The ending position </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pos</td><td>The position where the smallest value appeared in the subarray A[beg_pos .. end_pos) If there are many items having the smalles values, the smallest pos will be reporeted </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pos</td><td>The position where the smallest value appeared in the subarray A[beg_pos .. end_pos) If there are many items having the smallest values, the smallest pos will be reported </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">val</td><td>The smallest value appeared in the subarray A[beg_pos ... end_pos) </td></tr>
   </table>
   </dd>
@@ -598,7 +800,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>return A[pos] if found, or return NOT_FOUND if pos &gt;= size </dd></dl>
 
-<p>Definition at line <a class="el" href="wavelet-matrix_8hpp_source.html#l00089">89</a> of file <a class="el" href="wavelet-matrix_8hpp_source.html">wavelet-matrix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="wavelet-matrix_8hpp_source.html#l00106">106</a> of file <a class="el" href="wavelet-matrix_8hpp_source.html">wavelet-matrix.hpp</a>.</p>
 
 </div>
 </div>
@@ -650,7 +852,7 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">begin_pos</td><td>The beginning position </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">end_pos</td><td>The ending position </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">k</td><td>The order (should be smaller than end_pos - beg_pos). </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pos</td><td>The position where the k-th largest value appeared in the subarray A[beg_pos .. end_pos) If there are many items having the k-th largest values, the smallest pos will be reporeted </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pos</td><td>The position where the k-th largest value appeared in the subarray A[beg_pos .. end_pos) If there are many items having the k-th largest values, the smallest pos will be reported </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">val</td><td>The k-th largest value appeared in the subarray A[beg_pos ... end_pos) </td></tr>
   </table>
   </dd>
@@ -883,7 +1085,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compute the select = the position of the (rank+1)-th occurence of 'c' in the array. </p>
+<p>Compute the select = the position of the (rank+1)-th occurrence of 'c' in the array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>Character to be examined </td></tr>
@@ -891,7 +1093,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The position of the (rank+1)-th occurence of 'c' in the array. or NOT_FOUND if c &gt;= alphabet_num or rank &gt; freq(c) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The position of the (rank+1)-th occurrence of 'c' in the array. or NOT_FOUND if c &gt;= alphabet_num or rank &gt; freq(c) </dd></dl>
 
 </div>
 </div>
@@ -925,7 +1127,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compute the select = the position of the (rank+1)-th occurence of 'c' in the suffix of the array starting from 'pos'. </p>
+<p>Compute the select = the position of the (rank+1)-th occurrence of 'c' in the suffix of the array starting from 'pos'. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>Character to be examined </td></tr>
@@ -934,7 +1136,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The position of the (rank+1)-th occurence of 'c' in the suffix of the array. or NOT_FOUND if c &gt;= alphabet_num or rank &gt; freq(c) - rank(c, pos) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The position of the (rank+1)-th occurrence of 'c' in the suffix of the array. or NOT_FOUND if c &gt;= alphabet_num or rank &gt; freq(c) - rank(c, pos) </dd></dl>
 
 </div>
 </div>
@@ -962,7 +1164,7 @@ Public Member Functions</h2></td></tr>
 <p>Return the number of elements. </p>
 <dl class="section return"><dt>Returns</dt><dd>number of elements. </dd></dl>
 
-<p>Definition at line <a class="el" href="wavelet-matrix_8hpp_source.html#l00078">78</a> of file <a class="el" href="wavelet-matrix_8hpp_source.html">wavelet-matrix.hpp</a>.</p>
+<p>Definition at line <a class="el" href="wavelet-matrix_8hpp_source.html#l00095">95</a> of file <a class="el" href="wavelet-matrix_8hpp_source.html">wavelet-matrix.hpp</a>.</p>
 
 </div>
 </div>
@@ -996,7 +1198,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 4 2014 20:48:39 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 13 2014 07:26:22 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
