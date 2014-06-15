@@ -84,6 +84,15 @@ void main(){
     wm.minRange(1, 6, pos, val); // =(pos=2, val=0) A[6]=0 is minimum in vec[3..6)
     wm.quantileRange(1, 6, 3, pos, val); // = (pos=4, val=2). Sort A[1...6) = 01224, and take the (3+1)-th value
     
+    std::vector<ListResult> result;
+    wm.listModeRange(1,3, 0, 8, 3, result);
+    
+    result.clear();
+    wm.listMaxRange(1,5, 0, 8, 3, result);
+    
+    result.clear();
+    wm.listMinRange(0,5, 0, 8, 3, result);
+    
     return 0;    
 }
 
