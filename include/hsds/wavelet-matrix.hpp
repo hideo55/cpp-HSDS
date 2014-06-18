@@ -40,11 +40,22 @@ class Exception;
  * @brief Result of list* API
  */
 struct ListResult {
+    /**
+     * Constructor
+     *
+     * @param[in] c The character
+     * @param[in] freq The frequency of c in the array
+     */
     ListResult(uint64_t c, uint64_t freq) :
             c(c), freq(freq) {
     }
-    uint64_t c;
-    uint64_t freq;
+    uint64_t c;     ///< The character
+    uint64_t freq;  ///< The frequency of c in the array
+
+    /**
+     * Compare operator
+     * @param[in] lr ListResult object
+     */
     bool operator <(const ListResult& lr) const {
         if (c != lr.c)
             return c < lr.c;
