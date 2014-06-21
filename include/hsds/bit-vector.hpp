@@ -201,7 +201,7 @@ public:
      *
      * @param[out] os The instance of std::ostream
      *
-     * @exception hsds::Exception When failed to save file.
+     * @exception hsds::Exception When failed to save.
      */
     void save(std::ostream &os) const throw (hsds::Exception);
 
@@ -210,7 +210,7 @@ public:
      *
      * @param[in] is The instance of std::istream
      *
-     * @exception hsds::Exception When failed to load file.
+     * @exception hsds::Exception When failed to load.
      */
     void load(std::istream &is) throw (hsds::Exception);
 
@@ -222,7 +222,7 @@ public:
      *
      * @return Actually mapped size(byte size of offset from `ptr`).
      *
-     * @exception hsds::Exception When failed to load file.
+     * @exception hsds::Exception When failed to load.
      */
     uint64_t map(void* ptr, uint64_t size) throw (hsds::Exception);
     
