@@ -1,8 +1,7 @@
-/*
- * scoped_array.hpp
- *
- *  Created on: 2014/05/23
- *      Author: Hideaki Ohno
+/**
+ * @file scoped_array.hpp
+ * @brief Implementation of scoped array
+ * @author Hidaki Ohno
  */
 
 #if !defined(HSDS_SCOPED_ARRAY_HPP_)

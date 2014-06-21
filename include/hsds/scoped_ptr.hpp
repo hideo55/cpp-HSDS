@@ -1,8 +1,7 @@
-/*
- * scoped_ptr.hpp
- *
- *  Created on: 2014/05/23
- *      Author: Hideaki Ohno
+/**
+ * @file scoped_ptr.hpp
+ * @brief Implementation of scoped pointer
+ * @author Hideaki Ohno
  */
 
 #if !defined(HSDS_SCOPED_PTR_HPP_)

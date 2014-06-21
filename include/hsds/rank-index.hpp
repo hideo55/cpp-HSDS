@@ -1,3 +1,9 @@
+/**
+ * @file rank-index.hpp
+ * @brief Implementation of RankIndex class
+ * @author Hideaki Ohno
+ */
+
 #if !defined(HSDS_RANK_INDEX_H_)
 #define HSDS_RANK_INDEX_H_
 

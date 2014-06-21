@@ -1,6 +1,7 @@
 /**
  * @file wavelet-matrix.hpp
- * @brief Definittion of WaveletMatrix
+ * @brief Definition of WaveletMatrix
+ * @author Hideaki Ohno
  */
 
 #if !defined(HSDS_WAVELET_MATRIX_HPP_)

@@ -1,8 +1,6 @@
-/*
- * vector.hpp
- *
- *  Created on: 2014/05/22
- *      Author: Hideaki Ohno
+/**
+ * @file vector.hpp
+ * @author Hideaki Ohno
  */
 
 #if !defined(HSDS_VECTOR_HPP_)
@@ -224,16 +222,16 @@ private:
 
     void read_(std::istream& is) {
         uint64_t data_num;
-        is.read((char *) &data_num, sizeof(uint64_t));
+        is.read(reinterpret_cast<char*>(&data_num), sizeof(uint64_t));
         HSDS_EXCEPTION_IF((data_num * sizeof(T)) > HSDS_SIZE_MAX, HSDS_SIZE_ERROR);
         resize(data_num);
-        is.read((char *) objects_, data_num * sizeof(T));
+        is.read(reinterpret_cast<char*>(objects_), data_num * sizeof(T));
     }
 
     void write_(std::ostream& os) const {
         uint64_t data_num = size();
-        os.write((char*) &data_num, sizeof(uint64_t));
-        os.write((char*) const_objects_, total_size());
+        os.write(reinterpret_cast<const char*>(&data_num), sizeof(uint64_t));
+        os.write(reinterpret_cast<const char*>(const_objects_), total_size());
     }
 
     // realloc() assumes that T's placement new does not throw an exception.
@@ -260,6 +258,7 @@ private:
     Vector &operator=(const Vector &);
 };
 
-}
+} // namespace hsds
 
 #endif /* !defined(HSDS_VECTOR_HPP_) */
+

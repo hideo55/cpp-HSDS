@@ -1,8 +1,7 @@
-/*
- * constants.hpp
- *
- *  Created on: 2014/05/23
- *      Author: Hideaki Ohno
+/**
+ * @file constants.hpp
+ * @brief Definition of constant variables
+ * @author Hideaki Ohno
  */
 
 #if !defined(HSDS_CONSTANTS_HPP_)

@@ -1,3 +1,9 @@
+/**
+ * @file exception.hpp
+ * @brief Implementation of Exception class
+ * @author Hideaki Ohno
+ */
+
 #if !defined(HSDS_EXCEPTION_H_)
 #define HSDS_EXCEPTION_H_
 

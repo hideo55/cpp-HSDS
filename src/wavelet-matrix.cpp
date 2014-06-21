@@ -1,8 +1,7 @@
-/*
- * wavelet-matrix.cpp
- *
- *  Created on: 2014/05/25
- *      Author: Hideaki Ohno
+/**
+ * @file wavelet-matrix.cpp
+ * @brief Implementation of WaveletMatrix
+ * @author Hideaki Ohno
  */
 
 #include "hsds/wavelet-matrix.hpp"
@@ -173,17 +172,17 @@ void WaveletMatrix::rankAll(uint64_t c, uint64_t begin_pos, uint64_t end_pos, ui
         const BitVector& bv = bv_[i];
         unsigned int bit = (c >> (alphabetBitNum_ - i - 1)) & 1;
         uint64_t beg_node_zero = bv.rank0(beg_node);
-        uint64_t beg_node_one = beg_node - beg_node_zero;
+        uint64_t beg_node_one  = beg_node - beg_node_zero;
         uint64_t end_node_zero = bv.rank0(end_node);
-        uint64_t boundary = beg_node + end_node_zero - beg_node_zero;
-        if (!bit) {
-            rank_more_than += bv.rank1(pos) - beg_node_one;
-            pos = beg_node + bv.rank0(pos) - beg_node_zero;
-            end_node = boundary;
+        uint64_t boundary      = beg_node + end_node_zero - beg_node_zero;
+        if (!bit){
+          rank_more_than += bv.rank1(pos) - beg_node_one;
+          pos      = beg_node + bv.rank0(pos) - beg_node_zero;
+          end_node = boundary;
         } else {
-            rank_less_than += bv.rank0(pos) - beg_node_zero;
-            pos = boundary + bv.rank1(pos) - (beg_node - beg_node_zero);
-            beg_node = boundary;
+          rank_less_than += bv.rank0(pos) - beg_node_zero;
+          pos      = boundary + bv.rank1(pos) - (beg_node - beg_node_zero);
+          beg_node = boundary;
         }
     }
     rank = pos - beg_node;
@@ -367,8 +366,8 @@ void WaveletMatrix::listMaxRange(uint64_t min_c, uint64_t max_c, uint64_t beg_po
 }
 
 void WaveletMatrix::save(std::ostream& os) const throw (hsds::Exception) {
-    os.write((const char*) (&alphabetNum_), sizeof(alphabetNum_));
-    os.write((const char*) (&size_), sizeof(size_));
+    os.write(reinterpret_cast<const char*>(&alphabetNum_), sizeof(alphabetNum_));
+    os.write(reinterpret_cast<const char*>(&size_), sizeof(size_));
     for (size_t i = 0; i < bv_.size(); ++i) {
         bv_[i].save(os);
     }
@@ -379,9 +378,9 @@ void WaveletMatrix::save(std::ostream& os) const throw (hsds::Exception) {
 
 void WaveletMatrix::load(std::istream& is) throw (hsds::Exception) {
     clear();
-    is.read((char*) (&alphabetNum_), sizeof(alphabetNum_));
+    is.read(reinterpret_cast<char*>(&alphabetNum_), sizeof(alphabetNum_));
     alphabetBitNum_ = log2(alphabetNum_);
-    is.read((char*) (&size_), sizeof(size_));
+    is.read(reinterpret_cast<char*>(&size_), sizeof(size_));
 
     bv_.resize(alphabetBitNum_);
     for (size_t i = 0; i < bv_.size(); ++i) {
@@ -402,18 +401,18 @@ uint64_t WaveletMatrix::map(void* ptr, uint64_t mapSize) throw (hsds::Exception)
 
     alphabetBitNum_ = log2(alphabetNum_);
 
-    size_ = *(reinterpret_cast<uint64_t*>((char*) ptr + offset));
+    size_ = *(reinterpret_cast<uint64_t*>(reinterpret_cast<char*>(ptr) + offset));
     offset += sizeof(size_);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
     bv_.resize(alphabetBitNum_);
     for (size_t i = 0; i < alphabetBitNum_; ++i) {
-        offset += bv_[i].map((char*) ptr + offset, mapSize - offset);
+        offset += bv_[i].map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
     }
 
     nodePos_.resize(bv_.size());
     for (size_t i = 0; i < bv_.size(); ++i) {
-        offset += nodePos_[i].map((char*) ptr + offset, mapSize - offset);
+        offset += nodePos_[i].map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
     }
     return offset;
 }

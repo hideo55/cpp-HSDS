@@ -1,3 +1,8 @@
+/**
+ * @file bit-vector.cpp
+ * @brief Implementation of BItVector
+ * @author Hideaki Ohno
+ */
 #include "hsds/bit-vector.hpp"
 #include "hsds/internal/popcount.hpp"
 #include "hsds/exception.hpp"
@@ -461,8 +466,8 @@ uint64_t BitVector::select1(uint64_t x) const {
 }
 
 void BitVector::save(std::ostream &os) const throw (hsds::Exception) {
-    os.write((char*) &size_, sizeof(size_));
-    os.write((char*) &num_of_1s_, sizeof(num_of_1s_));
+    os.write(reinterpret_cast<const char*>(&size_), sizeof(size_));
+    os.write(reinterpret_cast<const char*>(&num_of_1s_), sizeof(num_of_1s_));
     blocks_.save(os);
     rank_table_.save(os);
     select0_table_.save(os);
@@ -473,10 +478,10 @@ void BitVector::save(std::ostream &os) const throw (hsds::Exception) {
 
 void BitVector::load(std::istream &is) throw (hsds::Exception) {
     clear();
-    is.read((char*) &size_, sizeof(size_));
+    is.read(reinterpret_cast<char*>(&size_), sizeof(size_));
     HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
-    is.read((char*) &num_of_1s_, sizeof(num_of_1s_));
+    is.read(reinterpret_cast<char*>(&num_of_1s_), sizeof(num_of_1s_));
     HSDS_EXCEPTION_IF((is.eof() || is.fail()), E_LOAD_FILE);
 
     blocks_.load(is);
@@ -491,20 +496,20 @@ uint64_t BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
     uint64_t offset = sizeof(size_);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    num_of_1s_ = *(reinterpret_cast<uint64_t*>((char*) ptr + offset));
+    num_of_1s_ = *(reinterpret_cast<uint64_t*>(reinterpret_cast<char*>(ptr) + offset));
     offset += sizeof(num_of_1s_);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += blocks_.map((char*) ptr + offset, mapSize - offset);
+    offset += blocks_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += rank_table_.map((char*) ptr + offset, mapSize - offset);
+    offset += rank_table_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += select0_table_.map((char*) ptr + offset, mapSize - offset);
+    offset += select0_table_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset >= mapSize, E_LOAD_FILE);
 
-    offset += select1_table_.map((char*) ptr + offset, mapSize - offset);
+    offset += select1_table_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset > mapSize, E_LOAD_FILE);
 
     return offset;
@@ -519,4 +524,5 @@ void BitVector::swap(BitVector &x) {
     select1_table_.swap(x.select1_table_);
 }
 
-}
+} // namespace hsds
+
