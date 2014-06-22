@@ -85,13 +85,13 @@ void main(){
     wm.quantileRange(1, 6, 3, pos, val); // = (pos=4, val=2). Sort A[1...6) = 01224, and take the (3+1)-th value
     
     std::vector<ListResult> result;
-    wm.listModeRange(1,3, 0, 8, 3, result);
+    wm.listModeRange(1,3, 0, 8, 3, result); //  = (c=2, freq=2), (c=1, freq=1)
     
     result.clear();
-    wm.listMaxRange(1,5, 0, 8, 3, result);
+    wm.listMaxRange(1,5, 0, 8, 3, result); // = (c=4, freq=1), (c=3, freq=1), (c=2, freq=2)
     
     result.clear();
-    wm.listMinRange(0,5, 0, 8, 3, result);
+    wm.listMinRange(0,5, 0, 8, 3, result); // = (c=0, freq=2), (c=1, freq=1), (c=2, freq=2)
     
     return 0;    
 }
