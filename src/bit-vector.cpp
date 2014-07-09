@@ -71,11 +71,15 @@ const uint8_t SELECT_TABLE[8][256] =
         7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
         7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7 } };
 
+const uint64_t MASK_01 = 0x0101010101010101ULL;
+#if !defined(HSDS_USE_SSE3)
 const uint64_t MASK_55 = 0x5555555555555555ULL;
 const uint64_t MASK_33 = 0x3333333333333333ULL;
 const uint64_t MASK_0F = 0x0F0F0F0F0F0F0F0FULL;
-const uint64_t MASK_01 = 0x0101010101010101ULL;
+#endif
+#if !(defined(HSDS_USE_POPCNT) && defined(HSDS_USE_SSE3)) && defined(_MSC_VER)
 const uint64_t MASK_80 = 0x8080808080808080ULL;
+#endif
 
 FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base) {
     // Calculate hamming weight
