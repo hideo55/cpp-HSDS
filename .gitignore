@@ -15,3 +15,7 @@ Testing
 
 install_manifest.txt
 t/test_wavelet-matrix
+t/test_trie
+libhsds-trie.1.0.0.dylib
+libhsds-trie.1.dylib
+libhsds-trie.dylib
