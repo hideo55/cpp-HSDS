@@ -251,8 +251,9 @@ Trie::id_t Trie::traverse(const char* str, size_t len, uint64_t& nodePos, uint64
     if(!isReady_) return NOT_FOUND;
     if(nodePos == NOT_FOUND) return NOT_FOUND;    
  
-    nodePos = std::max(nodePos, 2ULL);
-    zeros = std::max(zeros, 2ULL);
+    uint64_t defaultPos = 2;
+    nodePos = std::max(nodePos, defaultPos);
+    zeros = std::max(zeros, defaultPos);
     uint64_t ones = nodePos - zeros;
 
     if (tail_[ones]){
