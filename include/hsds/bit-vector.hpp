@@ -6,9 +6,6 @@
 #if !defined(HSDS_BIT_VECTOR_H_)
 #define HSDS_BIT_VECTOR_H_
 
-#if !defined(_MSC_VER)
-#include <cstdint>
-#endif // !defined(_MSC_VER)
 #include <vector>
 #include <iostream>
 #include <algorithm>

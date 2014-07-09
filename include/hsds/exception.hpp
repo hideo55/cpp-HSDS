@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string>
 #if !defined(_MSC_VER)
- #include <cstdint>
+ #include <stdint.h>
 #endif // !defined(_MSC_VER)
 
 #if !defined(HSDS_EXCEPTION_IF)

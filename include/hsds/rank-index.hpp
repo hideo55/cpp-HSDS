@@ -8,7 +8,7 @@
 #define HSDS_RANK_INDEX_H_
 
 #if !defined(_MSC_VER)
-#include <cstdint>
+#include <stdint.h>
 #endif // !defined(_MSC_VER)
 
 /**
