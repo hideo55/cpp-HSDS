@@ -1,9 +1,6 @@
 #if !defined(HSDS_TRIE_HPP_)
 #define HSDS_TRIE_HPP_
 
-#if !defined(_MSC_VER)
-#include <stdint.h>
-#endif // !defined(_MSC_VER)
 #include <vector>
 #include "hsds/vector.hpp"
 #include "hsds/bit-vector.hpp"

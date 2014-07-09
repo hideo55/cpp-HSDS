@@ -7,9 +7,6 @@
 #if !defined(HSDS_WAVELET_MATRIX_HPP_)
 #define HSDS_WAVELET_MATRIX_HPP_
 
-#if !defined(_MSC_VER)
-#include <stdint.h>
-#endif // !defined(_MSC_VER)
 #include <vector>
 #include <queue>
 #include "hsds/scoped_ptr.hpp"

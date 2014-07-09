@@ -7,7 +7,7 @@
 #define HSDS_BIT_VECTOR_H_
 
 #if !defined(_MSC_VER)
-#include <stdint.h>
+#include <cstdint>
 #endif // !defined(_MSC_VER)
 #include <vector>
 #include <iostream>
