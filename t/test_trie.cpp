@@ -36,8 +36,8 @@ Describe(hsds_Trie) {
             Trie trie;
             trie.build(keyList);
 
-            vector<string>::const_iterator iter = keyList.cbegin();
-            vector<string>::const_iterator iter_end = keyList.cend();
+            vector<string>::const_iterator iter = keyList.begin();
+            vector<string>::const_iterator iter_end = keyList.end();
             for(; iter != iter_end; ++iter) {
                 Trie::id_t id = trie.exactMatchSearch(iter->c_str(), iter->size());
                 AssertThatEx(id, IsLessThan(keyList.size()));
