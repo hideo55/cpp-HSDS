@@ -36,6 +36,10 @@ ADD_LIBRARY(hsds-waveletmatrix SHARED src/wavelet-matrix.cpp)
 TARGET_LINK_LIBRARIES(hsds-waveletmatrix hsds-bitvector)
 SET_TARGET_PROPERTIES(hsds-waveletmatrix PROPERTIES VERSION ${serial} SOVERSION ${soserial})
 
+ADD_LIBRARY(hsds-trie SHARED src/trie.cpp)
+TARGET_LINK_LIBRARIES(hsds-trie hsds-bitvector)
+SET_TARGET_PROPERTIES(hsds-trie PROPERTIES VERSION ${serial} SOVERSION ${soserial})
+
 INSTALL(TARGETS hsds-bitvector hsds-waveletmatrix DESTINATION lib)
 
 SET(INSTALL_HEADERS include/hsds/bit-vector.hpp include/hsds/exception.hpp include/hsds/constants.hpp include/hsds/rank-index.hpp)
@@ -54,6 +58,10 @@ ADD_TEST(NAME test_bitvector COMMAND ./t/test_bit-vector)
 ADD_EXECUTABLE(t/test_wavelet-matrix t/test_wavelet-matrix.cpp)
 TARGET_LINK_LIBRARIES(t/test_wavelet-matrix hsds-bitvector hsds-waveletmatrix)
 ADD_TEST(NAME test_waveletmatrix COMMAND ./t/test_wavelet-matrix)
+
+ADD_EXECUTABLE(t/test_trie t/test_trie.cpp)
+TARGET_LINK_LIBRARIES(t/test_trie hsds-bitvector hsds-trie)
+ADD_TEST(NAME test_trie COMMAND ./t/test_trie)
 
 # Benchmark
 OPTION(WITH_BENCHMARK "Build benchmark program" OFF)
