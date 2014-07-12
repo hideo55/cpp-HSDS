@@ -130,7 +130,7 @@ Trie::id_t Trie::exactMatchSearch(const char* str, size_t len) const {
 
     while(keyPos <= len){
         id = traverse(str, len, nodePos, zeros, keyPos);
-        if(keyPos == (len + 1)  && id != FAILED_TRAVERSE_AT_NODE){
+        if(keyPos == (len + 1)  && id != CAN_NOT_TRAVERSE){
             return id;
         }
     }
@@ -147,8 +147,8 @@ void Trie::commonPrefixSearch(const char* str,
     uint64_t zeros = 0;
     size_t keyPos = 0;
     Trie::id_t id;
-    while((id = traverse(str, len, nodePos, zeros, keyPos)) != NOT_FOUND){
-        if(id != FAILED_TRAVERSE_AT_NODE){
+    while((id = traverse(str, len, nodePos, zeros, keyPos)) != CAN_NOT_TRAVERSE){
+        if(id != NOT_FOUND){
             retIDs.push_back(id);
             if(retIDs.size() == limit){
                 break;
@@ -248,8 +248,8 @@ std::string Trie::getTail(const uint64_t i) const{
 
 Trie::id_t Trie::traverse(const char* str, size_t len, uint64_t& nodePos, uint64_t& zeros, size_t& keyPos) const {
     id_t id = NOT_FOUND;
-    if(!isReady_) return NOT_FOUND;
-    if(nodePos == NOT_FOUND) return NOT_FOUND;    
+    if(!isReady_) return CAN_NOT_TRAVERSE;
+    if(nodePos == NOT_FOUND) return CAN_NOT_TRAVERSE;
  
     uint64_t defaultPos = 2;
     nodePos = std::max(nodePos, defaultPos);
@@ -270,10 +270,9 @@ Trie::id_t Trie::traverse(const char* str, size_t len, uint64_t& nodePos, uint64
     
     ++keyPos;
     if(id == NOT_FOUND && nodePos == NOT_FOUND){
-        return NOT_FOUND;
-    } else if(id == NOT_FOUND) {
-        return FAILED_TRAVERSE_AT_NODE;
+        return CAN_NOT_TRAVERSE;
     }
+
     return id;
 }
  
@@ -297,14 +296,14 @@ void Trie::decodeKey(id_t id, std::string& ret) const {
     }
 }
 
-void Trie::swap(Trie& other) {
-    louds_.swap(other.louds_);
-    terminal_.swap(other.terminal_);
-    tail_.swap(other.tail_);
-    vtails_.swap(other.vtails_);
-    edges_.swap(other.edges_);
-    std::swap(numOfKeys_, other.numOfKeys_);
-    std::swap(isReady_, other.isReady_);
+void Trie::swap(Trie& x) {
+    louds_.swap(x.louds_);
+    terminal_.swap(x.terminal_);
+    tail_.swap(x.tail_);
+    vtails_.swap(x.vtails_);
+    edges_.swap(x.edges_);
+    std::swap(numOfKeys_, x.numOfKeys_);
+    std::swap(isReady_, x.isReady_);
 }
 
 void Trie::clear() {
