@@ -103,7 +103,35 @@ void main(){
 $ g++ sample.cpp -o sample -lhsds-waveletmatrix
 ```
 
-#### Sample
+
+### Trie(LOUDS)
+
+`Trie` class is implementation of LOUDS(Level-Order Unary Degree Sequence) Trie.
+
+```c++
+#include "hsds/trie.hpp"
+
+using namespace std;
+using namespace hsds;
+
+void main(){
+    vector<string> keyList;
+    keyList.push_back("abc");
+    keyList.push_back("abcdef");
+    keyList.push_back("xyz");
+    
+    Trie trie;
+    trie.build(keyList);
+    
+    vector<Trie::id_t> ids;
+    trie.commomPrefixSearch("abcdef", 6, ids);
+}
+```
+
+#### Build
+```sh
+$ g++ sample.cpp -o sample -lhsds-trie
+```
 
 ## Document
 
