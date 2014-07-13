@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a>  </div>
@@ -100,11 +101,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="trie_8hpp_source.html">trie.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhsds_1_1_trie_1_1_result.html">Result</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a4e7c3d205aa6140be46fc9ee2c855e76"><td class="memItemLeft" align="right" valign="top">typedef uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a4e7c3d205aa6140be46fc9ee2c855e76">id_t</a></td></tr>
 <tr class="memdesc:a4e7c3d205aa6140be46fc9ee2c855e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of leaf-node.  <a href="#a4e7c3d205aa6140be46fc9ee2c855e76">More...</a><br/></td></tr>
 <tr class="separator:a4e7c3d205aa6140be46fc9ee2c855e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad559e46e9e741bd689c4615a316c2fa7"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhsds_1_1_trie_1_1_result.html">hsds::Trie::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#ad559e46e9e741bd689c4615a316c2fa7">Result</a></td></tr>
+<tr class="separator:ad559e46e9e741bd689c4615a316c2fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -123,6 +131,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae31938a4c2e733b2293509376091bfd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#ae31938a4c2e733b2293509376091bfd4">commonPrefixSearch</a> (const char *str, size_t len, std::vector&lt; <a class="el" href="classhsds_1_1_trie.html#a4e7c3d205aa6140be46fc9ee2c855e76">id_t</a> &gt; &amp;retIDs, uint64_t limit=DEFAULT_LIMIT_VALUE) const </td></tr>
 <tr class="memdesc:ae31938a4c2e733b2293509376091bfd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches keys from the possible prefixes of a query string.  <a href="#ae31938a4c2e733b2293509376091bfd4">More...</a><br/></td></tr>
 <tr class="separator:ae31938a4c2e733b2293509376091bfd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0114c2d757fd12c950a5b632aea74f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#af0114c2d757fd12c950a5b632aea74f5">commonPrefixSearch</a> (const char *str, size_t len, std::vector&lt; <a class="el" href="structhsds_1_1_trie_1_1_result.html">Result</a> &gt; &amp;results, uint64_t limit=DEFAULT_LIMIT_VALUE) const </td></tr>
+<tr class="memdesc:af0114c2d757fd12c950a5b632aea74f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches keys from the possible prefixes of a query string.  <a href="#af0114c2d757fd12c950a5b632aea74f5">More...</a><br/></td></tr>
+<tr class="separator:af0114c2d757fd12c950a5b632aea74f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b21a956a80e1a489b02414cdfff199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a85b21a956a80e1a489b02414cdfff199">predictiveSearch</a> (const char *str, size_t len, std::vector&lt; <a class="el" href="classhsds_1_1_trie.html#a4e7c3d205aa6140be46fc9ee2c855e76">id_t</a> &gt; &amp;retIDs, uint64_t limit=DEFAULT_LIMIT_VALUE) const </td></tr>
 <tr class="memdesc:a85b21a956a80e1a489b02414cdfff199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches keys starting with a query string.  <a href="#a85b21a956a80e1a489b02414cdfff199">More...</a><br/></td></tr>
 <tr class="separator:a85b21a956a80e1a489b02414cdfff199"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,6 +177,18 @@ Static Public Attributes</h2></td></tr>
 <p>ID of leaf-node. </p>
 
 <p>Definition at line <a class="el" href="trie_8hpp_source.html#l00024">24</a> of file <a class="el" href="trie_8hpp_source.html">trie.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad559e46e9e741bd689c4615a316c2fa7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structhsds_1_1_trie_1_1_result.html">hsds::Trie::Result</a>  <a class="el" href="structhsds_1_1_trie_1_1_result.html">hsds::Trie::Result</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -296,6 +319,55 @@ Static Public Attributes</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>query string </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>length of str </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">retIDs</td><td>IDs of keys </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">limit</td><td>the upper limit of the ID number to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af0114c2d757fd12c950a5b632aea74f5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hsds::Trie::commonPrefixSearch </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structhsds_1_1_trie_1_1_result.html">Result</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>results</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>limit</em> = <code>DEFAULT_LIMIT_VALUE</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Searches keys from the possible prefixes of a query string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>query string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>length of str </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">results</td><td>search results </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">limit</td><td>the upper limit of the ID number to retrieve </td></tr>
   </table>
   </dd>
@@ -562,7 +634,7 @@ Static Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 23:55:06 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jul 14 2014 02:29:44 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
