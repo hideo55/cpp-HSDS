@@ -25,6 +25,13 @@ public:
     static const id_t NOT_FOUND = ~(0ULL);              ///< data not found
     static const id_t CAN_NOT_TRAVERSE = ~(0ULL) - 1;   ///< Can't traverse the next node
 
+    typedef struct Result {
+        id_t id;        ///< ID of leaf-node
+        uint64_t depth; ///< depth of node
+
+        Result(id_t id_, uint64_t depth_): id(id_), depth(depth_){}
+    } Result;
+
 
     /**
      * Constructor
@@ -63,6 +70,17 @@ public:
      * @param[in] limit the upper limit of the ID number to retrieve
      */
     void commonPrefixSearch(const char* str, size_t len, std::vector<id_t>& retIDs,
+            uint64_t limit = DEFAULT_LIMIT_VALUE) const;
+
+    /**
+     * Searches keys from the possible prefixes of a query string
+     *
+     * @param[in] str query string
+     * @param[in] len length of str
+     * @param[out] results search results
+     * @param[in] limit the upper limit of the ID number to retrieve
+     */
+    void commonPrefixSearch(const char* str, size_t len, std::vector<Result>& results,
             uint64_t limit = DEFAULT_LIMIT_VALUE) const;
 
     /**

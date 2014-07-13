@@ -156,6 +156,25 @@ void Trie::commonPrefixSearch(const char* str,
         }
     }
 }
+
+void Trie::commonPrefixSearch(const char* str,
+                              size_t len,
+                              std::vector<Result>& results,
+                              uint64_t limit) const {
+    results.clear();
+    uint64_t nodePos = 0;
+    uint64_t zeros = 0;
+    size_t keyPos = 0;
+    Trie::id_t id;
+    while((id = traverse(str, len, nodePos, zeros, keyPos)) != CAN_NOT_TRAVERSE){
+        if(id != NOT_FOUND){
+            results.push_back(Result(id, keyPos - 1));
+            if(results.size() == limit){
+                break;
+            }
+        }
+    }
+}
  
 void Trie::predictiveSearch(const char* str,
                            size_t len,
