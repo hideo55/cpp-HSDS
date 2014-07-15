@@ -84,11 +84,14 @@ IF(WITH_BENCHMARK)
 
     OPTION(MARISA_INCLUDE_PATH "marisa-trie include path" ./)
 
-    ADD_EXECUTABLE(benchmark_bit-vector benchmark/benchmark.cpp)
+    ADD_EXECUTABLE(benchmark_bit-vector benchmark/benchmark_bit-vector.cpp)
     ADD_DEFINITIONS(${BM_DEFINITIONS})
     INCLUDE_DIRECTORIES(${MARISA_INCLUDE_PATH} "${PROJECT_SOURCE_DIR}/include")
 
+    ADD_EXECUTABLE(benchmark_trie benchmark/benchmark_trie.cpp)
+
     TARGET_LINK_LIBRARIES(benchmark_bit-vector hsds-bitvector ${BM_LIBS})
+    TARGET_LINK_LIBRARIES(benchmark_trie hsds-trie)
 
 ENDIF(WITH_BENCHMARK)
 
