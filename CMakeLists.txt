@@ -91,7 +91,7 @@ IF(WITH_BENCHMARK)
     ADD_EXECUTABLE(benchmark_trie benchmark/benchmark_trie.cpp)
 
     TARGET_LINK_LIBRARIES(benchmark_bit-vector hsds-bitvector ${BM_LIBS})
-    TARGET_LINK_LIBRARIES(benchmark_trie hsds-trie)
+    TARGET_LINK_LIBRARIES(benchmark_trie hsds-trie ${BM_LIBS})
 
 ENDIF(WITH_BENCHMARK)
 
