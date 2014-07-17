@@ -46,11 +46,11 @@ Describe(hsds_Trie) {
 
         vector<Trie::id_t> ids;
         trie.commonPrefixSearch("abcde", 5, ids);
-        AssertThatEx(ids.size(), Equals(2));
+        AssertThatEx(ids.size(), Equals(2U));
 
         ids.clear();
         trie.predictiveSearch("ab", 2, ids);
-        AssertThatEx(ids.size(), Equals(3));
+        AssertThatEx(ids.size(), Equals(3U));
     }
 
     It(t03_commomPrefixSearch) {
@@ -66,7 +66,7 @@ Describe(hsds_Trie) {
 
         vector<Trie::id_t> ids;
         trie.commonPrefixSearch("abcde", 5, ids);
-        AssertThatEx(ids.size(), Equals(2));
+        AssertThatEx(ids.size(), Equals(2U));
         string ret;
         trie.decodeKey(ids[0], ret);
         AssertThatEx(ret, Equals(string("abc")));
@@ -75,14 +75,14 @@ Describe(hsds_Trie) {
 
         vector<Trie::Result> results;
         trie.commonPrefixSearch("abcde", 5, results);
-        AssertThatEx(results.size(), Equals(2));
+        AssertThatEx(results.size(), Equals(2U));
 
         trie.decodeKey(results[0].id, ret);
         AssertThatEx(ret, Equals(string("abc")));
-        AssertThatEx(results[0].depth, Equals(3));
+        AssertThatEx(results[0].depth, Equals(3U));
         trie.decodeKey(results[1].id, ret);
         AssertThatEx(ret, Equals(string("abcde")));
-        AssertThatEx(results[1].depth, Equals(5));
+        AssertThatEx(results[1].depth, Equals(5U));
     }
 
     It(t04_predictiveSearch){
