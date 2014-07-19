@@ -74,17 +74,22 @@ IF(WITH_BENCHMARK)
 
     OPTION(USE_MARISA OFF)
 
+    OPTION(UX_INCLUDE_PATH "ux-tie include path" ./)
+    OPTION(UX_LIBRARY_PATH "ux-trie library path" ./)
     IF(USE_UX)
         SET(BM_DEFINITIONS -DUSE_UX)
         SET(BM_LIBS ux)
+        INCLUDE_DIRECTORIES(${UX_INCLUDE_PATH})
+        LINK_DIRECTORIES(${UX_LIBRARY_PATH})
     ENDIF(USE_UX)
 
     OPTION(MARISA_INCLUDE_PATH "marisa-trie include path" ./)
-
+    OPTION(MARISA_LIBRARY_PATH "marisa-trie library path" ./)
     IF(USE_MARISA)
         SET(BM_DEFINITIONS ${BM_DEFINITIONS} -DUSE_MARISA)
         SET(BM_LIBS marisa)
         INCLUDE_DIRECTORIES(${MARISA_INCLUDE_PATH})
+        LINK_DIRECTORIES(${MARISA_LIBRARY_PATH})
     ENDIF(USE_MARISA)
 
     ADD_EXECUTABLE(benchmark_bit-vector benchmark/benchmark_bit-vector.cpp)
