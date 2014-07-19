@@ -29,7 +29,7 @@ IF(SSE4_2_FOUND)
 ENDIF(SSE4_2_FOUND)
 ADD_DEFINITIONS(${CXX_DFLAGS})
 
-INCLUDE_DIRECTORIES(include extlib/igloo extlib/igloo-TapTestListener)
+INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_CURRENT_SOURCE_DIR}/extlib/igloo" "${CMAKE_CURRENT_SOURCE_DIR}/extlib/igloo-TapTestListener")
 
 ADD_LIBRARY(hsds-bitvector SHARED src/bit-vector.cpp)
 SET_TARGET_PROPERTIES(hsds-bitvector PROPERTIES VERSION ${serial} SOVERSION ${soserial})
@@ -79,16 +79,16 @@ IF(WITH_BENCHMARK)
         SET(BM_LIBS ux)
     ENDIF(USE_UX)
 
+    OPTION(MARISA_INCLUDE_PATH "marisa-trie include path" ./)
+
     IF(USE_MARISA)
         SET(BM_DEFINITIONS ${BM_DEFINITIONS} -DUSE_MARISA)
         SET(BM_LIBS marisa)
+        INCLUDE_DIRECTORIES(${MARISA_INCLUDE_PATH})
     ENDIF(USE_MARISA)
-
-    OPTION(MARISA_INCLUDE_PATH "marisa-trie include path" ./)
 
     ADD_EXECUTABLE(benchmark_bit-vector benchmark/benchmark_bit-vector.cpp)
     ADD_DEFINITIONS(${BM_DEFINITIONS})
-    INCLUDE_DIRECTORIES(${MARISA_INCLUDE_PATH} "${PROJECT_SOURCE_DIR}/include")
 
     ADD_EXECUTABLE(benchmark_trie benchmark/benchmark_trie.cpp)
 

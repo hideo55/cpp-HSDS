@@ -123,13 +123,43 @@ public:
      */
     void clear();
 
+    /**
+     * Save the current status to a stream
+     *
+     * @param[out] os The output stream where the data is saved
+     *
+     * @exception hsds::Exception When failed to save.
+     */
+    void save(std::ostream& os) const throw (hsds::Exception);
+
+    /**
+     * Load the current status from a stream
+     *
+     * @param[in] is The input stream where the status is saved
+     *
+     * @exception hsds::Exception When failed to load.
+     */
+    void load(std::istream& is) throw (hsds::Exception);
+
+    /**
+     * @brief Mapping pointer to the Trie
+     *
+     * @param[in] ptr The pointer of the mmaped file
+     * @param[in] mapSize The size of mmaped file
+     *
+     * @return Actually mapped size(byte size of offset from `ptr`).
+     *
+     * @exception hsds::Exception When failed to load.
+     */
+    uint64_t map(void* ptr, uint64_t mapSize) throw (hsds::Exception);
+
 private:
     static const uint64_t DEFAULT_LIMIT_VALUE = ~(0ULL);///< Default value of the limit
     BitVector louds_;
     BitVector terminal_;
     BitVector tail_;
 
-    Vector<std::string> vtails_;
+    Vector<Vector<char> > vtails_;
     Vector<uint8_t> edges_;
     size_t numOfKeys_;
     bool isReady_;
@@ -139,7 +169,7 @@ private:
     void getParent(uint8_t& c, uint64_t& pos, uint64_t& zeros) const;
     void enumerateAll(uint64_t pos, uint64_t zeros, std::vector<id_t>& retIDs, size_t limit) const;
     bool tailMatch(const char* str, size_t len, size_t depth, uint64_t tailID, size_t& retLen) const;
-    std::string getTail(uint64_t i) const;
+    Vector<char> getTail(uint64_t i) const;
 };
 
 }

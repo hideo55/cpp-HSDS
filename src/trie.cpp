@@ -66,9 +66,9 @@ void Trie::build(vector<string>& keyList) {
             loudBV.set(loud_index++, true);
             terminalBV.set(terminal_index++, true);
             tailBV.set(tail_index++, true);
-            string tail;
+            Vector<char> tail;
             for (size_t i = depth; i < cur.size(); ++i){
-                tail += cur[i];
+                tail.push_back(cur[i]);
             }
             vtails_.push_back(tail);
             continue;
@@ -191,7 +191,7 @@ void Trie::predictiveSearch(const char* str,
 
         if (tail_[ones]){
             uint64_t tailID = tail_.rank1(ones);
-            string tail = getTail(tailID);
+            Vector<char> tail = getTail(tailID);
             for (size_t j = i; j < len; ++j){
                 if (str[j] != tail[j-i]){
                     return;
@@ -248,7 +248,7 @@ void Trie::enumerateAll(const uint64_t pos, const uint64_t zeros, vector<id_t>& 
 
 bool Trie::tailMatch(const char* str, const size_t len, const size_t depth,
         const uint64_t tailID, size_t& retLen) const{
-    string tail = getTail(tailID);
+    Vector<char> tail = getTail(tailID);
     if (tail.size() > (len - depth)) {
         return false;
     }
@@ -261,7 +261,7 @@ bool Trie::tailMatch(const char* str, const size_t len, const size_t depth,
     return true;
 }
 
-std::string Trie::getTail(const uint64_t i) const{
+Vector<char> Trie::getTail(const uint64_t i) const{
     return vtails_[i];
 }
 
@@ -311,7 +311,8 @@ void Trie::decodeKey(id_t id, std::string& ret) const {
     }
     reverse(ret.begin(), ret.end());
     if (tail_[nodeID]){
-        ret += getTail(tail_.rank1(nodeID));
+        Vector<char> tail = getTail(tail_.rank1(nodeID));
+        ret.append(&tail[0], tail.size());
     }
 }
 
@@ -330,5 +331,62 @@ void Trie::clear() {
     swap(tmpTrie);
 }
 
+void Trie::save(std::ostream& os) const throw(hsds::Exception) {
+    louds_.save(os);
+    terminal_.save(os);
+    tail_.save(os);
+    
+    os.write(reinterpret_cast<const char*>(&numOfKeys_), sizeof(numOfKeys_));
+    edges_.save(os);
+
+    size_t vtailSize = vtails_.size();
+    os.write(reinterpret_cast<const char*>(&vtailSize), sizeof(vtailSize));
+    for(size_t i = 0; i < vtailSize; ++i){
+        vtails_[i].save(os);
+    }
+}
+
+void Trie::load(std::istream& is) throw(hsds::Exception) {
+    clear();
+    louds_.load(is);
+    terminal_.load(is);
+    tail_.load(is);
+    is.read(reinterpret_cast<char*>(&numOfKeys_), sizeof(numOfKeys_));
+    size_t edgesSize = 0;
+    is.read(reinterpret_cast<char*>(&edgesSize), sizeof(edgesSize));
+    edges_.resize(edgesSize);
+    is.read(reinterpret_cast<char*>(&edges_[0]), sizeof(edges_[0]) * edgesSize);
+    
+    size_t vtailSize = 0;
+    is.read(reinterpret_cast<char*>(&vtailSize), sizeof(vtailSize));
+    vtails_.resize(vtailSize);
+    for(size_t i = 0; i < vtailSize; ++i){
+        vtails_[i].load(is);
+    }
+
+    HSDS_EXCEPTION_IF(is.fail(), E_LOAD_FILE);
+    isReady_ = true;
+}
+
+uint64_t Trie::map(void *ptr, uint64_t mapSize) throw (hsds::Exception) {
+    clear();
+    uint64_t offset = 0;
+    offset += louds_.map(ptr, mapSize);
+    offset += terminal_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+    offset += tail_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+
+    numOfKeys_ = *(reinterpret_cast<char*>(ptr) + offset);
+    offset += sizeof(numOfKeys_);
+    offset += edges_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+
+    size_t vtailSize = *(reinterpret_cast<char*>(ptr) + offset);
+    offset += sizeof(vtailSize);
+    vtails_.resize(vtailSize);
+    for(size_t i = 0; i < vtailSize; ++i){
+        offset += vtails_[i].map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+    }
+
+    return 0;
+}
 
 }

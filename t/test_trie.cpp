@@ -89,6 +89,80 @@ Describe(hsds_Trie) {
 
     }
 
+    Describe(io_test) {
+        std::vector<string> keyList;
+        Trie trie;
+        std::string tempfile;
+
+        void SetUp() {
+            tempfile = "tmp001";
+
+            keyList.clear();
+            keyList.push_back("bbc");
+            keyList.push_back("able");
+            keyList.push_back("abc");
+            keyList.push_back("abcde");
+            keyList.push_back("can");
+            trie.build(keyList);
+        }
+
+        void TearDown() {
+            remove(tempfile.c_str());
+        }
+
+
+        It(t05_save_and_load) {
+            ofstream ofs(tempfile.c_str(), ios_base::binary);
+            trie.save(ofs);
+            ofs.close();
+            ifstream ifs(tempfile.c_str());
+            {
+                Trie trie2;
+                trie2.load(ifs);
+
+                vector<string>::const_iterator iter = keyList.begin();
+                vector<string>::const_iterator iter_end = keyList.end();
+                for (; iter != iter_end; ++iter) {
+                    Trie::id_t id = trie.exactMatchSearch(iter->c_str(), iter->size());
+                    AssertThatEx(id, IsLessThan(keyList.size()));
+                    string ret;
+                    trie.decodeKey(id, ret);
+                    AssertThatEx(ret.c_str(), Equals(iter->c_str()));
+                }
+            }
+        }
+
+        It(t06_save_and_map) {
+            ofstream ofs(tempfile.c_str(), ios_base::binary);
+            trie.save(ofs);
+            ofs.close();
+            {
+
+                int fd = open(tempfile.c_str(), O_RDONLY, 0);
+                AssertThatEx(fd != -1, Is().EqualTo(true));
+                struct stat sb;
+                if (fstat(fd, &sb) == -1) {
+                    Assert::That(false);
+                }
+
+                void* mmapPtr = mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+                Trie trie2;
+                trie2.map(mmapPtr, sb.st_size);
+
+                vector<string>::const_iterator iter = keyList.begin();
+                vector<string>::const_iterator iter_end = keyList.end();
+                for (; iter != iter_end; ++iter) {
+                    Trie::id_t id = trie.exactMatchSearch(iter->c_str(), iter->size());
+                    AssertThatEx(id, IsLessThan(keyList.size()));
+                    string ret;
+                    trie.decodeKey(id, ret);
+                    AssertThatEx(ret.c_str(), Equals(iter->c_str()));
+                }
+            }
+        }
+
+    };
 };
 
 int main() {
