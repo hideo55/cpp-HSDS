@@ -125,6 +125,8 @@ void main(){
     
     vector<Trie::id_t> ids;
     trie.commomPrefixSearch("abcdef", 6, ids);
+    vector<Trie::Result> results;
+    trie.commonPrefixSearch("abcdef", 6, results);
 }
 ```
 
