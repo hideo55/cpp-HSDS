@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['save',['save',['../classhsds_1_1_bit_vector.html#a9eb0f066626e8573ee62dd8762d339c4',1,'hsds::BitVector::save()'],['../classhsds_1_1_wavelet_matrix.html#af993d0961981bd1cb2a7d4ada066709a',1,'hsds::WaveletMatrix::save()']]],
+  ['save',['save',['../classhsds_1_1_bit_vector.html#a9eb0f066626e8573ee62dd8762d339c4',1,'hsds::BitVector::save()'],['../classhsds_1_1_trie.html#a7264692b105e02bd4bbd2ba741eceb5c',1,'hsds::Trie::save()'],['../classhsds_1_1_wavelet_matrix.html#af993d0961981bd1cb2a7d4ada066709a',1,'hsds::WaveletMatrix::save()']]],
   ['select',['select',['../classhsds_1_1_bit_vector.html#ae693456051b234aa3badceb5a83a7e68',1,'hsds::BitVector::select()'],['../classhsds_1_1_wavelet_matrix.html#ac3b66bbd369992e180124ebb8fd3b527',1,'hsds::WaveletMatrix::select()']]],
   ['select0',['select0',['../classhsds_1_1_bit_vector.html#a822073506771c4b08d0238f9c0f08213',1,'hsds::BitVector']]],
   ['select1',['select1',['../classhsds_1_1_bit_vector.html#a4020dd48178e0a01c85883abe0817c47',1,'hsds::BitVector']]],
