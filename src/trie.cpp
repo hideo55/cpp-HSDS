@@ -2,6 +2,7 @@
 #include "hsds/trie.hpp"
 #include <algorithm>
 #include <queue>
+#include <cmath>
 
 namespace hsds {
 
@@ -20,14 +21,17 @@ Trie::Trie() : louds_(),
                vtails_(),
                edges_(),
                numOfKeys_(0),
-               isReady_(false){
+               isReady_(false),
+               vtailTrie_(NULL),
+               tailIDs_(),
+               tailSize_(0) {
 
 }
 
 Trie::~Trie() {}
 
 
-void Trie::build(vector<string>& keyList) {
+void Trie::build(vector<string>& keyList, bool useTailTrie) {
     clear();
     sort(keyList.begin(), keyList.end());
     keyList.erase(unique(keyList.begin(), keyList.end()), keyList.end());
@@ -120,6 +124,43 @@ void Trie::build(vector<string>& keyList) {
     if(numOfKeys_ > 0){
         isReady_ = true;
     }
+
+    if(useTailTrie) {
+        buildTailTrie();
+    }
+}
+
+void Trie::build(Vector<Vector<char>  >& keyList) {
+    size_t keyNum = keyList.size();
+    std::vector<string> newList;
+    newList.reserve(keyNum);
+    for(size_t i = 0; i < keyNum; ++i){
+        newList.push_back(string(&keyList[i][0], keyList[i].size()));
+    }
+    Vector<Vector<char> >().swap(keyList);
+    build(newList, false);
+}
+
+void Trie::buildTailTrie(){
+  Vector<Vector<char> > origTails = vtails_;
+  try {
+    vtailTrie_ = new Trie;
+  } catch (std::bad_alloc&){
+    isReady_ = false;
+    return;
+  }
+  for (size_t i = 0; i < vtails_.size(); ++i){
+    reverse(vtails_[i].begin(), vtails_[i].end());
+  }
+  vtailTrie_->build(vtails_);
+  tailSize_ = log2(vtailTrie_->size());
+
+  for (size_t i = 0; i < origTails.size(); ++i){
+    reverse(origTails[i].begin(), origTails[i].end());
+    id_t id = vtailTrie_->exactMatchSearch(&origTails[i][0], origTails[i].size());
+    tailIDs_.set(tailSize_ * i + id, true);
+  }
+  tailIDs_.build();
 }
 
 Trie::id_t Trie::exactMatchSearch(const char* str, size_t len) const {
@@ -262,7 +303,17 @@ bool Trie::tailMatch(const char* str, const size_t len, const size_t depth,
 }
 
 Vector<char> Trie::getTail(const uint64_t i) const{
-    return vtails_[i];
+    if(vtailTrie_){
+        string tail;
+        vtailTrie_->decodeKey(tailIDs_.rank1(tailSize_ * i), tail);
+        reverse(tail.begin(), tail.end());
+        Vector<char> ret;
+        ret.resize(tail.size());
+        std::memcpy(&ret[0], tail.c_str(), tail.size());
+        return ret;
+    } else {
+        return vtails_[i];
+    }
 }
 
 Trie::id_t Trie::traverse(const char* str, size_t len, uint64_t& nodePos, uint64_t& zeros, size_t& keyPos) const {
@@ -322,13 +373,20 @@ void Trie::swap(Trie& x) {
     tail_.swap(x.tail_);
     vtails_.swap(x.vtails_);
     edges_.swap(x.edges_);
+    tailIDs_.swap(x.tailIDs_);
     std::swap(numOfKeys_, x.numOfKeys_);
     std::swap(isReady_, x.isReady_);
+    std::swap(vtailTrie_, x.vtailTrie_);
+    std::swap(tailSize_, x.tailSize_);
 }
 
 void Trie::clear() {
     Trie tmpTrie;
     swap(tmpTrie);
+}
+
+size_t Trie::size() const {
+    return numOfKeys_;
 }
 
 void Trie::save(std::ostream& os) const throw(hsds::Exception) {
@@ -339,10 +397,18 @@ void Trie::save(std::ostream& os) const throw(hsds::Exception) {
     os.write(reinterpret_cast<const char*>(&numOfKeys_), sizeof(numOfKeys_));
     edges_.save(os);
 
-    size_t vtailSize = vtails_.size();
-    os.write(reinterpret_cast<const char*>(&vtailSize), sizeof(vtailSize));
-    for(size_t i = 0; i < vtailSize; ++i){
-        vtails_[i].save(os);
+    bool useTailTrie = (vtailTrie_ != NULL);
+    os.write((const char*)&useTailTrie, sizeof(useTailTrie));
+    if(useTailTrie){
+        vtailTrie_->save(os);
+        tailIDs_.save(os);
+        os.write(reinterpret_cast<const char*>(&tailSize_), sizeof(tailSize_));
+    } else {
+        size_t vtailSize = vtails_.size();
+        os.write(reinterpret_cast<const char*>(&vtailSize), sizeof(vtailSize));
+        for(size_t i = 0; i < vtailSize; ++i){
+            vtails_[i].save(os);
+        }
     }
 }
 
@@ -357,11 +423,20 @@ void Trie::load(std::istream& is) throw(hsds::Exception) {
     edges_.resize(edgesSize);
     is.read(reinterpret_cast<char*>(&edges_[0]), sizeof(edges_[0]) * edgesSize);
     
-    size_t vtailSize = 0;
-    is.read(reinterpret_cast<char*>(&vtailSize), sizeof(vtailSize));
-    vtails_.resize(vtailSize);
-    for(size_t i = 0; i < vtailSize; ++i){
-        vtails_[i].load(is);
+    bool useTailTrie = false;
+    is.read(reinterpret_cast<char*>(&useTailTrie), sizeof(useTailTrie));
+    if(useTailTrie){
+        vtailTrie_ = new Trie();
+        vtailTrie_->load(is);
+        tailIDs_.load(is);
+        is.read(reinterpret_cast<char*>(&tailSize_), sizeof(tailSize_));
+    } else {
+        size_t vtailSize = 0;
+        is.read(reinterpret_cast<char*>(&vtailSize), sizeof(vtailSize));
+        vtails_.resize(vtailSize);
+        for(size_t i = 0; i < vtailSize; ++i){
+            vtails_[i].load(is);
+        }
     }
 
     HSDS_EXCEPTION_IF(is.fail(), E_LOAD_FILE);
@@ -379,14 +454,28 @@ uint64_t Trie::map(void *ptr, uint64_t mapSize) throw (hsds::Exception) {
     offset += sizeof(numOfKeys_);
     offset += edges_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
 
-    size_t vtailSize = *(reinterpret_cast<char*>(ptr) + offset);
-    offset += sizeof(vtailSize);
-    vtails_.resize(vtailSize);
-    for(size_t i = 0; i < vtailSize; ++i){
-        offset += vtails_[i].map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+    bool useTailTrie = false;
+    useTailTrie = *(reinterpret_cast<char*>(ptr) + offset);
+    offset += sizeof(bool);
+
+    if(useTailTrie){
+        vtailTrie_ = new Trie();
+        offset += vtailTrie_->map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+        offset += tailIDs_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+        tailSize_ = *(reinterpret_cast<char*>(ptr) + offset);
+        offset += sizeof(tailSize_);
+    } else {
+        size_t vtailSize = *(reinterpret_cast<char*>(ptr) + offset);
+        offset += sizeof(vtailSize);
+        vtails_.resize(vtailSize);
+        for(size_t i = 0; i < vtailSize; ++i){
+            offset += vtails_[i].map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
+        }
     }
 
-    return 0;
+    isReady_ = true;
+
+    return offset;
 }
 
 }

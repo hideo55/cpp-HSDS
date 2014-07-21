@@ -21,17 +21,18 @@ namespace hsds {
  */
 class Trie {
 public:
-    typedef uint64_t id_t;                              ///< ID of leaf-node
-    static const id_t NOT_FOUND = ~(0ULL);              ///< data not found
-    static const id_t CAN_NOT_TRAVERSE = ~(0ULL) - 1;   ///< Can't traverse the next node
+    typedef uint64_t id_t; ///< ID of leaf-node
+    static const id_t NOT_FOUND = ~(0ULL); ///< data not found
+    static const id_t CAN_NOT_TRAVERSE = ~(0ULL) - 1; ///< Can't traverse the next node
 
     typedef struct Result {
-        id_t id;        ///< ID of leaf-node
+        id_t id; ///< ID of leaf-node
         uint64_t depth; ///< depth of node
 
-        Result(id_t id_, uint64_t depth_): id(id_), depth(depth_){}
+        Result(id_t id_, uint64_t depth_) :
+                id(id_), depth(depth_) {
+        }
     } Result;
-
 
     /**
      * Constructor
@@ -47,8 +48,9 @@ public:
      * Build louds trie
      *
      * @param[in] keyList source data of trie
+     * @param[in] useTailTrie use tail compression
      */
-    void build(std::vector<std::string>& keyList);
+    void build(std::vector<std::string>& keyList, bool useTailTrie = false);
 
     /**
      * Searches key exact match with query string.
@@ -80,8 +82,8 @@ public:
      * @param[out] results search results
      * @param[in] limit the upper limit of the ID number to retrieve
      */
-    void commonPrefixSearch(const char* str, size_t len, std::vector<Result>& results,
-            uint64_t limit = DEFAULT_LIMIT_VALUE) const;
+    void commonPrefixSearch(const char* str, size_t len, std::vector<Result>& results, uint64_t limit =
+            DEFAULT_LIMIT_VALUE) const;
 
     /**
      * Searches keys starting with a query string
@@ -124,6 +126,12 @@ public:
     void clear();
 
     /**
+     * Return the number of keys in the dictionary
+     * @return the number of keys in the dictionary
+     */
+    size_t size() const;
+
+    /**
      * Save the current status to a stream
      *
      * @param[out] os The output stream where the data is saved
@@ -154,7 +162,7 @@ public:
     uint64_t map(void* ptr, uint64_t mapSize) throw (hsds::Exception);
 
 private:
-    static const uint64_t DEFAULT_LIMIT_VALUE = ~(0ULL);///< Default value of the limit
+    static const uint64_t DEFAULT_LIMIT_VALUE = ~(0ULL); ///< Default value of the limit
     BitVector louds_;
     BitVector terminal_;
     BitVector tail_;
@@ -164,6 +172,12 @@ private:
     size_t numOfKeys_;
     bool isReady_;
 
+    Trie* vtailTrie_;
+    BitVector tailIDs_;
+    size_t tailSize_;
+
+    void build(hsds::Vector<Vector<char>  >& keyList);// for build tail trie
+    void buildTailTrie();
     bool isLeaf(uint64_t pos) const;
     void getChild(uint8_t c, uint64_t& pos, uint64_t& zeros) const;
     void getParent(uint8_t& c, uint64_t& pos, uint64_t& zeros) const;

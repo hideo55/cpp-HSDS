@@ -85,8 +85,38 @@ Describe(hsds_Trie) {
         AssertThatEx(results[1].depth, Equals(5U));
     }
 
-    It(t04_predictiveSearch){
+    It(t04_predictiveSearch) {
 
+    }
+
+    It(t05_tail_compression) {
+        std::vector<string> keyList;
+        keyList.push_back("bbc");
+        keyList.push_back("able");
+        keyList.push_back("abc");
+        keyList.push_back("abcde");
+        keyList.push_back("can");
+
+        Trie trie;
+        trie.build(keyList, true);
+
+        vector<string>::const_iterator iter = keyList.begin();
+        vector<string>::const_iterator iter_end = keyList.end();
+        for (; iter != iter_end; ++iter) {
+            Trie::id_t id = trie.exactMatchSearch(iter->c_str(), iter->size());
+            AssertThatEx(id, IsLessThan(keyList.size()));
+            string ret;
+            trie.decodeKey(id, ret);
+            AssertThatEx(ret.c_str(), Equals(iter->c_str()));
+        }
+
+        vector<Trie::id_t> ids;
+        trie.commonPrefixSearch("abcde", 5, ids);
+        AssertThatEx(ids.size(), Equals(2U));
+
+        ids.clear();
+        trie.predictiveSearch("ab", 2, ids);
+        AssertThatEx(ids.size(), Equals(3U));
     }
 
     Describe(io_test) {
@@ -110,8 +140,7 @@ Describe(hsds_Trie) {
             remove(tempfile.c_str());
         }
 
-
-        It(t05_save_and_load) {
+        It(t06_save_and_load) {
             ofstream ofs(tempfile.c_str(), ios_base::binary);
             trie.save(ofs);
             ofs.close();
@@ -132,7 +161,80 @@ Describe(hsds_Trie) {
             }
         }
 
-        It(t06_save_and_map) {
+        It(t07_save_and_map) {
+            ofstream ofs(tempfile.c_str(), ios_base::binary);
+            trie.save(ofs);
+            ofs.close();
+            {
+
+                int fd = open(tempfile.c_str(), O_RDONLY, 0);
+                AssertThatEx(fd != -1, Is().EqualTo(true));
+                struct stat sb;
+                if (fstat(fd, &sb) == -1) {
+                    Assert::That(false);
+                }
+
+                void* mmapPtr = mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+                Trie trie2;
+                trie2.map(mmapPtr, sb.st_size);
+
+                vector<string>::const_iterator iter = keyList.begin();
+                vector<string>::const_iterator iter_end = keyList.end();
+                for (; iter != iter_end; ++iter) {
+                    Trie::id_t id = trie.exactMatchSearch(iter->c_str(), iter->size());
+                    AssertThatEx(id, IsLessThan(keyList.size()));
+                    string ret;
+                    trie.decodeKey(id, ret);
+                    AssertThatEx(ret.c_str(), Equals(iter->c_str()));
+                }
+            }
+        }
+    };
+
+    Describe(io_test_with_tailtrie) {
+        std::vector<string> keyList;
+        Trie trie;
+        std::string tempfile;
+
+        void SetUp() {
+            tempfile = "tmp002";
+
+            keyList.clear();
+            keyList.push_back("bbc");
+            keyList.push_back("able");
+            keyList.push_back("abc");
+            keyList.push_back("abcde");
+            keyList.push_back("can");
+            trie.build(keyList, true);
+        }
+
+        void TearDown() {
+            remove(tempfile.c_str());
+        }
+
+        It(t08_save_and_load) {
+            ofstream ofs(tempfile.c_str(), ios_base::binary);
+            trie.save(ofs);
+            ofs.close();
+            ifstream ifs(tempfile.c_str());
+            {
+                Trie trie2;
+                trie2.load(ifs);
+
+                vector<string>::const_iterator iter = keyList.begin();
+                vector<string>::const_iterator iter_end = keyList.end();
+                for (; iter != iter_end; ++iter) {
+                    Trie::id_t id = trie.exactMatchSearch(iter->c_str(), iter->size());
+                    AssertThatEx(id, IsLessThan(keyList.size()));
+                    string ret;
+                    trie.decodeKey(id, ret);
+                    AssertThatEx(ret.c_str(), Equals(iter->c_str()));
+                }
+            }
+        }
+
+        It(t09_save_and_map) {
             ofstream ofs(tempfile.c_str(), ios_base::binary);
             trie.save(ofs);
             ofs.close();
