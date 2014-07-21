@@ -122,9 +122,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4608f76d8e3de46ca457f3813b8bae64"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a4608f76d8e3de46ca457f3813b8bae64">~Trie</a> ()</td></tr>
 <tr class="memdesc:a4608f76d8e3de46ca457f3813b8bae64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a4608f76d8e3de46ca457f3813b8bae64">More...</a><br/></td></tr>
 <tr class="separator:a4608f76d8e3de46ca457f3813b8bae64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a952d983fc7946bfc1bd491a70786532c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a952d983fc7946bfc1bd491a70786532c">build</a> (std::vector&lt; std::string &gt; &amp;keyList)</td></tr>
-<tr class="memdesc:a952d983fc7946bfc1bd491a70786532c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build louds trie.  <a href="#a952d983fc7946bfc1bd491a70786532c">More...</a><br/></td></tr>
-<tr class="separator:a952d983fc7946bfc1bd491a70786532c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a061d9db537b490a34219826675eaed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a6a061d9db537b490a34219826675eaed">build</a> (std::vector&lt; std::string &gt; &amp;keyList, bool useTailTrie=false)</td></tr>
+<tr class="memdesc:a6a061d9db537b490a34219826675eaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build louds trie.  <a href="#a6a061d9db537b490a34219826675eaed">More...</a><br/></td></tr>
+<tr class="separator:a6a061d9db537b490a34219826675eaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a691e9a2e51d6ff0705522d2da92e16cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhsds_1_1_trie.html#a4e7c3d205aa6140be46fc9ee2c855e76">id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a691e9a2e51d6ff0705522d2da92e16cd">exactMatchSearch</a> (const char *str, size_t len) const </td></tr>
 <tr class="memdesc:a691e9a2e51d6ff0705522d2da92e16cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches key exact match with query string.  <a href="#a691e9a2e51d6ff0705522d2da92e16cd">More...</a><br/></td></tr>
 <tr class="separator:a691e9a2e51d6ff0705522d2da92e16cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,6 +149,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab974345c38f670b62d3b95f4e16734e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#ab974345c38f670b62d3b95f4e16734e8">clear</a> ()</td></tr>
 <tr class="memdesc:ab974345c38f670b62d3b95f4e16734e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear trie.  <a href="#ab974345c38f670b62d3b95f4e16734e8">More...</a><br/></td></tr>
 <tr class="separator:ab974345c38f670b62d3b95f4e16734e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9265d79654d1af7ab54b6da7e2d0f524"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a9265d79654d1af7ab54b6da7e2d0f524">size</a> () const </td></tr>
+<tr class="memdesc:a9265d79654d1af7ab54b6da7e2d0f524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of keys in the dictionary.  <a href="#a9265d79654d1af7ab54b6da7e2d0f524">More...</a><br/></td></tr>
+<tr class="separator:a9265d79654d1af7ab54b6da7e2d0f524"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7264692b105e02bd4bbd2ba741eceb5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_trie.html#a7264692b105e02bd4bbd2ba741eceb5c">save</a> (std::ostream &amp;os) const   throw (hsds::Exception)</td></tr>
 <tr class="memdesc:a7264692b105e02bd4bbd2ba741eceb5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the current status to a stream.  <a href="#a7264692b105e02bd4bbd2ba741eceb5c">More...</a><br/></td></tr>
 <tr class="separator:a7264692b105e02bd4bbd2ba741eceb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -245,7 +248,7 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a952d983fc7946bfc1bd491a70786532c"></a>
+<a class="anchor" id="a6a061d9db537b490a34219826675eaed"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -253,8 +256,18 @@ Static Public Attributes</h2></td></tr>
           <td class="memname">void hsds::Trie::build </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>keyList</em></td><td>)</td>
+          <td class="paramname"><em>keyList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>useTailTrie</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -263,6 +276,7 @@ Static Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">keyList</td><td>source data of trie </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">useTailTrie</td><td>use tail compression </td></tr>
   </table>
   </dd>
 </dl>
@@ -612,6 +626,24 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a9265d79654d1af7ab54b6da7e2d0f524"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t hsds::Trie::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the number of keys in the dictionary. </p>
+<dl class="section return"><dt>Returns</dt><dd>the number of keys in the dictionary </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a6ab1314b96ab8c082aee37641ee57853"></a>
 <div class="memitem">
 <div class="memproto">
@@ -745,7 +777,7 @@ Static Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 20 2014 18:36:54 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 22 2014 01:44:33 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
