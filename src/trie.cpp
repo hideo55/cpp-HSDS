@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <queue>
 #include <cmath>
+#include <cstring>
 
 namespace hsds {
 
