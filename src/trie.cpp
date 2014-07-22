@@ -376,7 +376,6 @@ void Trie::swap(Trie& x) {
     std::swap(numOfKeys_, x.numOfKeys_);
     std::swap(isReady_, x.isReady_);
     std::swap(vtailTrie_, x.vtailTrie_);
-    std::swap(tailSize_, x.tailSize_);
 }
 
 void Trie::clear() {
