@@ -154,14 +154,13 @@ void Trie::buildTailTrie(){
     reverse(vtails_[i].begin(), vtails_[i].end());
   }
   vtailTrie_->build(vtails_);
-  tailSize_ = log2(vtailTrie_->size());
 
-  for (size_t i = 0; i < origTails.size(); ++i){
+  size_t tailSize = origTails.size();
+  for (size_t i = 0; i < tailSize; ++i){
     reverse(origTails[i].begin(), origTails[i].end());
     id_t id = vtailTrie_->exactMatchSearch(&origTails[i][0], origTails[i].size());
-    tailIDs_.set(tailSize_ * i + id, true);
+    tailIDs_.push_back(id);
   }
-  tailIDs_.build();
 }
 
 Trie::id_t Trie::exactMatchSearch(const char* str, size_t len) const {
@@ -306,7 +305,7 @@ bool Trie::tailMatch(const char* str, const size_t len, const size_t depth,
 Vector<char> Trie::getTail(const uint64_t i) const{
     if(vtailTrie_){
         string tail;
-        vtailTrie_->decodeKey(tailIDs_.rank1(tailSize_ * i), tail);
+        vtailTrie_->decodeKey(tailIDs_[i], tail);
         reverse(tail.begin(), tail.end());
         Vector<char> ret;
         ret.resize(tail.size());
@@ -403,7 +402,6 @@ void Trie::save(std::ostream& os) const throw(hsds::Exception) {
     if(useTailTrie){
         vtailTrie_->save(os);
         tailIDs_.save(os);
-        os.write(reinterpret_cast<const char*>(&tailSize_), sizeof(tailSize_));
     } else {
         size_t vtailSize = vtails_.size();
         os.write(reinterpret_cast<const char*>(&vtailSize), sizeof(vtailSize));
@@ -430,7 +428,6 @@ void Trie::load(std::istream& is) throw(hsds::Exception) {
         vtailTrie_ = new Trie();
         vtailTrie_->load(is);
         tailIDs_.load(is);
-        is.read(reinterpret_cast<char*>(&tailSize_), sizeof(tailSize_));
     } else {
         size_t vtailSize = 0;
         is.read(reinterpret_cast<char*>(&vtailSize), sizeof(vtailSize));
@@ -463,8 +460,6 @@ uint64_t Trie::map(void *ptr, uint64_t mapSize) throw (hsds::Exception) {
         vtailTrie_ = new Trie();
         offset += vtailTrie_->map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
         offset += tailIDs_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
-        tailSize_ = *(reinterpret_cast<char*>(ptr) + offset);
-        offset += sizeof(tailSize_);
     } else {
         size_t vtailSize = *(reinterpret_cast<char*>(ptr) + offset);
         offset += sizeof(vtailSize);
