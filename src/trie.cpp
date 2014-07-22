@@ -24,8 +24,7 @@ Trie::Trie() : louds_(),
                numOfKeys_(0),
                isReady_(false),
                vtailTrie_(NULL),
-               tailIDs_(),
-               tailSize_(0) {
+               tailIDs_() {
 
 }
 
