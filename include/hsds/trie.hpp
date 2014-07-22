@@ -173,7 +173,8 @@ private:
     bool isReady_;
 
     Trie* vtailTrie_;
-    Vector<uint64_t> tailIDs_;
+    BitVector tailIDs_;
+    uint64_t tailIDSize_;
 
     void build(hsds::Vector<Vector<char>  >& keyList);// for build tail trie
     void buildTailTrie();

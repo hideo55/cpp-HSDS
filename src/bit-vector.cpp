@@ -131,6 +131,10 @@ FORCE_INLINE uint64_t select64(uint64_t block, uint64_t i, uint64_t base) {
     return base + SELECT_TABLE[i][block & 0xFF];
 }
 
+FORCE_INLINE uint64_t mask(uint64_t x, uint64_t pos){
+  return x & ((1LLU << pos) - 1);
+}
+
 BitVector::BitVector() :
         size_(0), num_of_1s_(0) {
 }
@@ -166,6 +170,30 @@ void BitVector::set(uint64_t i, bool b) {
         blocks_[block_id] |= m;
     } else {
         blocks_[block_id] &= ~m;
+    }
+}
+
+void BitVector::push_back_bits(uint64_t x, uint64_t len) {
+    size_t offset = size_ % S_BLOCK_SIZE;
+    if ((size_ + len - 1) / S_BLOCK_SIZE >= blocks_.size()){
+      blocks_.push_back(0);
+    }
+
+    blocks_[size_ / S_BLOCK_SIZE] |= (x << offset);
+    if (offset + len - 1 >= S_BLOCK_SIZE){
+      blocks_[size_ / S_BLOCK_SIZE + 1] |= (x >> (S_BLOCK_SIZE - offset));
+    }
+    size_ += len;
+}
+
+uint64_t BitVector::get_bits(uint64_t pos, uint64_t len) const {
+    uint64_t blockInd1    = pos / S_BLOCK_SIZE;
+    uint64_t blockOffset1 = pos % S_BLOCK_SIZE;
+    if (blockOffset1 + len <= S_BLOCK_SIZE){
+      return mask(blocks_[blockInd1] >> blockOffset1, len);
+    } else {
+      uint64_t blockInd2    = ((pos + len - 1) / S_BLOCK_SIZE);
+      return  mask((blocks_[blockInd1] >> blockOffset1) + (blocks_[blockInd2] << (S_BLOCK_SIZE - blockOffset1)), len);
     }
 }
 

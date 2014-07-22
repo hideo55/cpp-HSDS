@@ -95,6 +95,24 @@ public:
     void set(uint64_t i, bool b = true);
 
     /**
+     * @brief push bits to bit vector
+     *
+     * @param[in] x bits
+     * @param[in] len bit length
+     */
+    void push_back_bits(uint64_t x, uint64_t len);
+
+    /**
+     * @brief get bits from bit vector
+     *
+     * @param[in] pos position of bits
+     * @param[in] len bit length
+     *
+     * @return bits
+     */
+    uint64_t get_bits(uint64_t pos, uint64_t len) const;
+
+    /**
      * @brief Build succinct bit vector
      *
      * @param[in] enable_faster_select1 Enable faster select1().
