@@ -26,15 +26,15 @@ FORCE_INLINE uint64_t lg2(const uint64_t x){
 
 Trie::Trie() :
         louds_(),
-            terminal_(),
-            tail_(),
-            vtails_(),
-            edges_(),
-            numOfKeys_(0),
-            isReady_(false),
-            vtailTrie_(NULL),
-            tailIDs_(),
-            tailIDSize_(0) {
+        terminal_(),
+        tail_(),
+        vtails_(),
+        edges_(),
+        numOfKeys_(0),
+        isReady_(false),
+        vtailTrie_(NULL),
+        tailIDs_(),
+        tailIDSize_(0) {
 
 }
 
