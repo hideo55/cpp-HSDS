@@ -86,7 +86,25 @@ Describe(hsds_Trie) {
     }
 
     It(t04_predictiveSearch) {
+        std::vector<string> keyList;
+        keyList.push_back("bbc");
+        keyList.push_back("able");
+        keyList.push_back("abc");
+        keyList.push_back("abcde");
+        keyList.push_back("can");
 
+        Trie trie;
+        trie.build(keyList);
+
+        vector<Trie::id_t> ids;
+        trie.predictiveSearch("ab", 2, ids);
+        string ret;
+        trie.decodeKey(ids[0], ret);
+        AssertThatEx(ret, Equals(string("abc")));
+        trie.decodeKey(ids[1], ret);
+        AssertThatEx(ret, Equals(string("abcde")));
+        trie.decodeKey(ids[2], ret);
+        AssertThatEx(ret, Equals(string("able")));
     }
 
     It(t05_tail_compression) {
