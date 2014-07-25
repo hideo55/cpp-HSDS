@@ -56,11 +56,8 @@ void Trie::build(vector<string>& keyList, bool useTailTrie) {
     }
 
     BitVector loudBV, terminalBV, tailBV;
-    size_t loud_index = 0;
-    size_t terminal_index = 0;
-    size_t tail_index = 0;
-    loudBV.set(loud_index++, false);
-    loudBV.set(loud_index++, true);
+    loudBV.push_back(false);
+    loudBV.push_back(true);
 
     for (size_t depth = 0;;) {
         if (q.empty()) {
@@ -76,9 +73,9 @@ void Trie::build(vector<string>& keyList, bool useTailTrie) {
         q.pop();
         string& cur = keyList[left];
         if (left + 1 == right && depth + 1 < cur.size()) { // tail candidate
-            loudBV.set(loud_index++, true);
-            terminalBV.set(terminal_index++, true);
-            tailBV.set(tail_index++, true);
+            loudBV.push_back(true);
+            terminalBV.push_back(true);
+            tailBV.push_back(true);
             Vector<char> tail;
             for (size_t i = depth; i < cur.size(); ++i) {
                 tail.push_back(cur[i]);
@@ -86,19 +83,19 @@ void Trie::build(vector<string>& keyList, bool useTailTrie) {
             vtails_.push_back(tail);
             continue;
         } else {
-            tailBV.set(tail_index++, false);
+            tailBV.push_back(false);
         }
 
         size_t newLeft = left;
         if (depth == cur.size()) {
-            terminalBV.set(terminal_index++, true);
+            terminalBV.push_back(true);
             ++newLeft;
             if (newLeft == right) {
-                loudBV.set(loud_index++, true);
+                loudBV.push_back(true);
                 continue;
             }
         } else {
-            terminalBV.set(terminal_index++, false);
+            terminalBV.push_back(false);
         }
 
         size_t prev = newLeft;
@@ -109,7 +106,7 @@ void Trie::build(vector<string>& keyList, bool useTailTrie) {
                 continue;
             }
             edges_.push_back(prevC);
-            loudBV.set(loud_index++, false);
+            loudBV.push_back(false);
             degree++;
             nextQ.push(RangeNode(prev, i));
             if (i == right) {
@@ -119,7 +116,7 @@ void Trie::build(vector<string>& keyList, bool useTailTrie) {
             prevC = keyList[prev][depth];
 
         }
-        loudBV.set(loud_index++, true);
+        loudBV.push_back(true);
     }
 
     loudBV.build(true, true);
