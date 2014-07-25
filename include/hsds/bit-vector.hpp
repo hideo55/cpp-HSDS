@@ -95,6 +95,13 @@ public:
     void set(uint64_t i, bool b = true);
 
     /**
+     * @brief push bit to bit vector
+     *
+     * @param[in] b Boolean value that indicates the bit to push.(true = 1, false = 0)
+     */
+    void push_back(bool b);
+
+    /**
      * @brief push bits to bit vector
      *
      * @param[in] x bits
