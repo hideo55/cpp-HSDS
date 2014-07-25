@@ -173,6 +173,22 @@ void BitVector::set(uint64_t i, bool b) {
     }
 }
 
+void BitVector::push_back(bool b) {
+    if(size_/S_BLOCK_SIZE >= blocks_.size()) {
+        blocks_.push_back(0);
+    }
+    
+    uint64_t block_id = size_ / S_BLOCK_SIZE;
+    uint64_t r = size_ % S_BLOCK_SIZE;
+    uint64_t m = 0x1ULL << r;
+    if(b) {
+        blocks_[block_id] |= m;
+    } else {
+        blocks_[block_id] &= ~m;
+    }
+    ++size_;
+}
+
 void BitVector::push_back_bits(uint64_t x, uint64_t len) {
     size_t offset = size_ % S_BLOCK_SIZE;
     if ((size_ + len - 1) / S_BLOCK_SIZE >= blocks_.size()){
