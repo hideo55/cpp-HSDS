@@ -116,6 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a41426138566c030a1d88cfb17812c392"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a41426138566c030a1d88cfb17812c392">set</a> (uint64_t i, bool b=true)</td></tr>
 <tr class="memdesc:a41426138566c030a1d88cfb17812c392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value to bit vector by index.  <a href="#a41426138566c030a1d88cfb17812c392">More...</a><br/></td></tr>
 <tr class="separator:a41426138566c030a1d88cfb17812c392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39a6d6d1da5b58385c9a3ee7462ce2a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#a39a6d6d1da5b58385c9a3ee7462ce2a4">push_back</a> (bool b)</td></tr>
+<tr class="memdesc:a39a6d6d1da5b58385c9a3ee7462ce2a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">push bit to bit vector  <a href="#a39a6d6d1da5b58385c9a3ee7462ce2a4">More...</a><br/></td></tr>
+<tr class="separator:a39a6d6d1da5b58385c9a3ee7462ce2a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af357f43bb45b7095dcee661728d06de2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhsds_1_1_bit_vector.html#af357f43bb45b7095dcee661728d06de2">push_back_bits</a> (uint64_t x, uint64_t len)</td></tr>
 <tr class="memdesc:af357f43bb45b7095dcee661728d06de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">push bits to bit vector  <a href="#af357f43bb45b7095dcee661728d06de2">More...</a><br/></td></tr>
 <tr class="separator:af357f43bb45b7095dcee661728d06de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -344,7 +347,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00150">150</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00157">157</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -481,6 +484,30 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a39a6d6d1da5b58385c9a3ee7462ce2a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hsds::BitVector::push_back </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>push bit to bit vector </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Boolean value that indicates the bit to push.(true = 1, false = 0) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="af357f43bb45b7095dcee661728d06de2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -558,7 +585,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of the bits </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00162">162</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00169">169</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -684,7 +711,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Index of x-th 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00192">192</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00199">199</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -797,7 +824,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Returns number of the element in bit vector. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00129">129</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00136">136</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -832,7 +859,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of bits that matches with argument in the bit vector </dd></dl>
 
-<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00140">140</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
+<p>Definition at line <a class="el" href="bit-vector_8hpp_source.html#l00147">147</a> of file <a class="el" href="bit-vector_8hpp_source.html">bit-vector.hpp</a>.</p>
 
 </div>
 </div>
@@ -866,7 +893,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 01:41:07 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Feb 28 2015 20:48:22 for HSDS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
