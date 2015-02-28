@@ -98,6 +98,12 @@ public:
 
     /**
      * Traverse the node of the trie
+     * 
+     * @param[in] str query string
+     * @param[in] len length of str
+     * @param[in,out] nodePos current position in trie
+     * @param[in,out] zeros 
+     * @param[in,out] keyPos current position in key
      *
      * @retval Trie::CAN_NOT_TRAVERSE
      * @retval Trie::NOT_FOUND
