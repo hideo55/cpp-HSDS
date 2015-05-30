@@ -176,7 +176,10 @@ Trie::id_t Trie::exactMatchSearch(const char* str, size_t len) const {
 
     while (keyPos <= len) {
         id = traverse(str, len, nodePos, zeros, keyPos);
-        if (keyPos == (len + 1) && id != CAN_NOT_TRAVERSE) {
+        if (id == CAN_NOT_TRAVERSE) {
+            break;
+        }
+        if (keyPos == (len + 1)) {
             return id;
         }
     }
