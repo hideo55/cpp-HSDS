@@ -100,21 +100,18 @@ void Trie::build(vector<string>& keyList, bool useTailTrie) {
 
         size_t prev = newLeft;
         uint8_t prevC = (uint8_t) keyList[prev][depth];
-        uint64_t degree = 0;
         for (size_t i = prev + 1;; ++i) {
             if (i < right && prevC == (uint8_t) keyList[i][depth]) {
                 continue;
             }
             edges_.push_back(prevC);
             loudBV.push_back(false);
-            degree++;
             nextQ.push(RangeNode(prev, i));
             if (i == right) {
                 break;
             }
             prev = i;
             prevC = keyList[prev][depth];
-
         }
         loudBV.push_back(true);
     }
