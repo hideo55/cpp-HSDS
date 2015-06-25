@@ -128,8 +128,6 @@ uint64_t WaveletMatrix::rank(uint64_t c, uint64_t pos) const {
         }
     }
     return endPos - beginPos;
-
-    return 0;
 }
 
 uint64_t WaveletMatrix::rankLessThan(uint64_t c, uint64_t pos) const {
