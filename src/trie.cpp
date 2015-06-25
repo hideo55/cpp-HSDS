@@ -114,6 +114,7 @@ void Trie::build(vector<string>& keyList, bool useTailTrie) {
             prevC = keyList[prev][depth];
         }
         loudBV.push_back(true);
+
     }
 
     loudBV.build(true, true);
@@ -320,6 +321,8 @@ Trie::id_t Trie::traverse(const char* str, size_t len, uint64_t& nodePos, uint64
         return CAN_NOT_TRAVERSE;
     if (nodePos == NOT_FOUND)
         return CAN_NOT_TRAVERSE;
+    if (keyPos > len)
+        return CAN_NOT_TRAVERSE;
 
     uint64_t defaultPos = 2;
     nodePos = std::max(nodePos, defaultPos);
@@ -335,9 +338,7 @@ Trie::id_t Trie::traverse(const char* str, size_t len, uint64_t& nodePos, uint64
     } else if (terminal_[ones]) {
         id = terminal_.rank1(ones);
     }
-
     getChild((uint8_t) str[keyPos], nodePos, zeros);
-
     ++keyPos;
     if (id == NOT_FOUND && nodePos == NOT_FOUND) {
         return CAN_NOT_TRAVERSE;
@@ -352,7 +353,6 @@ void Trie::decodeKey(id_t id, std::string& ret) const {
         return;
 
     uint64_t nodeID = terminal_.select1(id);
-
     uint64_t pos = louds_.select1(nodeID) + 1;
     uint64_t zeros = pos - nodeID;
     for (;;) {
