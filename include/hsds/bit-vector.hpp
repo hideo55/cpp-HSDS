@@ -35,6 +35,7 @@ const uint32_t L_BLOCK_SIZE = 512;
 const uint32_t BLOCK_RATE = 8;
 
 const char* const E_OUT_OF_RANGE = "Out of range access";
+const char* const E_FREEZE = "This vector is already frozen(already call 'build()' method).";
 const char* const E_SAVE_FILE = "Failed to save the bit vector.";
 const char* const E_LOAD_FILE = "Failed to read file. File format is invalid.";
 }
@@ -267,6 +268,7 @@ private:
     select_dict_type select1_table_;    ///< Select dictionary for 1-bits
     uint64_t size_;                     ///< Size of bit vector
     uint64_t num_of_1s_;                ///< Nuber of the 1-bits
+    bool freeze_; 
 
     // Disable assingment operator
     BitVector &operator=(const BitVector &);

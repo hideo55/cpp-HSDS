@@ -136,18 +136,16 @@ FORCE_INLINE uint64_t mask(uint64_t x, uint64_t pos){
 }
 
 BitVector::BitVector() :
-        size_(0), num_of_1s_(0) {
+        size_(0), num_of_1s_(0), freeze_(false) {
 }
 
 BitVector::BitVector(uint64_t size) :
-        size_(size), num_of_1s_(0) {
+        size_(size), num_of_1s_(0), freeze_(false) {
     uint64_t block_num = (size + S_BLOCK_SIZE - 1) / S_BLOCK_SIZE;
     blocks_.resize(block_num, 0);
 }
 
-BitVector::~BitVector() {
-
-}
+BitVector::~BitVector() {}
 
 bool BitVector::operator[](uint64_t i) const {
     HSDS_DEBUG_IF(i >= size_, E_OUT_OF_RANGE);
@@ -155,6 +153,7 @@ bool BitVector::operator[](uint64_t i) const {
 }
 
 void BitVector::set(uint64_t i, bool b) {
+    HSDS_EXCEPTION_IF(freeze_, E_FREEZE);
     if (i >= size_) {
         size_ = i + 1;
     }
@@ -174,6 +173,7 @@ void BitVector::set(uint64_t i, bool b) {
 }
 
 void BitVector::push_back(bool b) {
+    HSDS_EXCEPTION_IF(freeze_, E_FREEZE);
     if(size_/S_BLOCK_SIZE >= blocks_.size()) {
         blocks_.push_back(0);
     }
@@ -190,6 +190,7 @@ void BitVector::push_back(bool b) {
 }
 
 void BitVector::push_back_bits(uint64_t x, uint64_t len) {
+    HSDS_EXCEPTION_IF(freeze_, E_FREEZE);
     size_t offset = size_ % S_BLOCK_SIZE;
     if ((size_ + len - 1) / S_BLOCK_SIZE >= blocks_.size()){
       blocks_.push_back(0);
@@ -322,6 +323,7 @@ void BitVector::build(bool enable_faster_select1, bool enable_faster_select0) {
     if (enable_faster_select0) {
         select0_table_.push_back(size_);
     }
+    freeze_ = true;
 }
 
 uint64_t BitVector::rank0(uint64_t i) const {
@@ -537,6 +539,7 @@ void BitVector::load(std::istream &is) throw (hsds::Exception) {
     select0_table_.load(is);
     select1_table_.load(is);
     HSDS_EXCEPTION_IF(is.fail(), E_LOAD_FILE);
+    freeze_ = true;
 }
 
 uint64_t BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
@@ -559,7 +562,7 @@ uint64_t BitVector::map(void* ptr, uint64_t mapSize) throw (hsds::Exception) {
 
     offset += select1_table_.map(reinterpret_cast<char*>(ptr) + offset, mapSize - offset);
     HSDS_EXCEPTION_IF(offset > mapSize, E_LOAD_FILE);
-
+    freeze_ = true;
     return offset;
 }
 
@@ -570,6 +573,7 @@ void BitVector::swap(BitVector &x) {
     rank_table_.swap(x.rank_table_);
     select0_table_.swap(x.select0_table_);
     select1_table_.swap(x.select1_table_);
+    std::swap(freeze_, x.freeze_);
 }
 
 } // namespace hsds
