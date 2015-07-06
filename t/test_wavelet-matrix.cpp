@@ -56,7 +56,6 @@ Describe(wavelet_matrix) {
         AssertThatEx( wm.rank(1, 10), Is().EqualTo(hsds::NOT_FOUND)); // pos > wm.size()
         AssertThatEx( wm.select(2, 1), Is().EqualTo(4UL)); // =4 ... The second 2 appeared in vec[4]
         AssertThatEx( wm.select(2, 2), Is().EqualTo(5UL)); // =5 ... The second 2 appeared in vec[5] // =6 ... The second 2 appeared in vec[6]
-        cout << 5 - wm.rank(4,5) - wm.rankLessThan(4, 5) << endl;;
         AssertThatEx( wm.rankLessThan(4, 5), Is().EqualTo(3UL)); // =3 .. {1,0,2}  appear in vec[0..5)
         AssertThatEx( wm.rankMoreThan(3, 5), Is().EqualTo(2UL)); // =2 ... {5, 4} appear in vec[0..5)
         AssertThatEx( wm.freq(2), Is().EqualTo(2UL)); // =2 ... {2, 2} appear in vec
