@@ -191,7 +191,7 @@ uint64_t WaveletMatrix::select(uint64_t c, uint64_t rank) const {
 }
 
 uint64_t WaveletMatrix::selectFromPos(uint64_t c, uint64_t pos, uint64_t rank) const {
-    if (c >= alphabetNum_ || pos >= size_) {
+    if (c >= alphabetNum_ || pos >= size_ || rank > freq(c)) {
         return NOT_FOUND;
     }
 
